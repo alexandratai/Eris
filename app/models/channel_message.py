@@ -11,7 +11,7 @@ class ChannelMessage(db.Model):
     channel_id = db.Column(db.Integer, nullable=False, db.ForeignKey(add_prefix_for_prod("channels.id")))
     user_id = db.Column(db.Integer, nullable=False, db.ForeignKey(add_prefix_for_prod("users.id")))
     body = db.Column(db.String)
-    image_url = db.Column(db.String)
+    image = db.Column(db.String)
     created_at = db.Column(db.Timestamp(timezone=True), server_default=func.now())
     updated_at = db.Column(db.Timestamp(timezone=True), onupdate=func.now())
 
@@ -24,5 +24,5 @@ class ChannelMessage(db.Model):
             'channel_id': self.channel_id,
             'user_id': self.user_id,
             'body': self.body,
-            'image_url': self.image_url,
+            'image': self.image,
         }

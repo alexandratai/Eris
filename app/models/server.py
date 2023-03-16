@@ -10,15 +10,15 @@ class Server(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(45), nullable=False)
     owner_id = db.Column(db.Integer, nullable=False, db.ForeignKey(add_prefix_for_prod("users.id")))
-    image_url = db.Column(db.String)
+    image = db.Column(db.String)
 
     channels = db.relationship("Channel", back_populates="server", cascade="all, delete")
-    users = db.relationship("User", secondary=memberships, back_populates="server")
+    users = db.relationship("User", secondary=memberships, back_populates="server", cascade="all, delete")
 
     def to_dict(self):
         return {
             'id': self.id,
             'name': self.name,
             'owner_id': self.owner_id,
-            'image_url': self.image_url,
+            'image': self.image,
         }
