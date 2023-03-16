@@ -16,7 +16,7 @@ class User(db.Model, UserMixin):
     profile_photo = db.Column(db.String)
 
     channel_messages = db.relationship("ChannelMessages", back_populates="users", cascade="all, delete")
-    server = db.relationship("Server", secondary=memberships, back_populates="users", cascade="all, delete")
+    server = db.relationship("Server", secondary=memberships, back_populates="users", cascade="all, delete-orphan")
 
     @property
     def password(self):

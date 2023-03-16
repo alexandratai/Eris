@@ -22,4 +22,4 @@ class SignUpForm(FlaskForm):
         'Username', validators=[DataRequired(), username_exists])
     email = StringField('Email', validators=[DataRequired(), user_exists])
     password = StringField('Password', validators=[DataRequired()])
-    profile_photo = StringField('Profile Photo URL')
+    profile_photo = StringField('Profile Photo')
