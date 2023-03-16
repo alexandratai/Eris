@@ -15,7 +15,7 @@ class User(db.Model, UserMixin):
     hashed_password = db.Column(db.String(255), nullable=False)
     profile_photo = db.Column(db.String)
 
-    channel_messages = db.relationship("ChannelMessages", back_populates="users", cascade="all, delete")
+    channel_messages = db.relationship("ChannelMessages", back_populates="users", cascade="all, delete-orphan")
     server = db.relationship("Server", secondary=memberships, back_populates="users", cascade="all, delete-orphan")
 
     @property
