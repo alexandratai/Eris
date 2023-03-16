@@ -2,6 +2,7 @@ from flask.cli import AppGroup
 from .users import seed_users, undo_users
 from .servers import seed_servers, undo_servers
 from .channels import seed_channels, undo_channels
+from .channel_messages import seed_channel_messages, undo_channel_messages
 
 from app.models.db import db, environment, SCHEMA
 
@@ -16,6 +17,7 @@ def seed():
         db.session.execute(f"TRUNCATE table {SCHEMA}.users RESTART IDENTITY CASCADE;")
         db.session.execute(f"TRUNCATE table {SCHEMA}.servers RESTART IDENTITY CASCADE;")
         db.session.execute(f"TRUNCATE table {SCHEMA}.channels RESTART IDENTITY CASCADE;")
+        db.session.execute(f"TRUNCATE table {SCHEMA}.channel_messages RESTART IDENTITY CASCADE;")
 
         db.session.commit()
         # Before seeding in production, you want to run the seed undo 
@@ -25,9 +27,11 @@ def seed():
         undo_users()
         undo_servers()
         undo_channels()
+        undo_channel_messages()
     seed_users()
     seed_servers()
     seed_channels()
+    seed_channel_messages()
     # Add other seed functions here
 
 
@@ -37,4 +41,5 @@ def undo():
     undo_users()
     undo_servers()
     undo_channels()
+    undo_channel_messages()
     # Add other undo functions here
