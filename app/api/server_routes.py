@@ -1,7 +1,6 @@
 from flask import Blueprint, jsonify, redirect, render_template, request
 from app.models import Server, Channel, db
 from ..forms.server_form import ServerForm
-from ..forms.channel_form import ChannelForm
 from flask_login import current_user
 from flask_login import login_required
 
@@ -40,3 +39,11 @@ def channels(server_id):
     """
     channels = Channel.query.filter(Channel.server_id == server_id).all()
     return {'channels': [channel.to_dict() for channel in channels]}
+
+@server_routes.route('/<int:server_id>/channels/<int:channel_id>')
+def channels(channel_id):
+    """
+    Query for one channel.
+    """
+    channel = Channel.query.get(channel_id)
+    return channel.to_dict()
