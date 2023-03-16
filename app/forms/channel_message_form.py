@@ -3,6 +3,6 @@ from wtforms import StringField
 from wtforms.validators import DataRequired, Email, ValidationError
 from app.models import ChannelMessage
 
-class ServerForm(FlaskForm):
+class ChannelMessageForm(FlaskForm):
     body = StringField('Message')
     image = StringField('Attach an image')
