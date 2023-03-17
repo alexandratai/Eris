@@ -16,13 +16,13 @@ def validation_errors_to_error_messages(validation_errors):
             errorMessages.append(f'{field}: {error}')
     return errorMessages
 
-@channel_message_routes.route('/')
-def channel_messages():
-    """
-    Query for all channel messages and returns them in a list of channel message dictionaries.
-    """
-    channel_messages = ChannelMessage.query.all()
-    return {'channel_messages': [channel_message.to_dict() for channel_message in channel_messages]}
+# @channel_message_routes.route('/')
+# def channel_messages():
+#     """
+#     Query for all channel messages and returns them in a list of channel message dictionaries.
+#     """
+#     channel_messages = ChannelMessage.query.all()
+#     return {'channel_messages': [channel_message.to_dict() for channel_message in channel_messages]}
 
 @channel_message_routes.route('/<int:channel_message_id>')
 def channel_message(channel_message_id):

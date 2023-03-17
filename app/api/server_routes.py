@@ -1,6 +1,7 @@
 from flask import Blueprint, jsonify, redirect, render_template, request
-from app.models import Server, db
+from app.models import Server, Channel, db
 from ..forms.server_form import ServerForm
+from ..forms.channel_form import ChannelForm
 from flask_login import current_user
 from flask_login import login_required
 
@@ -24,10 +25,27 @@ def servers():
     servers = Server.query.all()
     return {'servers': [server.to_dict() for server in servers]}
 
-@server_routes.route('/<int:server_id>')
-def server(server_id):
+@server_routes.route('/current')
+def user_servers():
     """
-    Query for one server.
+    Query for all servers that a user is of a part of 
+    and return them in a list of server dictionaries
     """
-    server = Server.query.get(server_id)
-    return server.to_dict()
+    servers = Server.query.join(Server.users).filter(memberships.member_id == current_user.id).all()
+    return {'servers': [server.to_dict() for server in servers]}
+
+# @server_routes.route('/<int:server_id>')
+# def server(server_id):
+#     """
+#     Query for one server.
+#     """
+#     server = Server.query.get(server_id)
+#     return server.to_dict()
+
+@server_routes.route('/<int:server_id>/channels')
+def server_channels(server_id):
+    """
+    Query for all channels by server id and returns them in a list of channel dictionaries.
+    """
+    channels = Channel.query.filter(Channel.server_id == server_id).all()
+    return {'channels': [channel.to_dict() for channel in channels]}
