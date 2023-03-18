@@ -25,6 +25,7 @@ def validation_errors_to_error_messages(validation_errors):
 #     return {'channel_messages': [channel_message.to_dict() for channel_message in channel_messages]}
 
 @channel_message_routes.route('/<int:channel_message_id>')
+@login_required
 def channel_message(channel_message_id):
     """
     Query for one channel message.

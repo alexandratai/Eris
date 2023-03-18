@@ -1,15 +1,15 @@
 from app.models import db, User, environment, SCHEMA
 from sqlalchemy.sql import text
 
+demo = User(
+    username='Demo', email='demo@aa.io', password='password', profile_photo='https://static1.cbrimages.com/wordpress/wp-content/uploads/2022/02/hermione-making-the-polyjuice-potion.jpg')
+marnie = User(
+    username='marnie', email='marnie@aa.io', password='password', profile_photo='https://cdn.britannica.com/81/152981-050-7891A7CF/Daniel-Radcliffe-Harry-Potter-and-the-Philosophers.jpg')
+jane = User(
+    username='jane', email='jane@aa.io', password='password', profile_photo='http://images4.fanpop.com/image/photos/16600000/Ronald-Weasley-ronald-weasley-16679447-499-298.jpg')
 
 # Adds a demo user, you can add other users here if you want
 def seed_users():
-    demo = User(
-        username='Demo', email='demo@aa.io', password='password', profile_photo='https://static1.cbrimages.com/wordpress/wp-content/uploads/2022/02/hermione-making-the-polyjuice-potion.jpg')
-    marnie = User(
-        username='marnie', email='marnie@aa.io', password='password', profile_photo='https://cdn.britannica.com/81/152981-050-7891A7CF/Daniel-Radcliffe-Harry-Potter-and-the-Philosophers.jpg')
-    jane = User(
-        username='jane', email='jane@aa.io', password='password', profile_photo='http://images4.fanpop.com/image/photos/16600000/Ronald-Weasley-ronald-weasley-16679447-499-298.jpg')
 
     users = [demo, marnie, jane]
     for user in users:

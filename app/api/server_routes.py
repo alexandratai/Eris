@@ -26,6 +26,7 @@ def servers():
     return {'servers': [server.to_dict() for server in servers]}
 
 @server_routes.route('/current')
+@login_required
 def user_servers():
     """
     Query for all servers that a user is of a part of 
@@ -43,6 +44,7 @@ def user_servers():
 #     return server.to_dict()
 
 @server_routes.route('/<int:server_id>/channels')
+@login_required
 def server_channels(server_id):
     """
     Query for all channels by server id and returns them in a list of channel dictionaries.

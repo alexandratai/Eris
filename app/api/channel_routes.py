@@ -18,6 +18,7 @@ def validation_errors_to_error_messages(validation_errors):
     return errorMessages
 
 @channel_routes.route('/<int:channel_id>/messages')
+@login_required
 def messages_by_channel(channel_id):
     """
     Query for all messages by channel and returns them in a list of message dictionaries.

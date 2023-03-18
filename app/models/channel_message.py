@@ -8,13 +8,13 @@ class ChannelMessage(db.Model):
         __table_args__ = {'schema': SCHEMA}
 
     id = db.Column(db.Integer, primary_key=True)
-    server_id = db.Column(db.Integer, nullable=False, db.ForeignKey(add_prefix_for_prod("servers.id")))
-    channel_id = db.Column(db.Integer, nullable=False, db.ForeignKey(add_prefix_for_prod("channels.id")))
-    user_id = db.Column(db.Integer, nullable=False, db.ForeignKey(add_prefix_for_prod("users.id")))
+    server_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("servers.id")), nullable=False)
+    channel_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("channels.id")), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("users.id")), nullable=False)
     body = db.Column(db.String)
     image = db.Column(db.String)
-    created_at = db.Column(db.Timestamp(timezone=True), server_default=func.now())
-    updated_at = db.Column(db.Timestamp(timezone=True), onupdate=func.now())
+    created_at = db.Column(db.TIMESTAMP(timezone=True), server_default=func.now())
+    updated_at = db.Column(db.TIMESTAMP(timezone=True), onupdate=func.now())
 
     server = db.relationship("Server", back_populates="channel_messages")
     channel = db.relationship("Channel", back_populates="channel_messages")
