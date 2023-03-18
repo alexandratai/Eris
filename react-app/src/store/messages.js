@@ -1,6 +1,13 @@
 const GET_MESSAGES_BY_CHANNEL = "messages/allMessagesByChannelId";
 const GET_ONE_MESSAGE = "messages/getOneMessage";
 
+const getMessagesByChannelId = (messages) => {
+  return {
+    type: GET_MESSAGES_BY_CHANNEL,
+    messages,
+  };
+};
+
 const getOneMessage = (message) => {
   return {
     type: GET_ONE_MESSAGE,
@@ -8,7 +15,14 @@ const getOneMessage = (message) => {
   };
 };
 
-export const oneReviewThunk = (id) => async (dispatch) => {
+export const allMessagesByChannelIdThunk = (channelId) => async (dispatch) => {
+  const res = await fetch(`/api/channels/${channelId}/messages`);
+  const data = await res.json();
+  dispatch(getMessagesByChannelId(data.messages));
+  return res;
+};
+
+export const oneMessageThunk = (id) => async (dispatch) => {
   const res = await fetch(`/api/messages/${id}`);
   const data = await res.json();
   dispatch(getOneMessage(data));
@@ -30,7 +44,7 @@ const messageReducer = (state = initialState, action) => {
       return newState;
     default:
       return state;
-  }
+  };
 };
 
 export default messageReducer;

@@ -5,6 +5,9 @@ import SignupFormPage from "./components/SignupFormPage";
 import LoginFormPage from "./components/LoginFormPage";
 import { authenticate } from "./store/session";
 import Navigation from "./components/Navigation";
+import HomePage from "./components/HomePage";
+import ServerGrid from "./components/ServerGrid";
+import ChannelGrid from "./components/ChannelGrid";
 
 function App() {
   const dispatch = useDispatch();
@@ -23,6 +26,13 @@ function App() {
           </Route>
           <Route path="/signup">
             <SignupFormPage />
+          </Route>
+          <Route path="/" exact={true}>
+            <HomePage />
+          </Route>
+          <Route exact path="/:serverId?/:channelId?">
+            <ServerGrid />
+            <ChannelGrid />
           </Route>
         </Switch>
       )}
