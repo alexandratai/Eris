@@ -28,7 +28,7 @@ function App() {
           <Route path="/signup">
             <SignupFormPage />
           </Route>
-          <Route path="/" exact={true}>
+          <Route exact path="/">
             <HomePage />
           </Route>
           <Route exact path="/:serverId?/:channelId?">

@@ -62,6 +62,7 @@ def add_servers():
     form['csrf_token'].data = request.cookies['csrf_token']
 
     if form.validate_on_submit():
+        print("#### VALIDATE ON SUBMIT IN ROUTE ###")
         server = Server(
             name = form.name.data,
             owner_id = current_user.id,

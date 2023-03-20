@@ -23,3 +23,5 @@ class SignUpForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired(), user_exists])
     password = StringField('Password', validators=[DataRequired()])
     profile_photo = StringField('Profile Photo')
+    # class Meta:
+    #     csrf=False
