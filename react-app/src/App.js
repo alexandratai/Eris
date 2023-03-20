@@ -8,6 +8,7 @@ import Navigation from "./components/Navigation";
 import HomePage from "./components/HomePage";
 import ServerGrid from "./components/ServerGrid";
 import ChannelGrid from "./components/ChannelGrid";
+import MessageGrid from "./components/MessageGrid";
 
 function App() {
   const dispatch = useDispatch();
@@ -33,6 +34,7 @@ function App() {
           <Route exact path="/:serverId?/:channelId?">
             <ServerGrid />
             <ChannelGrid />
+            <MessageGrid />
           </Route>
         </Switch>
       )}

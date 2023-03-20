@@ -8,10 +8,10 @@ import { useState, useEffect } from "react";
 const ServerGrid = () => {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
+  const { serverId } = useParams();
 
   const serverObject = useSelector((state) => state.servers);
   const serverArr = Object.values(serverObject);
-  const { serverId } = useParams();
 
   useEffect(() => {
     dispatch(allUserServersThunk(serverId)).then(() => setIsLoaded(true));
@@ -25,8 +25,6 @@ const ServerGrid = () => {
             return <Server key={server.id} server={server} />;
           })}
       </div>
-
-      <div>This is the server grid.</div>
     </>
   );
 };

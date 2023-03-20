@@ -35,6 +35,9 @@ const messageReducer = (state = initialState, action) => {
   let newState = { ...state };
   switch (action.type) {
     case GET_MESSAGES_BY_CHANNEL:
+      // For efficiency later:
+      // If statement, checks the current length of newState
+      // if Object.values(newState).length > 500 newState = {} then run the loop.
       action.messages.forEach((message) => {
         newState[message.id] = message;
       });

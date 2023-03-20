@@ -29,6 +29,9 @@ function SignupFormModal() {
 		}
 	};
 
+	// To do: Redirect to a server after signing up (homepage)
+  // ^ until you have DMs then send them to DMs
+
 	return (
 		<>
 			<h1>Sign Up</h1>

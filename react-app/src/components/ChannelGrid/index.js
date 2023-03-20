@@ -9,10 +9,12 @@ import { useState, useEffect } from "react";
 const ChannelGrid = () => {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
+  const { serverId, channelId } = useParams();
 
   const channelObj = useSelector((state) => state.channels);
-  const channelArr = Object.values(channelObj);
-  const { serverId, channelId } = useParams();
+  const channelArr = Object.values(channelObj).filter((channel) => {
+    return channel.server_id == serverId;
+  });
 
   // if statement - if no channelId && isLoaded && 
   // channelArr.length > 0, cause a redirect to the 1st
@@ -36,8 +38,6 @@ const ChannelGrid = () => {
             return <Channel key={channel.id} channel={channel} />;
           })}
       </div>
-
-      <div>This is the channel grid.</div>
     </>
   );
 };

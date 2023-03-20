@@ -21,6 +21,8 @@ function LoginFormModal() {
     }
   };
 
+  // To do: Redirect to a server after logging in (homepage)
+
   return (
     <>
       <h1>Log In</h1>

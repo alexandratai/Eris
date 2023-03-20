@@ -51,3 +51,31 @@ def server_channels(server_id):
     """
     channels = Channel.query.join(Server).join(memberships).join(User).filter(Server.id == server_id).filter(User.id == current_user.id).all()
     return {'channels': [channel.to_dict() for channel in channels]}
+
+@server_routes.route('/new', methods=['POST'])
+@login_required
+def add_servers():
+    """
+    This function creates a new server with a default General Info channel.
+    """
+    form = ServerForm()
+    form['csrf_token'].data = request.cookies['csrf_token']
+
+    if form.validate_on_submit():
+        server = Server(
+            name = form.name.data,
+            owner_id = current_user.id,
+            image = form.image.data,
+        )
+        db.session.add(server)
+        db.session.commit()
+
+        channel = Channel(
+            name = "general-info",
+            server_id = server.id,
+        )
+        db.session.add(channel)
+        db.session.commit()
+
+        return server.to_dict()
+    return {'errors': validation_errors_to_error_messages(form.errors)}, 401
