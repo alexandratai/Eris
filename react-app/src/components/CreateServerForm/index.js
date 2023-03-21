@@ -7,8 +7,8 @@ import { useHistory } from "react-router-dom";
 
 const CreateServerForm = ({ serverId }) => {
   const dispatch = useDispatch();
-  const history = useHistory();
   const sessionUser = useSelector((state) => state.session.user);
+  const history = useHistory();
 
   const [name, setName] = useState("");
   const [image, setImage] = useState("");
@@ -23,14 +23,15 @@ const CreateServerForm = ({ serverId }) => {
 
     const payload = {
       name,
-      image
+      image,
     };
 
-    const createdServer = await dispatch(makeServerThunk(serverId, payload));
+    const createdServer = await dispatch(makeServerThunk(payload));
     if (!createdServer.id) {
       setErrors(createdServer);
     } else {
       closeModal();
+      history.push(`/${createdServer.id}`)
     }
   };
 
@@ -43,31 +44,30 @@ const CreateServerForm = ({ serverId }) => {
       </ul>
 
       <div className="create-server-modal">
-      <p>Add a Server:</p>
-      <input
-        type="text"
-        placeholder="Server name here"
-        value={name}
-        onChange={updateName}
-        required
-      />
-      
-      <br></br>
-      <input
-        type="text"
-        placeholder="Image url here"
-        value={image}
-        onChange={updateImage}
-        required
-      />
+        <p>Add a Server:</p>
+        <input
+          type="text"
+          placeholder="Server name here"
+          value={name}
+          onChange={updateName}
+          required
+        />
 
-      <div>
-        <button className="create-server-button" type="submit">
-          Add New Server
-        </button>
+        <br></br>
+        <input
+          type="text"
+          placeholder="Image url here"
+          value={image}
+          onChange={updateImage}
+          required
+        />
+
+        <div>
+          <button className="create-server-button" type="submit">
+            Add New Server
+          </button>
+        </div>
       </div>
-    </div>
-
     </form>
   ) : null;
 };

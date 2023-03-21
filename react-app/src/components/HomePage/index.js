@@ -19,10 +19,7 @@ const HomePage = () => {
     dispatch(allUserServersThunk(serverId)).then(() => setIsLoaded(true));
   }, [dispatch, serverId]);
 
-  // const handleGetUserServers = () => {
-    if (isLoaded && sessionUser && serverArr.length > 0) return <Redirect to={`/${serverArr[0].id}`} />
-    // if (sessionUser) return <Redirect to={`/${serverArr[0].id}`} />
-  // };
+  if (isLoaded && sessionUser && serverArr.length > 0) return <Redirect to={`/${serverArr[0].id}`} />
 
   return (
     <>

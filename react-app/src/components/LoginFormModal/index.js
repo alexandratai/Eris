@@ -22,6 +22,7 @@ function LoginFormModal() {
   };
 
   // To do: Redirect to a server after logging in (homepage)
+  // ^ until you have DMs then send them to DMs
 
   return (
     <>
