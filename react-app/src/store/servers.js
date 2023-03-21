@@ -1,5 +1,6 @@
 const GET_SERVERS = "servers/getServers";
 const ADD_SERVERS = "servers/addServer";
+const EDIT_SERVERS = "servers/editServer";
 
 const getServers = (servers) => {
     return {
@@ -11,6 +12,13 @@ const getServers = (servers) => {
 const addServer = (server) => {
   return {
     type: ADD_SERVERS,
+    server
+  }
+};
+
+const editServer = (server) => {
+  return {
+    type: EDIT_SERVERS,
     server
   }
 };
@@ -56,6 +64,20 @@ export const makeServerThunk = (server) => async (dispatch) => {
 	}
 };
 
+export const editServerThunk = (server) => async (dispatch) => {
+  const res = await fetch(`/api/servers/${server.id}`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(server),
+  });
+
+  if (res.ok) {
+    const serverEdited = await res.json();
+    dispatch(editServer(serverEdited));
+    return serverEdited;
+  }
+};
+
 const initialState = {};
 
 const serverReducer = (state = initialState, action) => {
@@ -67,6 +89,9 @@ const serverReducer = (state = initialState, action) => {
         });
         return newState;
       case ADD_SERVERS:
+        newState[action.server.id] = action.server;
+        return newState;
+      case EDIT_SERVERS:
         newState[action.server.id] = action.server;
         return newState;
       default:
