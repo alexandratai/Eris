@@ -1,6 +1,7 @@
 const GET_SERVERS = "servers/getServers";
 const ADD_SERVERS = "servers/addServer";
 const EDIT_SERVERS = "servers/editServer";
+const DELETE_SERVERS = "servers/deleteServer";
 
 const getServers = (servers) => {
     return {
@@ -21,6 +22,13 @@ const editServer = (server) => {
     type: EDIT_SERVERS,
     server
   }
+};
+
+const deleteServer = (id) => {
+  return {
+    type: DELETE_SERVERS,
+    id,
+  };
 };
 
 export const allServersThunk = () => async (dispatch) => {
@@ -78,6 +86,16 @@ export const editServerThunk = (server) => async (dispatch) => {
   }
 };
 
+export const deleteServerThunk = (id) => async (dispatch) => {
+  const res = await fetch(`/api/servers/${id}`, {
+    method: "DELETE",
+  });
+
+  if (res.ok) {
+    dispatch(deleteServer(id));
+  }
+};
+
 const initialState = {};
 
 const serverReducer = (state = initialState, action) => {
@@ -93,6 +111,9 @@ const serverReducer = (state = initialState, action) => {
         return newState;
       case EDIT_SERVERS:
         newState[action.server.id] = action.server;
+        return newState;
+      case DELETE_SERVERS:
+        delete newState[action.id]
         return newState;
       default:
         return newState;

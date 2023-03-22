@@ -32,10 +32,7 @@ const EditServerForm = ({ server }) => {
       id: server.id
     };
 
-    console.log("#####", payload)
-
     const editedServer = await dispatch(editServerThunk(payload));
-    console.log("@@@@@@", editedServer)
     if (!editedServer.id) {
       setErrors(editedServer);
     } else {

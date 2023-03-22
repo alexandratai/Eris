@@ -1,8 +1,8 @@
 .channel-grid {
     display: flex;
     flex-direction: column;
-    margin-top: -400px;
-    margin-left: 60px;
+    /* margin-top: -400px;
+    margin-left: 60px; */
 }
 
 .server-dropdown {

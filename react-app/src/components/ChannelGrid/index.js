@@ -3,13 +3,16 @@ import Channel from "../Channel";
 
 import { useSelector, useDispatch } from "react-redux";
 import { allChannelsByServerIdThunk } from "../../store/channels";
+import { allUserServersThunk } from "../../store/servers";
+import { deleteServerThunk } from "../../store/servers";
 import EditServerForm from "../EditServerForm";
-import { useParams, Redirect } from "react-router-dom";
+import { useParams, Redirect, useHistory } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
 import OpenModalButton from "../OpenModalButton";
 
 const ChannelGrid = () => {
   const dispatch = useDispatch();
+  const history = useHistory();
   const [isLoaded, setIsLoaded] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
   const ulRef = useRef();
@@ -21,26 +24,25 @@ const ChannelGrid = () => {
   });
 
   const serverObj = useSelector((state) => state.servers);
-  const serverArr = Object.values(serverObj);
+  const server = serverObj[serverId];
 
-  const server = serverArr.find(server => server.id === parseInt(serverId));
-
-  const sessionUser = useSelector((state) => state.session.user)
+  const sessionUser = useSelector((state) => state.session.user);
 
   const openMenu = () => {
     if (showMenu) return;
     setShowMenu(true);
   };
 
-  // if statement - if no channelId && isLoaded && 
+  // if statement - if no channelId && isLoaded &&
   // channelArr.length > 0, cause a redirect to the 1st
   // channel in channelArr
   // If a user clicks on a server, it takes then to /1 or /4
-  
+
   useEffect(() => {
     if (serverId) {
       dispatch(allChannelsByServerIdThunk(serverId))
-      .then(() => setIsLoaded(true));
+        .then(dispatch(allUserServersThunk(serverId)))
+        .then(() => setIsLoaded(true));
     }
   }, [dispatch, serverId]);
 
@@ -68,28 +70,60 @@ const ChannelGrid = () => {
       );
     }
   };
-  
-  if (isLoaded && !channelId && channelArr.length > 0) return <Redirect to={`/${serverId}/${channelArr[0].id}`} />
+
+  if (isLoaded && !channelId && channelArr.length > 0)
+    return <Redirect to={`/${serverId}/${channelArr[0].id}`} />;
 
   const ulClassName = "server-dropdown" + (showMenu ? "" : " hidden");
   const closeMenu = () => setShowMenu(false);
- 
+
+  const serverDeleter = () => {
+    const confirm = window.confirm(
+      `Are you sure you wish to delete your server "${server.name}"?`
+    );
+    if (confirm) {
+      return dispatch(deleteServerThunk(serverId)).then(() => {
+        return history.push("/@me");
+      });
+    }
+  };
+
+  const userDeleteServer = () => {
+    if (sessionUser && server && (sessionUser.id == server.owner_id)) {
+      return (
+        <button
+          className="server-page-delete-button"
+          onClick={() => {
+            serverDeleter();
+          }}
+        >
+          Delete Server
+        </button>
+      );
+    }
+  };
+
   return (
     <>
       <div className="channel-grid">
-        <button onClick={openMenu} className="server-dropdown">
-        {server && server.name} <i className="fa-solid fa-angle-down"></i>
-        </button>
-        <ul className={ulClassName} ref={ulRef} id="server-dropdown-list">
+        {isLoaded && (
           <>
-            <li>{editServer()}</li>
+            <button onClick={openMenu} className="server-dropdown">
+              {server && server.name} <i className="fa-solid fa-angle-down"></i>
+            </button>
+            <ul className={ulClassName} ref={ulRef} id="server-dropdown-list">
+              <>
+                <li>{editServer()}</li>
+                <li>{userDeleteServer()}</li>
+              </>
+            </ul>
+            <br></br>
+            {channelArr.length > 0 &&
+              channelArr.map((channel) => {
+                return <Channel key={channel.id} channel={channel} />;
+              })}
           </>
-          </ul>
-        <br></br>
-        {channelArr.length > 0 &&
-          channelArr.map((channel) => {
-            return <Channel key={channel.id} channel={channel} />;
-          })}
+        )}
       </div>
     </>
   );

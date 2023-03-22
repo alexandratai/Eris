@@ -9,6 +9,7 @@ import HomePage from "./components/HomePage";
 import ServerGrid from "./components/ServerGrid";
 import ChannelGrid from "./components/ChannelGrid";
 import MessageGrid from "./components/MessageGrid";
+import ProtectedRoute from "./components/auth/ProtectedRoute";
 
 function App() {
   const dispatch = useDispatch();
@@ -31,11 +32,13 @@ function App() {
           <Route exact path="/">
             <HomePage />
           </Route>
-          <Route exact path="/:serverId?/:channelId?">
+          <ProtectedRoute>
+          <Route exact path="/:serverId(\d+)?/:channelId(\d+)?">
             <ServerGrid />
             <ChannelGrid />
             <MessageGrid />
           </Route>
+          </ProtectedRoute>
         </Switch>
       )}
     </>

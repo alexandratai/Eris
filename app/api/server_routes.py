@@ -107,3 +107,13 @@ def edits_a_server(server_id):
         return server.to_dict()
 
     return {'errors': validation_errors_to_error_messages(form.errors)}, 400
+
+@server_routes.route('/<int:server_id>', methods=["DELETE"])
+def deletes_a_server(server_id):
+    """
+    Deletes a server by ID.
+    """
+    server = Server.query.get(server_id)
+    db.session.delete(server)
+    db.session.commit()
+    return {'message': 'Server has been deleted!'}
