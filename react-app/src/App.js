@@ -10,6 +10,7 @@ import ServerGrid from "./components/ServerGrid";
 import ChannelGrid from "./components/ChannelGrid";
 import MessageGrid from "./components/MessageGrid";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
+import UserSplashPage from "./components/UserSplashPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -28,6 +29,9 @@ function App() {
           </Route>
           <Route path="/signup">
             <SignupFormPage />
+          </Route>
+          <Route exact path="/@me">
+            <UserSplashPage />
           </Route>
           <Route exact path="/">
             <HomePage />

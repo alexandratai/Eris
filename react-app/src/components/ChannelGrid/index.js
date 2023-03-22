@@ -41,7 +41,7 @@ const ChannelGrid = () => {
   useEffect(() => {
     if (serverId) {
       dispatch(allChannelsByServerIdThunk(serverId))
-        .then(dispatch(allUserServersThunk(serverId)))
+        .then(dispatch(allUserServersThunk()))
         .then(() => setIsLoaded(true));
     }
   }, [dispatch, serverId]);
@@ -61,7 +61,7 @@ const ChannelGrid = () => {
   }, [showMenu]);
 
   const editServer = () => {
-    if (sessionUser) {
+    if (sessionUser && server && server.owner_id == sessionUser.id) {
       return (
         <OpenModalButton
           buttonText="Edit Server"
@@ -89,7 +89,7 @@ const ChannelGrid = () => {
   };
 
   const userDeleteServer = () => {
-    if (sessionUser && server && (sessionUser.id == server.owner_id)) {
+    if (sessionUser && server && sessionUser.id == server.owner_id) {
       return (
         <button
           className="server-page-delete-button"
@@ -108,16 +108,21 @@ const ChannelGrid = () => {
       <div className="channel-grid">
         {isLoaded && (
           <>
-            <button onClick={openMenu} className="server-dropdown">
-              {server && server.name} <i className="fa-solid fa-angle-down"></i>
-            </button>
-            <ul className={ulClassName} ref={ulRef} id="server-dropdown-list">
-              <>
-                <li>{editServer()}</li>
-                <li>{userDeleteServer()}</li>
-              </>
-            </ul>
-            <br></br>
+                <button onClick={openMenu} className="server-dropdown">
+                  {server && server.name}{" "}
+                  <i className="fa-solid fa-angle-down"></i>
+                </button>
+                <ul
+                  className={ulClassName}
+                  ref={ulRef}
+                  id="server-dropdown-list"
+                >
+                  <>
+                    <li>{editServer()}</li>
+                    <li>{userDeleteServer()}</li>
+                  </>
+                </ul>
+                <br></br>
             {channelArr.length > 0 &&
               channelArr.map((channel) => {
                 return <Channel key={channel.id} channel={channel} />;
