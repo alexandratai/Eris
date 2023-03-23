@@ -1,6 +1,7 @@
 const GET_CHANNELS_BY_SERVER = "channels/allChannelsByServerId";
 const ADD_CHANNELS = "channels/addChannel";
 const EDIT_CHANNELS = "channels/editChannel";
+const DELETE_CHANNEL = "channels/deleteChannel";
 
 const getChannelsByServerId = (channels) => {
   return {
@@ -20,6 +21,13 @@ const editChannel = (channel) => {
   return {
     type: EDIT_CHANNELS,
     channel,
+  };
+};
+
+const deleteChannel = (channel) => {
+  return {
+    type: DELETE_CHANNEL,
+    channel
   }
 };
 
@@ -48,7 +56,7 @@ export const makeChannelThunk = (serverId, channel) => async (dispatch) => {
 		}
 	} else {
 		return ["An error occurred. Please try again."];
-	}
+	};
 };
 
 export const editChannelThunk = (channel) => async (dispatch) => {
@@ -62,6 +70,16 @@ export const editChannelThunk = (channel) => async (dispatch) => {
     const editedChannel = await res.json();
     dispatch(editChannel(editedChannel));
     return editedChannel;
+  };
+};
+
+export const deleteChannelThunk = (channel) => async (dispatch) => {
+  const res = await fetch(`/api/servers/${channel.server_id}/channels/${channel.id}`, {
+    method: "DELETE",
+  });
+
+  if (res.ok) {
+    dispatch(deleteChannel(channel));
   }
 };
 
@@ -80,6 +98,9 @@ const channelReducer = (state = initialState, action) => {
       return newState;
     case EDIT_CHANNELS:
       newState[action.channel.id] = action.channel;
+      return newState;
+    case DELETE_CHANNEL:
+      delete newState[action.channel.id]
       return newState;
     default:
       return state;
