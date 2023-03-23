@@ -144,3 +144,21 @@ def add_channels(server_id):
 
         return channel.to_dict()
     return {'errors': validation_errors_to_error_messages(form.errors)}, 401
+
+@server_routes.route('/<int:server_id>/channels/<int:channel_id>', methods=["PUT"])
+def edits_a_channel(server_id, channel_id):
+    """
+    Edits a channel by ID.
+    """
+    form = ChannelForm()
+    form['csrf_token'].data = request.cookies['csrf_token']
+
+    if form.validate_on_submit():
+        data = form.data
+        channel = Channel.query.get(channel_id)
+
+        for key, value in data.items():
+            setattr(channel, key, value)
+        db.session.commit()
+        return channel.to_dict()
+    return {'errors': validation_errors_to_error_messages(form.errors)}, 400

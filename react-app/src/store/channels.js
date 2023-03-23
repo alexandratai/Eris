@@ -1,5 +1,6 @@
 const GET_CHANNELS_BY_SERVER = "channels/allChannelsByServerId";
 const ADD_CHANNELS = "channels/addChannel";
+const EDIT_CHANNELS = "channels/editChannel";
 
 const getChannelsByServerId = (channels) => {
   return {
@@ -13,6 +14,13 @@ const addChannel = (channel) => {
     type: ADD_CHANNELS,
     channel
   };
+};
+
+const editChannel = (channel) => {
+  return {
+    type: EDIT_CHANNELS,
+    channel,
+  }
 };
 
 export const allChannelsByServerIdThunk = (serverId) => async (dispatch) => {
@@ -43,6 +51,20 @@ export const makeChannelThunk = (serverId, channel) => async (dispatch) => {
 	}
 };
 
+export const editChannelThunk = (channel) => async (dispatch) => {
+  const res = await fetch(`/api/servers/${channel.serverId}/channels/${channel.id}`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(channel),
+  });
+
+  if (res.ok) {
+    const editedChannel = await res.json();
+    dispatch(editChannel(editedChannel));
+    return editedChannel;
+  }
+};
+
 const initialState = {};
 
 const channelReducer = (state = initialState, action) => {
@@ -54,6 +76,9 @@ const channelReducer = (state = initialState, action) => {
       });
       return newState;
     case ADD_CHANNELS:
+      newState[action.channel.id] = action.channel;
+      return newState;
+    case EDIT_CHANNELS:
       newState[action.channel.id] = action.channel;
       return newState;
     default:
