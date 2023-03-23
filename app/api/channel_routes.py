@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify, redirect, render_template, request
-from app.models import Channel, ChannelMessage, db
+from app.models import Channel, ChannelMessage, db, Server
 from ..forms.channel_form import ChannelForm
 from ..forms.channel_message_form import ChannelMessageForm
 from flask_login import current_user
@@ -25,3 +25,29 @@ def messages_by_channel(channel_id):
     """
     messages = ChannelMessage.query.filter(ChannelMessage.channel_id == channel_id).all()
     return {'messages': [message.to_dict() for message in messages]}
+
+@channel_routes.route('/<int:server_id>/channels', methods=['POST'])
+@login_required
+def add_channels(server_id):
+    """
+    This function creates a new channel.
+    """
+    form = ChannelForm()
+    form['csrf_token'].data = request.cookies['csrf_token']
+
+    server = Server.query.get(server_id)
+
+    if server.owner_id != current_user.id:
+        return {'error': 'You do not own this server'}, 403
+
+    if form.validate_on_submit(): 
+        channel = Channel(
+            name = form.name.data,
+            server_id = server_id
+        )
+
+        db.session.add(channel)
+        db.session.commit()
+
+        return channel.to_dict()
+    return {'errors': validation_errors_to_error_messages(form.errors)}, 401
