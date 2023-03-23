@@ -7,7 +7,6 @@ import { allUserServersThunk } from "../../store/servers";
 import { deleteServerThunk } from "../../store/servers";
 import EditServerForm from "../EditServerForm";
 import CreateChannelForm from "../CreateChannelForm";
-import EditChannelForm from "../EditChannelForm";
 import { useParams, Redirect, useHistory } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
 import OpenModalButton from "../OpenModalButton";
@@ -23,10 +22,6 @@ const ChannelGrid = () => {
   const channelObj = useSelector((state) => state.channels);
   const channelArr = Object.values(channelObj).filter((channel) => {
     return channel.server_id == serverId;
-  });
-
-  const channel = channelArr.filter(channel => {
-    return channel.id == channelId
   });
 
   const serverObj = useSelector((state) => state.servers);
@@ -120,17 +115,6 @@ const ChannelGrid = () => {
     }
   };
 
-  // const editChannel = () => {
-  //   if (sessionUser && server && (sessionUser.id == server.owner_id) && channelId) {
-  //     return (
-  //       <OpenModalButton
-  //         buttonText={<i class="fa-sharp fa-solid fa-gear"></i>}
-  //         modalComponent={<EditChannelForm channel={channel[0]} serverId={serverId} />}
-  //       />
-  //     );
-  //   }
-  // };
-
   return (
     <>
       <div className="channel-grid">
@@ -155,8 +139,6 @@ const ChannelGrid = () => {
               channelArr.map((channel) => {
                 return <Channel key={channel.id} channel={channel} />;
               })}
-
-            {/* {editChannel()} */}
           </>
         )}
       </div>
