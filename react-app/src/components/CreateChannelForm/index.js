@@ -3,9 +3,11 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { makeChannelThunk } from "../../store/channels";
 import { useModal } from "../../context/Modal";
+import { useHistory } from "react-router-dom";
 
 const CreateChannelForm = (serverId) => {
     const dispatch = useDispatch();
+    const history = useHistory();
     const sessionUser = useSelector((state) => state.session.user);
   
     const [name, setName] = useState("");
@@ -27,6 +29,7 @@ const CreateChannelForm = (serverId) => {
         setErrors(createdChannel);
       } else {
         closeModal()
+        history.push(`/${serverId.serverId}/${createdChannel.id}`)
       }
     };
   

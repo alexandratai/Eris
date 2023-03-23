@@ -1,14 +1,14 @@
 import "./EditChannelForm.css";
 import { useState } from "react";
-import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { editChannelThunk } from "../../store/channels";
 import { deleteChannelThunk } from "../../store/channels";
+import { useHistory } from "react-router-dom";
 import { useModal } from "../../context/Modal";
 
 const EditChannelForm = ({ channel, serverId }) => {
     const dispatch = useDispatch();
-    const { channelId } = useParams();
+    const history = useHistory();
     const sessionUser = useSelector((state) => state.session.user);
 
     const serverObj = useSelector((state) => state.servers);
@@ -38,16 +38,20 @@ const EditChannelForm = ({ channel, serverId }) => {
       }
     };
 
-    const channelDeleter = () => {
+    const channelDeleter = async (e) => {
+        e.preventDefault();
+
         const confirm = window.confirm(
           `Are you sure you wish to delete your channel?`
         );
         if (confirm) {
           dispatch(deleteChannelThunk(channel));
+          history.push(`/${serverId}`)
+          closeModal()
         }
       };
     
-      const deleteChannel = () => {
+      const deleteChannel = (e) => {
         if (
           sessionUser &&
           server &&
@@ -56,9 +60,7 @@ const EditChannelForm = ({ channel, serverId }) => {
           return (
             <button
               className="channel-delete-button"
-              onClick={() => {
-                channelDeleter();
-              }}
+              onClick={channelDeleter}
             >
               Delete Channel
             </button>
