@@ -1,5 +1,6 @@
 const GET_MESSAGES_BY_CHANNEL = "messages/allMessagesByChannelId";
 const GET_ONE_MESSAGE = "messages/getOneMessage";
+const ADD_MESSAGES = "messages/addMessage";
 
 const getMessagesByChannelId = (messages) => {
   return {
@@ -12,6 +13,13 @@ const getOneMessage = (message) => {
   return {
     type: GET_ONE_MESSAGE,
     message,
+  };
+};
+
+const addMessage = (message) => {
+  return {
+    type: ADD_MESSAGES,
+    message
   };
 };
 
@@ -29,6 +37,27 @@ export const oneMessageThunk = (id) => async (dispatch) => {
   return res;
 };
 
+export const makeMessageThunk = (serverId, channelId, message) => async (dispatch) => {
+  const res = await fetch(`/api/servers/${serverId}/channels/${channelId}/messages/new`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(message),
+  });
+
+  if (res.ok) {
+    const newMessage = await res.json();
+    dispatch(addMessage(newMessage));
+    return newMessage;
+  } else if (res.status < 500) {
+		const data = await res.json();
+		if (data.errors) {
+			return data.errors;
+		}
+	} else {
+		return ["An error occurred. Please try again."];
+	};
+};
+
 const initialState = {};
 
 const messageReducer = (state = initialState, action) => {
@@ -43,6 +72,9 @@ const messageReducer = (state = initialState, action) => {
       });
       return newState;
     case GET_ONE_MESSAGE:
+      newState[action.message.id] = action.message;
+      return newState;
+    case ADD_MESSAGES:
       newState[action.message.id] = action.message;
       return newState;
     default:

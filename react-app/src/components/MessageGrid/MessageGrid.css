@@ -1,5 +1,6 @@
 .messages-grid {
     display: flex;
+    flex-direction: column;
     margin-top: -35px;
     margin-left: 160px;
 }

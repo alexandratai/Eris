@@ -1,5 +1,6 @@
 import "./MessageGrid.css";
 import Message from "../Message";
+import CreateMessageForm from "../CreateMessageForm";
 
 import { useSelector, useDispatch } from "react-redux";
 import { allMessagesByChannelIdThunk } from "../../store/messages";
@@ -9,7 +10,7 @@ import { useState, useEffect } from "react";
 const MessageGrid = () => {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
-  const { channelId } = useParams();
+  const { serverId, channelId } = useParams();
 
   const messagesObj = useSelector((state) => state.messages);
   const messagesArr = Object.values(messagesObj).filter((message) => {
@@ -32,6 +33,7 @@ const MessageGrid = () => {
             return <Message key={message.id} message={message} />;
           })}
       </div>
+      <CreateMessageForm serverId={serverId} channelId={channelId} />
     </>
   );
 };

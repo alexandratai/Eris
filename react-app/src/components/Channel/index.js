@@ -19,8 +19,7 @@ const Channel = ({ channel }) => {
       sessionUser &&
       server &&
       sessionUser.id == server.owner_id &&
-      channelId &&
-      channel.id == channelId
+      channelId
     ) {
       return (
           <OpenModalButton

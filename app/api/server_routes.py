@@ -1,7 +1,8 @@
 from flask import Blueprint, jsonify, redirect, render_template, request
-from app.models import Server, Channel, User, memberships, db
+from app.models import Server, Channel, ChannelMessage, User, memberships, db
 from ..forms.server_form import ServerForm
 from ..forms.channel_form import ChannelForm
+from ..forms.channel_message_form import ChannelMessageForm
 from flask_login import current_user
 from flask_login import login_required
 
@@ -172,3 +173,27 @@ def deletes_a_channel(server_id, channel_id):
     db.session.delete(channel)
     db.session.commit()
     return {'message': 'Your channel has been deleted!'}
+
+@server_routes.route('/<int:server_id>/channels/<int:channel_id>/messages/new', methods=['POST'])
+@login_required
+def add_messages(server_id, channel_id):
+    """
+    This function creates a new channel message.
+    """
+    form = ChannelMessageForm()
+    form['csrf_token'].data = request.cookies['csrf_token']
+
+    if form.validate_on_submit(): 
+        channel_message = ChannelMessage(
+            server_id = server_id,
+            channel_id = channel_id,
+            user_id = current_user.id,
+            body = form.body.data,
+            image = form.image.data,
+        )
+
+        db.session.add(channel_message)
+        db.session.commit()
+
+        return channel_message.to_dict()
+    return {'errors': validation_errors_to_error_messages(form.errors)}, 401

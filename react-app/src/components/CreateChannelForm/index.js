@@ -5,7 +5,7 @@ import { makeChannelThunk } from "../../store/channels";
 import { useModal } from "../../context/Modal";
 import { useHistory } from "react-router-dom";
 
-const CreateChannelForm = (serverId) => {
+const CreateChannelForm = ({ serverId }) => {
     const dispatch = useDispatch();
     const history = useHistory();
     const sessionUser = useSelector((state) => state.session.user);
@@ -21,7 +21,7 @@ const CreateChannelForm = (serverId) => {
   
       const payload = {
         name,
-        serverId: serverId.serverId
+        serverId
       };
   
       const createdChannel = await dispatch(makeChannelThunk(serverId, payload))
@@ -29,7 +29,7 @@ const CreateChannelForm = (serverId) => {
         setErrors(createdChannel);
       } else {
         closeModal()
-        history.push(`/${serverId.serverId}/${createdChannel.id}`)
+        history.push(`/${serverId}/${createdChannel.id}`)
       }
     };
   

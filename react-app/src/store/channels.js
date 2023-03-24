@@ -39,7 +39,7 @@ export const allChannelsByServerIdThunk = (serverId) => async (dispatch) => {
 };
 
 export const makeChannelThunk = (serverId, channel) => async (dispatch) => {
-  const res = await fetch(`/api/servers/${serverId.serverId}/channels`, {
+  const res = await fetch(`/api/servers/${serverId}/channels`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(channel),
