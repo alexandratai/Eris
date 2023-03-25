@@ -197,3 +197,21 @@ def add_messages(server_id, channel_id):
 
         return channel_message.to_dict()
     return {'errors': validation_errors_to_error_messages(form.errors)}, 401
+
+@server_routes.route('/<int:server_id>/channels/<int:channel_id>/messages/<int:message_id>', methods=["PUT"])
+def edits_a_message(server_id, channel_id, message_id):
+    """
+    Edits a channel message by ID.
+    """
+    form = ChannelMessageForm()
+    form['csrf_token'].data = request.cookies['csrf_token']
+
+    if form.validate_on_submit():
+        data = form.data
+        channel_message = ChannelMessage.query.get(message_id)
+
+        for key, value in data.items():
+            setattr(channel_message, key, value)
+        db.session.commit()
+        return channel_message.to_dict()
+    return {'errors': validation_errors_to_error_messages(form.errors)}, 400

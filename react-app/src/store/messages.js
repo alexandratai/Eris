@@ -1,6 +1,7 @@
 const GET_MESSAGES_BY_CHANNEL = "messages/allMessagesByChannelId";
 const GET_ONE_MESSAGE = "messages/getOneMessage";
 const ADD_MESSAGES = "messages/addMessage";
+const EDIT_MESSAGES = "messages/editMessage";
 
 const getMessagesByChannelId = (messages) => {
   return {
@@ -21,6 +22,13 @@ const addMessage = (message) => {
     type: ADD_MESSAGES,
     message
   };
+};
+
+const editMessage = (message) => {
+  return {
+    type: EDIT_MESSAGES,
+    message
+  }
 };
 
 export const allMessagesByChannelIdThunk = (channelId) => async (dispatch) => {
@@ -58,6 +66,20 @@ export const makeMessageThunk = (serverId, channelId, message) => async (dispatc
 	};
 };
 
+export const editMessageThunk = (serverId, channelId, message) => async (dispatch) => {
+  const res = await fetch(`/api/servers/${serverId}/channels/${channelId}/messages/${message.id}`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(message),
+  });
+
+  if (res.ok) {
+    const messageEdited = await res.json();
+    dispatch(editMessage(messageEdited));
+    return messageEdited;
+  }
+};
+
 const initialState = {};
 
 const messageReducer = (state = initialState, action) => {
@@ -75,6 +97,9 @@ const messageReducer = (state = initialState, action) => {
       newState[action.message.id] = action.message;
       return newState;
     case ADD_MESSAGES:
+      newState[action.message.id] = action.message;
+      return newState;
+    case EDIT_MESSAGES:
       newState[action.message.id] = action.message;
       return newState;
     default:

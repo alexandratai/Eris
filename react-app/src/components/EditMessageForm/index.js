@@ -1,34 +1,28 @@
-import "./CreateMessageForm.css";
-
+import "./EditMessageForm.css";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { makeMessageThunk } from "../../store/messages";
-import { allUserServersThunk } from "../../store/servers";
-import { allChannelsByServerIdThunk } from "../../store/channels";
+import { allMessagesByChannelIdThunk } from "../../store/messages";
+import { editMessageThunk } from "../../store/messages";
 import { useModal } from "../../context/Modal";
 import { useHistory } from "react-router-dom";
 
-const CreateMessageForm = ({ serverId, channelId }) => {
+const EditMessageForm = ({ serverId, channelId, message, setShowForm }) => {
     const dispatch = useDispatch();
     const history = useHistory();
     const sessionUser = useSelector((state) => state.session.user);
-    const channelObj = useSelector((state) => state.channels);
-    const channel = Object.values(channelObj).find(channel => {
-        return channel.id == channelId
-      });
-  
-    const [body, setBody] = useState("");
-    const [image, setImage] = useState("");
+ 
+    const [body, setBody] = useState(message.body);
+    const [image, setImage] = useState(message.image);
     const [isLoaded, setIsLoaded] = useState(false);
     const [errors, setErrors] = useState([]);
     const { closeModal } = useModal();
   
     const updateBody = (e) => setBody(e.target.value);
-    const updateImage= (e) => setImage(e.target.value);
+    const updateImage = (e) => setImage(e.target.value);
 
     useEffect(() => {
-        dispatch(allUserServersThunk()).then(dispatch(allChannelsByServerIdThunk(serverId))).then(() => setIsLoaded(true));
-      }, [dispatch, serverId, channelId]);
+        dispatch(allMessagesByChannelIdThunk(channelId)).then(() => setIsLoaded(true));
+      }, [dispatch, channelId]);
   
     const handleSubmit = async (e) => {
       e.preventDefault();
@@ -38,11 +32,12 @@ const CreateMessageForm = ({ serverId, channelId }) => {
         image,
         serverId,
         channelId,
+        id: message.id
       };
   
-      const createdChannelMessage = await dispatch(makeMessageThunk(serverId, channelId, payload))
-      if (!createdChannelMessage.id) {
-        setErrors(createdChannelMessage);
+      const editedChannelMessage = await dispatch(editMessageThunk(serverId, channelId, payload)).then(setShowForm(false))
+      if (!editedChannelMessage.id) {
+        setErrors(editedChannelMessage);
       } else {
         closeModal()
         history.push(`/${serverId}/${channelId}`)
@@ -56,10 +51,10 @@ const CreateMessageForm = ({ serverId, channelId }) => {
             <li key={idx}>{error}</li>
           ))}
         </ul>
-        <div className="create-channel-message-form">
+        <div className="edit-channel-message-form">
           <input
             type="text"
-            placeholder={`Message #${channel && channel.name}`}
+            placeholder={body}
             value={body}
             onChange={updateBody}
             required
@@ -67,12 +62,12 @@ const CreateMessageForm = ({ serverId, channelId }) => {
   
           <input
             type="text"
-            placeholder={`Image url`}
+            placeholder={image || "Image url"}
             value={image}
             onChange={updateImage}
           />
           <div>
-            <button className="create-channel-button" type="submit">
+            <button className="edit-channel-button" type="submit">
               Send Message
             </button>
           </div>
@@ -81,4 +76,4 @@ const CreateMessageForm = ({ serverId, channelId }) => {
     ) : null;
   };
   
-  export default CreateMessageForm;
+  export default EditMessageForm;

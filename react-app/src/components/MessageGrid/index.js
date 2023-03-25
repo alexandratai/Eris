@@ -33,7 +33,9 @@ const MessageGrid = () => {
             return <Message key={message.id} message={message} />;
           })}
       </div>
+      <div className="messages-grid-create-message-form">
       <CreateMessageForm serverId={serverId} channelId={channelId} />
+      </div>
     </>
   );
 };
