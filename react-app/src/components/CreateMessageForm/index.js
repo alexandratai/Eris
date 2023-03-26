@@ -1,16 +1,18 @@
 import "./CreateMessageForm.css";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { makeMessageThunk } from "../../store/messages";
 import { allUserServersThunk } from "../../store/servers";
 import { allChannelsByServerIdThunk } from "../../store/channels";
-import { useModal } from "../../context/Modal";
 import { useHistory } from "react-router-dom";
+import { SocketContext } from "../../socket";
+// import { socket } from "../../socket";
 
 const CreateMessageForm = ({ serverId, channelId }) => {
     const dispatch = useDispatch();
     const history = useHistory();
+    const socket = useContext(SocketContext);
     const sessionUser = useSelector((state) => state.session.user);
     const channelObj = useSelector((state) => state.channels);
     const channel = Object.values(channelObj).find(channel => {
@@ -21,7 +23,6 @@ const CreateMessageForm = ({ serverId, channelId }) => {
     const [image, setImage] = useState("");
     const [isLoaded, setIsLoaded] = useState(false);
     const [errors, setErrors] = useState([]);
-    const { closeModal } = useModal();
   
     const updateBody = (e) => setBody(e.target.value);
     const updateImage= (e) => setImage(e.target.value);
@@ -44,9 +45,9 @@ const CreateMessageForm = ({ serverId, channelId }) => {
       if (!createdChannelMessage.id) {
         setErrors(createdChannelMessage);
       } else {
-        closeModal()
-        history.push(`/${serverId}/${channelId}`)
+        // Clear input
       }
+      socket.emit("chat", createdChannelMessage)
     };
   
     return sessionUser.id ? (

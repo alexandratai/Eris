@@ -1,10 +1,10 @@
 import "./EditMessageForm.css";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { allMessagesByChannelIdThunk } from "../../store/messages";
 import { editMessageThunk } from "../../store/messages";
-import { useModal } from "../../context/Modal";
 import { useHistory } from "react-router-dom";
+import { SocketContext } from "../../socket";
 
 const EditMessageForm = ({ serverId, channelId, message, setShowForm }) => {
     const dispatch = useDispatch();
@@ -15,7 +15,7 @@ const EditMessageForm = ({ serverId, channelId, message, setShowForm }) => {
     const [image, setImage] = useState(message.image);
     const [isLoaded, setIsLoaded] = useState(false);
     const [errors, setErrors] = useState([]);
-    const { closeModal } = useModal();
+    const socket = useContext(SocketContext);
   
     const updateBody = (e) => setBody(e.target.value);
     const updateImage = (e) => setImage(e.target.value);
@@ -39,8 +39,8 @@ const EditMessageForm = ({ serverId, channelId, message, setShowForm }) => {
       if (!editedChannelMessage.id) {
         setErrors(editedChannelMessage);
       } else {
-        closeModal()
-        history.push(`/${serverId}/${channelId}`)
+        editedChannelMessage.isEdited = true;
+        socket.emit("chat", editedChannelMessage);
       }
     };
   

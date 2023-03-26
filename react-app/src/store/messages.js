@@ -35,7 +35,7 @@ export const allMessagesByChannelIdThunk = (channelId) => async (dispatch) => {
   const res = await fetch(`/api/channels/${channelId}/messages`);
   const data = await res.json();
   dispatch(getMessagesByChannelId(data.messages));
-  return res;
+  return data.messages;
 };
 
 export const oneMessageThunk = (id) => async (dispatch) => {

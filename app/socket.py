@@ -10,16 +10,32 @@ else:
     origins = "*"
 
 # initialize your socket instance
-socketio = SocketIO(cors_allowed_origins=origins)
+socketio = SocketIO(cors_allowed_origins=origins, logger=True, engineio_logger=True)
+
+@socketio.on("chat")
+def handle_chat(data):
+    channel_id = data['channel_id']
+    room = f'channel:{channel_id}'
+    emit("chat", data, room=room)
+
+@socketio.on('subscribe')
+def handle_subscribe(data):
+    channel_id = data['channel_id']
+    room = f'channel:{channel_id}'
+    join_room(room)
+
+@socketio.on('unsubscribe')
+def handle_unsubscribe(data):
+    channel_id = data['channel_id']
+    room = f'channel:{channel_id}'
+    leave_room(room)
+
+# USE AN IS DELETED FLAG
 
 # handle chat messages
 # @socketio.on("chat")
 # def handle_chat(data):
 #     emit("chat", data, room=data['room'])
-
-@socketio.on("chat")
-def handle_chat(data):
-    emit("chat", data, broadcast=True)
 
 # @socketio.on("join_room")
 # def on_join(data):
