@@ -7,7 +7,6 @@ import { allUserServersThunk } from "../../store/servers";
 import { allChannelsByServerIdThunk } from "../../store/channels";
 import { useHistory } from "react-router-dom";
 import { SocketContext } from "../../socket";
-// import { socket } from "../../socket";
 
 const CreateMessageForm = ({ serverId, channelId }) => {
     const dispatch = useDispatch();
@@ -44,8 +43,6 @@ const CreateMessageForm = ({ serverId, channelId }) => {
       const createdChannelMessage = await dispatch(makeMessageThunk(serverId, channelId, payload))
       if (!createdChannelMessage.id) {
         setErrors(createdChannelMessage);
-      } else {
-        // Clear input
       }
       socket.emit("chat", createdChannelMessage)
     };

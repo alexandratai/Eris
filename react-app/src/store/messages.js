@@ -2,6 +2,7 @@ const GET_MESSAGES_BY_CHANNEL = "messages/allMessagesByChannelId";
 const GET_ONE_MESSAGE = "messages/getOneMessage";
 const ADD_MESSAGES = "messages/addMessage";
 const EDIT_MESSAGES = "messages/editMessage";
+const DELETE_MESSAGES = "messages/deleteMessage";
 
 const getMessagesByChannelId = (messages) => {
   return {
@@ -28,6 +29,13 @@ const editMessage = (message) => {
   return {
     type: EDIT_MESSAGES,
     message
+  }
+};
+
+const deleteMessage = (id) => {
+  return {
+    type: DELETE_MESSAGES,
+    id,
   }
 };
 
@@ -80,6 +88,16 @@ export const editMessageThunk = (serverId, channelId, message) => async (dispatc
   }
 };
 
+export const deleteMessageThunk = (id) => async (dispatch) => {
+  const res = await fetch(`/api/messages/${id}`, {
+    method: "DELETE",
+  });
+
+  if (res.ok) {
+    dispatch(deleteMessage(id));
+  }
+};
+
 const initialState = {};
 
 const messageReducer = (state = initialState, action) => {
@@ -101,6 +119,9 @@ const messageReducer = (state = initialState, action) => {
       return newState;
     case EDIT_MESSAGES:
       newState[action.message.id] = action.message;
+      return newState;
+    case DELETE_MESSAGES:
+      delete newState[action.id]
       return newState;
     default:
       return state;

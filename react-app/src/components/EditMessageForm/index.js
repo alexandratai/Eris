@@ -3,12 +3,10 @@ import { useState, useEffect, useContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { allMessagesByChannelIdThunk } from "../../store/messages";
 import { editMessageThunk } from "../../store/messages";
-import { useHistory } from "react-router-dom";
 import { SocketContext } from "../../socket";
 
 const EditMessageForm = ({ serverId, channelId, message, setShowForm }) => {
     const dispatch = useDispatch();
-    const history = useHistory();
     const sessionUser = useSelector((state) => state.session.user);
  
     const [body, setBody] = useState(message.body);

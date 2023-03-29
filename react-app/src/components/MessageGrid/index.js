@@ -34,14 +34,18 @@ const MessageGrid = () => {
   useEffect(() => {
     socket.emit("subscribe", { channel_id: channelId });
     socket.on("chat", (chat) => {
-
       if (chat.isEdited) {
         setMessages(messages => {
           const index = messages.findIndex(message => message.id == chat.id);
           messages[index] = chat;
           return [...messages];
         });
-        // if else statement for delete here
+      } else if (chat.isDeleted) {
+        setMessages(messages => {
+          const index = messages.findIndex(message => message.id == chat.id);
+          messages.splice(index, 1);
+          return [...messages];
+        })
       } else {
         setMessages((messages) => [...messages, chat]);
       };
