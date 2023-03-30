@@ -68,6 +68,7 @@ const EditMessageForm = ({ serverId, channelId, message, setShowForm }) => {
             <button className="edit-channel-button" type="submit">
               Send Message
             </button>
+            <button type="cancel">Cancel</button>
           </div>
         </div>
       </form>

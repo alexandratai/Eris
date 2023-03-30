@@ -30,10 +30,13 @@ const Message = ({ message }) => {
     // e.preventDefault();
 
     const deletedChannelMessage = await dispatch(deleteMessageThunk(message.id));
+
     if (!deletedChannelMessage) {
       setErrors(deletedChannelMessage);
     } else {
       deletedChannelMessage.isDeleted = true;
+      deletedChannelMessage.channel_id = parseInt(channelId);
+      deletedChannelMessage.id = message.id;
       socket.emit("chat", deletedChannelMessage);
     }
   };

@@ -3,4 +3,6 @@ import React from 'react';
 
 export const socket = io();
 
-export const SocketContext = React.createContext();
+export const SocketContext = React.createContext(
+    { pingInterval: 30000, pingTimeout: 10000 }
+);

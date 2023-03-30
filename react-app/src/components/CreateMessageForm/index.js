@@ -44,6 +44,8 @@ const CreateMessageForm = ({ serverId, channelId }) => {
       if (!createdChannelMessage.id) {
         setErrors(createdChannelMessage);
       }
+      setBody("");
+      setImage("");
       socket.emit("chat", createdChannelMessage)
     };
   

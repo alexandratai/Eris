@@ -91,10 +91,13 @@ export const editMessageThunk = (serverId, channelId, message) => async (dispatc
 export const deleteMessageThunk = (id) => async (dispatch) => {
   const res = await fetch(`/api/messages/${id}`, {
     method: "DELETE",
+    body: JSON.stringify(id),
   });
 
   if (res.ok) {
-    dispatch(deleteMessage(id));
+    const messageDeleted = await res.json();
+    // dispatch(deleteMessage(id));
+    return messageDeleted;
   }
 };
 

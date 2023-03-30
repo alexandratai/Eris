@@ -45,7 +45,7 @@ const MessageGrid = () => {
           const index = messages.findIndex(message => message.id == chat.id);
           messages.splice(index, 1);
           return [...messages];
-        })
+        });
       } else {
         setMessages((messages) => [...messages, chat]);
       };
