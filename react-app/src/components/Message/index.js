@@ -2,18 +2,31 @@ import "./Message.css";
 import EditMessageForm from "../EditMessageForm";
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { deleteMessageThunk } from "../../store/messages";
 import { SocketContext } from "../../socket";
 
 const Message = ({ message }) => {
   const { serverId, channelId } = useParams();
   const sessionUser = useSelector((state) => state.session.user);
+  const messagesObj = useSelector((state) => state.messages);
+  const messageArr = Object.values(messagesObj);
   const dispatch = useDispatch();
   const socket = useContext(SocketContext);
   const [errors, setErrors] = useState([]);
-
   const [showForm, setShowForm] = useState(false);
+  const [userProfilePhotoDisplay, setUserProfilePhotoDisplay] = useState(false);
+
+  useEffect(() => {
+    if (messageArr.length > 1) {
+      const previousMessage = messageArr[messageArr.indexOf(message) - 1];
+      if (previousMessage && previousMessage.user.id === message.user.id) {
+        setUserProfilePhotoDisplay(false);
+      } else {
+        setUserProfilePhotoDisplay(true);
+      }
+    }
+  }, [messageArr, message]);
 
   const editMessage = () => {
     return (
@@ -29,7 +42,9 @@ const Message = ({ message }) => {
   const handleDelete = async () => {
     // e.preventDefault();
 
-    const deletedChannelMessage = await dispatch(deleteMessageThunk(message.id));
+    const deletedChannelMessage = await dispatch(
+      deleteMessageThunk(message.id)
+    );
 
     if (!deletedChannelMessage) {
       setErrors(deletedChannelMessage);
@@ -51,7 +66,7 @@ const Message = ({ message }) => {
   };
 
   const userDeleteMessage = () => {
-    if (sessionUser && message && sessionUser.id == message.user_id) {
+    if (sessionUser && message && sessionUser.id == message.user.id) {
       return (
         <button
           className="message-page-delete-button"
@@ -67,23 +82,48 @@ const Message = ({ message }) => {
 
   return (
     <>
-      {showForm == true ? (
+      {showForm ? (
         editMessage()
       ) : (
         <>
           <div>
-            {message.body}
-            {sessionUser &&
-              sessionUser.id &&
-              sessionUser.id == message.user_id && (
-                <button
-                  className="edit-message-form-button"
-                  onClick={() => setShowForm(true)}
-                >
-                  <i className="fa-solid fa-pencil"></i>
-                </button>
-              )}
-            {userDeleteMessage()}
+            {userProfilePhotoDisplay ? (
+              <>
+                <p>{message.user.username}</p>
+                <p>{message.body}</p>
+                <img
+                  className="messages-grid-message-profile-photo"
+                  src={message.user.profile_photo}
+                />
+
+                {sessionUser &&
+                  sessionUser.id &&
+                  sessionUser.id == message.user.id && (
+                    <button
+                      className="edit-message-form-button"
+                      onClick={() => setShowForm(true)}
+                    >
+                      <i className="fa-solid fa-pencil"></i>
+                    </button>
+                  )}
+                {userDeleteMessage()}
+              </>
+            ) : (
+              <>
+                {message.body}
+                {sessionUser &&
+                  sessionUser.id &&
+                  sessionUser.id == message.user.id && (
+                    <button
+                      className="edit-message-form-button"
+                      onClick={() => setShowForm(true)}
+                    >
+                      <i className="fa-solid fa-pencil"></i>
+                    </button>
+                  )}
+                {userDeleteMessage()}
+              </>
+            )}
           </div>
         </>
       )}
