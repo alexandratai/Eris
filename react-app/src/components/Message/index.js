@@ -7,12 +7,14 @@ import { deleteMessageThunk } from "../../store/messages";
 import { SocketContext } from "../../socket";
 
 const Message = ({ message }) => {
+  const dispatch = useDispatch();
+  const socket = useContext(SocketContext);
   const { serverId, channelId } = useParams();
+
   const sessionUser = useSelector((state) => state.session.user);
   const messagesObj = useSelector((state) => state.messages);
   const messageArr = Object.values(messagesObj);
-  const dispatch = useDispatch();
-  const socket = useContext(SocketContext);
+
   const [errors, setErrors] = useState([]);
   const [showForm, setShowForm] = useState(false);
   const [userProfilePhotoDisplay, setUserProfilePhotoDisplay] = useState(false);
@@ -20,11 +22,18 @@ const Message = ({ message }) => {
   useEffect(() => {
     if (messageArr.length > 1) {
       const previousMessage = messageArr[messageArr.indexOf(message) - 1];
-      if (previousMessage && previousMessage.user.id === message.user.id) {
+      if (previousMessage && previousMessage.user.id == message.user.id) {
         setUserProfilePhotoDisplay(false);
       } else {
-        setUserProfilePhotoDisplay(true);
+        const userMessages = messageArr.filter((m) => m.user.id == message.user.id);
+        if (userMessages.length == 1 || userMessages[0].id == message.id) {
+          setUserProfilePhotoDisplay(true);
+        } else {
+          setUserProfilePhotoDisplay(false);
+        }
       }
+    } else {
+      setUserProfilePhotoDisplay(true);
     }
   }, [messageArr, message]);
 
@@ -82,51 +91,47 @@ const Message = ({ message }) => {
 
   return (
     <>
-      {showForm ? (
-        editMessage()
-      ) : (
-        <>
-          <div>
-            {userProfilePhotoDisplay ? (
-              <>
-                <p>{message.user.username}</p>
-                <p>{message.body}</p>
-                <img
-                  className="messages-grid-message-profile-photo"
-                  src={message.user.profile_photo}
-                />
+      <div>
+        {userProfilePhotoDisplay ? (
+          <>
+            <img
+              className="messages-grid-message-profile-photo"
+              src={message.user.profile_photo}
+            />
+            <p>{message.user.username}</p>
+            <p>{message.body}</p>
 
-                {sessionUser &&
-                  sessionUser.id &&
-                  sessionUser.id == message.user.id && (
-                    <button
-                      className="edit-message-form-button"
-                      onClick={() => setShowForm(true)}
-                    >
-                      <i className="fa-solid fa-pencil"></i>
-                    </button>
-                  )}
-                {userDeleteMessage()}
-              </>
-            ) : (
-              <>
-                {message.body}
-                {sessionUser &&
-                  sessionUser.id &&
-                  sessionUser.id == message.user.id && (
-                    <button
-                      className="edit-message-form-button"
-                      onClick={() => setShowForm(true)}
-                    >
-                      <i className="fa-solid fa-pencil"></i>
-                    </button>
-                  )}
-                {userDeleteMessage()}
-              </>
-            )}
-          </div>
-        </>
-      )}
+            {sessionUser &&
+              sessionUser.id &&
+              sessionUser.id == message.user.id && (
+                <button
+                  className="edit-message-form-button"
+                  onClick={() => setShowForm(true)}
+                >
+                  <i className="fa-solid fa-pencil"></i>
+                </button>
+              )}
+            {showForm && editMessage()}
+            {userDeleteMessage()}
+          </>
+        ) : (
+          <>
+            {message.body}
+            {sessionUser &&
+              sessionUser.id &&
+              sessionUser.id == message.user.id && (
+                <button
+                  className="edit-message-form-button"
+                  onClick={() => setShowForm(true)}
+                >
+                  <i className="fa-solid fa-pencil"></i>
+                </button>
+              )}
+            {showForm && editMessage()}
+            {userDeleteMessage()}
+          </>
+        )}
+      </div>
     </>
   );
 };
