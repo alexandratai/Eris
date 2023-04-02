@@ -17,7 +17,6 @@ const CreateServerForm = ({ serverId }) => {
   const { closeModal } = useModal();
 
   const updateName = (e) => setName(e.target.value);
-  const updateImage = (e) => setImage(e.target.value);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

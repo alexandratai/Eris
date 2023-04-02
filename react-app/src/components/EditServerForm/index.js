@@ -5,6 +5,7 @@ import { allUserServersThunk } from "../../store/servers";
 import { editServerThunk } from "../../store/servers";
 import { useModal } from "../../context/Modal";
 import { useHistory } from "react-router-dom";
+import ImageUpload from "../ImageUpload";
 
 const EditServerForm = ({ server }) => {
   const dispatch = useDispatch();
@@ -17,10 +18,9 @@ const EditServerForm = ({ server }) => {
   const { closeModal } = useModal();
 
   const updateName = (e) => setName(e.target.value);
-  const updateImage = (e) => setImage(e.target.value);
 
   useEffect(() => {
-    dispatch(allUserServersThunk())
+    dispatch(allUserServersThunk());
   }, [dispatch]);
 
   const handleSubmit = async (e) => {
@@ -29,7 +29,7 @@ const EditServerForm = ({ server }) => {
     const payload = {
       name,
       image,
-      id: server.id
+      id: server.id,
     };
 
     const editedServer = await dispatch(editServerThunk(payload));
@@ -37,44 +37,40 @@ const EditServerForm = ({ server }) => {
       setErrors(editedServer);
     } else {
       closeModal();
-      history.push(`/${editedServer.id}`)
+      history.push(`/${editedServer.id}`);
     }
   };
 
   return sessionUser.id ? (
-    <form onSubmit={handleSubmit}>
-      <ul>
-        {errors.map((error, idx) => (
-          <li key={idx}>{error}</li>
-        ))}
-      </ul>
+    <>
+      <ImageUpload setImage={setImage} />
+      <form onSubmit={handleSubmit}>
+        <ul>
+          {errors.map((error, idx) => (
+            <li key={idx}>{error}</li>
+          ))}
+        </ul>
 
-      <div className="edit-server-modal">
-        <p>Edit a Server:</p>
-        <input
-          type="text"
-          placeholder="Server name here"
-          value={name}
-          onChange={updateName}
-          required
-        />
+        <div className="edit-server-modal">
+          <p>Edit a Server:</p>
+          <input
+            type="text"
+            placeholder="Server name here"
+            value={name}
+            onChange={updateName}
+            required
+          />
 
-        <br></br>
-        <input
-          type="text"
-          placeholder="Image url here"
-          value={image}
-          onChange={updateImage}
-          required
-        />
+          <br></br>
 
-        <div>
-          <button className="edit-server-button" type="submit">
-            Edit Server
-          </button>
+          <div>
+            <button className="edit-server-button" type="submit">
+              Edit Server
+            </button>
+          </div>
         </div>
-      </div>
-    </form>
+      </form>
+    </>
   ) : null;
 };
 
