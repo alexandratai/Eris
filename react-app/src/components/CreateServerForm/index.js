@@ -57,17 +57,7 @@ const CreateServerForm = ({ serverId }) => {
           />
 
           <br></br>
-          {/* <input
-          // type="file"
-          // accept="image/*"
-          // name="image"
-          type="text"
-          placeholder="Image url here"
-          value={image}
-          onChange={updateImage}
-          required
-        /> */}
-
+      
           <div>
             <button className="create-server-button" type="submit">
               Add New Server

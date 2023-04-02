@@ -5,7 +5,7 @@ const ImageUpload = ({ setImage }) => {
   const [photo, setPhoto] = useState("");
   const [imageLoading, setImageLoading] = useState(false);
   const [imageUploaded, setImageUploaded] = useState(false);
-//   const [previewImage, setPreviewImage] = useState("");
+  //   const [previewImage, setPreviewImage] = useState("");
   const [errors, setErrors] = useState([]);
 
   const handleSubmit = async (image) => {
@@ -45,19 +45,17 @@ const ImageUpload = ({ setImage }) => {
       {imageUploaded ? (
         <>
           <div>
-            <button
-              onClick={() => document.getElementById("file").click()}
-            >
-              <img src={photo} />
+            <img src={photo} className="image-uploaded-photo-preview" />
+            <br></br>
+            <button onClick={() => document.getElementById("file").click()}>
+              {" "}
+              Change Image
             </button>
           </div>
         </>
-      ) :
-      
-      <div>
-          <button
-            onClick={() => document.getElementById("file").click()}
-          >
+      ) : (
+        <div>
+          <button onClick={() => document.getElementById("file").click()}>
             <i
               className="fa-solid fa-camera fa-3x"
               style={{ marginTop: "5px" }}
@@ -66,25 +64,25 @@ const ImageUpload = ({ setImage }) => {
               <h1>Upload</h1>
             </div>
           </button>
-      </div>
-      }
-
-        <ul>
-          {errors.map((error, idx) => (
-            <li key={idx}>{error}</li>
-          ))}
-        </ul>
-        {imageLoading && <p>Loading...</p>}
-
-        <div>
-          <input
-            type="file"
-            accept="image/*"
-            onChange={updateImage}
-            style={{ display: "none" }}
-            id="file"
-          />
         </div>
+      )}
+
+      <ul>
+        {errors.map((error, idx) => (
+          <li key={idx}>{error}</li>
+        ))}
+      </ul>
+      {imageLoading && <p>Loading...</p>}
+
+      <div>
+        <input
+          type="file"
+          accept="image/*"
+          onChange={updateImage}
+          style={{ display: "none" }}
+          id="file"
+        />
+      </div>
     </>
   );
 };
