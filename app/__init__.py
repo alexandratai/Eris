@@ -13,6 +13,7 @@ from .config import Config
 from .api.channel_messages_routes import channel_message_routes
 from .api.channel_routes import channel_routes
 from .api.server_routes import server_routes
+from .api.image_routes import image_routes
 
 app = Flask(__name__, static_folder='../react-app/build', static_url_path='/')
 
@@ -34,6 +35,7 @@ app.register_blueprint(auth_routes, url_prefix='/api/auth')
 app.register_blueprint(server_routes, url_prefix='/api/servers')
 app.register_blueprint(channel_routes, url_prefix='/api/channels')
 app.register_blueprint(channel_message_routes, url_prefix='/api/messages')
+app.register_blueprint(image_routes, url_prefix='/api/images')
 
 db.init_app(app)
 Migrate(app, db)

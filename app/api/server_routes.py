@@ -3,8 +3,7 @@ from app.models import Server, Channel, ChannelMessage, User, memberships, db
 from ..forms.server_form import ServerForm
 from ..forms.channel_form import ChannelForm
 from ..forms.channel_message_form import ChannelMessageForm
-from flask_login import current_user
-from flask_login import login_required
+from flask_login import current_user, login_required
 
 server_routes = Blueprint('servers', __name__)
 
