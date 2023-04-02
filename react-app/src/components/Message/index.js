@@ -100,6 +100,7 @@ const Message = ({ message }) => {
             />
             <p>{message.user.username}</p>
             <p>{message.body}</p>
+            <img src={message.image} />
 
             {sessionUser &&
               sessionUser.id &&

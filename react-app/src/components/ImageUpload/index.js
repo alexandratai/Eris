@@ -1,11 +1,10 @@
 import React, { useState } from "react";
 import "./ImageUpload.css";
 
-const ImageUpload = ({ setImage }) => {
+const ImageUpload = ({ setImage, formSubmitted }) => {
   const [photo, setPhoto] = useState("");
   const [imageLoading, setImageLoading] = useState(false);
   const [imageUploaded, setImageUploaded] = useState(false);
-  //   const [previewImage, setPreviewImage] = useState("");
   const [errors, setErrors] = useState([]);
 
   const handleSubmit = async (image) => {
@@ -42,7 +41,7 @@ const ImageUpload = ({ setImage }) => {
 
   return (
     <>
-      {imageUploaded ? (
+      {imageUploaded && !formSubmitted ? (
         <>
           <div>
             <img src={photo} className="image-uploaded-photo-preview" />
@@ -65,6 +64,10 @@ const ImageUpload = ({ setImage }) => {
             </div>
           </button>
         </div>
+      )}
+
+      {formSubmitted && imageUploaded && (
+        <></>
       )}
 
       <ul>

@@ -7,49 +7,58 @@ import { allUserServersThunk } from "../../store/servers";
 import { allChannelsByServerIdThunk } from "../../store/channels";
 import { useHistory } from "react-router-dom";
 import { SocketContext } from "../../socket";
+import ImageUpload from "../ImageUpload";
 
 const CreateMessageForm = ({ serverId, channelId }) => {
-    const dispatch = useDispatch();
-    const history = useHistory();
-    const socket = useContext(SocketContext);
-    const sessionUser = useSelector((state) => state.session.user);
-    const channelObj = useSelector((state) => state.channels);
-    const channel = Object.values(channelObj).find(channel => {
-        return channel.id == channelId
-      });
-  
-    const [body, setBody] = useState("");
-    const [image, setImage] = useState("");
-    const [isLoaded, setIsLoaded] = useState(false);
-    const [errors, setErrors] = useState([]);
-  
-    const updateBody = (e) => setBody(e.target.value);
-    const updateImage= (e) => setImage(e.target.value);
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const socket = useContext(SocketContext);
+  const sessionUser = useSelector((state) => state.session.user);
+  const channelObj = useSelector((state) => state.channels);
+  const channel = Object.values(channelObj).find((channel) => {
+    return channel.id == channelId;
+  });
 
-    useEffect(() => {
-        dispatch(allUserServersThunk()).then(dispatch(allChannelsByServerIdThunk(serverId))).then(() => setIsLoaded(true));
-      }, [dispatch, serverId, channelId]);
-  
-    const handleSubmit = async (e) => {
-      e.preventDefault();
-  
-      const payload = {
-        body,
-        image,
-        serverId,
-        channelId,
-      };
-  
-      const createdChannelMessage = await dispatch(makeMessageThunk(serverId, channelId, payload))
-      if (!createdChannelMessage.id) {
-        setErrors(createdChannelMessage);
-      }
-      setBody("");
-      setImage("");
-      socket.emit("chat", createdChannelMessage)
+  const [body, setBody] = useState("");
+  const [image, setImage] = useState("");
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [formSubmitted, setFormSubmitted] = useState(false);
+  const [errors, setErrors] = useState([]);
+
+  const updateBody = (e) => setBody(e.target.value);
+
+  useEffect(() => {
+    dispatch(allUserServersThunk())
+      .then(dispatch(allChannelsByServerIdThunk(serverId)))
+      .then(() => setIsLoaded(true));
+  }, [dispatch, serverId, channelId]);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const payload = {
+      body,
+      image,
+      serverId,
+      channelId,
     };
-  
-    return sessionUser.id ? (
+
+    const createdChannelMessage = await dispatch(
+      makeMessageThunk(serverId, channelId, payload)
+    );
+    if (!createdChannelMessage.id) {
+      setErrors(createdChannelMessage);
+    }
+    setBody("");
+    setImage("");
+    socket.emit("chat", createdChannelMessage);
+
+    setFormSubmitted(true);
+  };
+
+  return sessionUser.id ? (
+    <>
+      <ImageUpload setImage={setImage} formSubmitted={formSubmitted} />
       <form onSubmit={handleSubmit}>
         <ul>
           {errors.map((error, idx) => (
@@ -64,13 +73,7 @@ const CreateMessageForm = ({ serverId, channelId }) => {
             onChange={updateBody}
             required
           />
-  
-          <input
-            type="text"
-            placeholder={`Image url`}
-            value={image}
-            onChange={updateImage}
-          />
+
           <div>
             <button className="create-channel-button" type="submit">
               Send Message
@@ -78,7 +81,8 @@ const CreateMessageForm = ({ serverId, channelId }) => {
           </div>
         </div>
       </form>
-    ) : null;
-  };
-  
-  export default CreateMessageForm;
+    </>
+  ) : null;
+};
+
+export default CreateMessageForm;
