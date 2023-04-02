@@ -60,7 +60,7 @@ const ImageUpload = ({ setImage, formSubmitted }) => {
               style={{ marginTop: "5px" }}
             ></i>
             <div>
-              <h1>Upload</h1>
+              <p>Upload Image</p>
             </div>
           </button>
         </div>
