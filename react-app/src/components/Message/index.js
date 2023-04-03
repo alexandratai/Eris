@@ -102,12 +102,14 @@ const Message = ({ message }) => {
       >
         {userProfilePhotoDisplay ? (
           <>
-            <img
-              className="messages-message-profile-photo"
-              src={message.user.profile_photo}
-            />
-            <p>{message.user.username}</p>
-            <p>{message.body}</p>
+            <div className="messages-profile-photo-and-username">
+              <img
+                className="messages-message-profile-photo"
+                src={message.user.profile_photo}
+              />
+              <p className="messages-username">{message.user.username}</p>
+            </div>
+              <p>{message.body}</p>
             <img src={message.image} className="messages-message-photo" />
 
             {sessionUser &&

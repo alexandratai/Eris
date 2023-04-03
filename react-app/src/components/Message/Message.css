@@ -17,3 +17,13 @@
     height: 150px;
     object-fit: cover;
 }
+
+.messages-profile-photo-and-username {
+    display: flex;
+    justify-content: flex-start;
+    margin-top: 10px;
+}
+
+.messages-username {
+    margin-left: 5px;
+}
