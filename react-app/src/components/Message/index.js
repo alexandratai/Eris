@@ -18,6 +18,7 @@ const Message = ({ message }) => {
   const [errors, setErrors] = useState([]);
   const [showForm, setShowForm] = useState(false);
   const [userProfilePhotoDisplay, setUserProfilePhotoDisplay] = useState(false);
+  const [hovered, setHovered] = useState(false);
 
   useEffect(() => {
     if (messageArr.length > 1) {
@@ -25,7 +26,9 @@ const Message = ({ message }) => {
       if (previousMessage && previousMessage.user.id == message.user.id) {
         setUserProfilePhotoDisplay(false);
       } else {
-        const userMessages = messageArr.filter((m) => m.user.id == message.user.id);
+        const userMessages = messageArr.filter(
+          (m) => m.user.id == message.user.id
+        );
         if (userMessages.length == 1 || userMessages[0].id == message.id) {
           setUserProfilePhotoDisplay(true);
         } else {
@@ -78,7 +81,9 @@ const Message = ({ message }) => {
     if (sessionUser && message && sessionUser.id == message.user.id) {
       return (
         <button
-          className="message-page-delete-button"
+          className={`message-page-delete-button ${
+            hovered ? "visible" : "hidden"
+          }`}
           onClick={() => {
             messageDeleter();
           }}
@@ -91,7 +96,10 @@ const Message = ({ message }) => {
 
   return (
     <>
-      <div>
+      <div
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
+      >
         {userProfilePhotoDisplay ? (
           <>
             <img
@@ -106,7 +114,9 @@ const Message = ({ message }) => {
               sessionUser.id &&
               sessionUser.id == message.user.id && (
                 <button
-                  className="edit-message-form-button"
+                  className={`edit-message-form-button ${
+                    hovered ? "visible" : "hidden"
+                  }`}
                   onClick={() => setShowForm(true)}
                 >
                   <i className="fa-solid fa-pencil"></i>
@@ -122,7 +132,9 @@ const Message = ({ message }) => {
               sessionUser.id &&
               sessionUser.id == message.user.id && (
                 <button
-                  className="edit-message-form-button"
+                  className={`edit-message-form-button ${
+                    hovered ? "visible" : "hidden"
+                  }`}
                   onClick={() => setShowForm(true)}
                 >
                   <i className="fa-solid fa-pencil"></i>
