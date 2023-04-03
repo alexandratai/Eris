@@ -57,7 +57,7 @@ const CreateMessageForm = ({ serverId, channelId }) => {
   };
 
   return sessionUser.id ? (
-    <>
+    <div className="create-message-overall-div">
       <MessageImageUpload setImage={setImage} formSubmitted={formSubmitted} />
       <form onSubmit={handleSubmit}>
         <ul>
@@ -65,7 +65,7 @@ const CreateMessageForm = ({ serverId, channelId }) => {
             <li key={idx}>{error}</li>
           ))}
         </ul>
-        <div className="create-channel-message-form">
+        <div className="create-message-form">
           <input
             type="text"
             placeholder={`Message #${channel && channel.name}`}
@@ -75,13 +75,13 @@ const CreateMessageForm = ({ serverId, channelId }) => {
           />
 
           <div>
-            <button className="create-channel-button" type="submit">
+            <button className="create-message-button" type="submit">
               Send Message
             </button>
           </div>
         </div>
       </form>
-    </>
+    </div>
   ) : null;
 };
 

@@ -38,7 +38,7 @@ const MessageImageUpload = ({ setImage, formSubmitted, isEditing = false }) => {
     const file = e.target.files[0];
     if (!file) {
       return;
-    }
+    } // If you click cancel, it will not throw an error
     handleSubmit(file);
   };
 
