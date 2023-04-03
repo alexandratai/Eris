@@ -95,12 +95,12 @@ const Message = ({ message }) => {
         {userProfilePhotoDisplay ? (
           <>
             <img
-              className="messages-grid-message-profile-photo"
+              className="messages-message-profile-photo"
               src={message.user.profile_photo}
             />
             <p>{message.user.username}</p>
             <p>{message.body}</p>
-            <img src={message.image} />
+            <img src={message.image} className="messages-message-photo" />
 
             {sessionUser &&
               sessionUser.id &&

@@ -7,7 +7,7 @@ import { allUserServersThunk } from "../../store/servers";
 import { allChannelsByServerIdThunk } from "../../store/channels";
 import { useHistory } from "react-router-dom";
 import { SocketContext } from "../../socket";
-import ImageUpload from "../ImageUpload";
+import MessageImageUpload from "../MessageImageUpload";
 
 const CreateMessageForm = ({ serverId, channelId }) => {
   const dispatch = useDispatch();
@@ -58,7 +58,7 @@ const CreateMessageForm = ({ serverId, channelId }) => {
 
   return sessionUser.id ? (
     <>
-      <ImageUpload setImage={setImage} formSubmitted={formSubmitted} />
+      <MessageImageUpload setImage={setImage} formSubmitted={formSubmitted} />
       <form onSubmit={handleSubmit}>
         <ul>
           {errors.map((error, idx) => (

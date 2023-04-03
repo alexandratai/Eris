@@ -4,13 +4,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { allMessagesByChannelIdThunk } from "../../store/messages";
 import { editMessageThunk } from "../../store/messages";
 import { SocketContext } from "../../socket";
-import ImageUpload from "../ImageUpload";
+import MessageImageUpload from "../MessageImageUpload";
 
 const EditMessageForm = ({ serverId, channelId, message, setShowForm }) => {
   const dispatch = useDispatch();
   const sessionUser = useSelector((state) => state.session.user);
 
   const [body, setBody] = useState(message.body);
+  const [tempImage, setTempImage] = useState(message.image);
   const [image, setImage] = useState(message.image);
   const [isLoaded, setIsLoaded] = useState(false);
   const [formSubmitted, setFormSubmitted] = useState(false);
@@ -20,9 +21,11 @@ const EditMessageForm = ({ serverId, channelId, message, setShowForm }) => {
   const updateBody = (e) => setBody(e.target.value);
 
   useEffect(() => {
+    const abortController = new AbortController();
     dispatch(allMessagesByChannelIdThunk(channelId)).then(() =>
       setIsLoaded(true)
     );
+    return () => abortController.abort(); // cleanup function
   }, [dispatch, channelId]);
 
   const handleSubmit = async (e) => {
@@ -30,7 +33,7 @@ const EditMessageForm = ({ serverId, channelId, message, setShowForm }) => {
 
     const payload = {
       body,
-      image,
+      image: tempImage ? tempImage : null, // Use null if tempImage is not set,
       serverId,
       channelId,
       id: message.id,
@@ -45,13 +48,19 @@ const EditMessageForm = ({ serverId, channelId, message, setShowForm }) => {
       editedChannelMessage.isEdited = true;
       socket.emit("chat", editedChannelMessage);
 
+      setImage(tempImage)
       setFormSubmitted(true);
     }
   };
 
+  const handleCancel = () => {
+    setShowForm(false);
+    setImage(message.image); // restore original image
+  };
+
   return sessionUser.id ? (
     <>
-      <ImageUpload setImage={setImage} formSubmitted={formSubmitted} />
+      <MessageImageUpload setImage={setTempImage} formSubmitted={formSubmitted} isEditing={true} />
       <form onSubmit={handleSubmit}>
         <ul>
           {errors.map((error, idx) => (
@@ -69,9 +78,9 @@ const EditMessageForm = ({ serverId, channelId, message, setShowForm }) => {
 
           <div>
             <button className="edit-channel-button" type="submit">
-              Send Message
+              Save
             </button>
-            <button type="cancel">Cancel</button>
+            <button type="cancel" onClick={handleCancel}>Cancel</button>
           </div>
         </div>
       </form>

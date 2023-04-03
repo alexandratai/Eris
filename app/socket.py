@@ -30,7 +30,11 @@ def handle_unsubscribe(data):
     room = f'channel:{channel_id}'
     leave_room(room)
 
-# USE AN IS DELETED FLAG
+# USE AN IS DELETED FLAG -> frontend, emit to chat,
+# give it an object (should have the channelId to locate the proper room,
+# have the id of deleted msg, and flag that says isDeleted)
+# then add an if else statement in your if statements you have
+# in MessagesGrid
 
 # handle chat messages
 # @socketio.on("chat")
