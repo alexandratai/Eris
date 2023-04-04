@@ -47,7 +47,7 @@ const EditMessageForm = ({ serverId, channelId, message, setShowForm }) => {
     } else {
       editedChannelMessage.isEdited = true;
       socket.emit("chat", editedChannelMessage);
-
+      
       setImage(tempImage)
       setFormSubmitted(true);
     }

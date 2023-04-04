@@ -109,46 +109,65 @@ const Message = ({ message }) => {
               />
               <p className="messages-username">{message.user.username}</p>
             </div>
-              <p>{message.body}</p>
-            <img src={message.image} className="messages-message-photo" />
-
-            {sessionUser &&
-              sessionUser.id &&
-              sessionUser.id == message.user.id && (
-                <button
-                  className={`edit-message-form-button ${
-                    hovered ? "visible" : "hidden"
-                  }`}
-                  onClick={() => setShowForm(true)}
-                >
-                  <i className="fa-solid fa-pencil"></i>
-                </button>
-              )}
-            {showForm && editMessage()}
-            {userDeleteMessage()}
+            {showForm ? (
+              <EditMessageForm
+                serverId={serverId}
+                channelId={channelId}
+                message={message}
+                setShowForm={setShowForm}
+              />
+            ) : (
+              <>
+                <p>{message.body}</p>
+                <img src={message.image} className="messages-message-photo" />
+                {sessionUser &&
+                  sessionUser.id &&
+                  sessionUser.id == message.user.id && (
+                    <button
+                      className={`edit-message-form-button ${
+                        hovered ? "visible" : "hidden"
+                      }`}
+                      onClick={() => setShowForm(true)}
+                    >
+                      <i className="fa-solid fa-pencil"></i>
+                    </button>
+                  )}
+                {userDeleteMessage()}
+              </>
+            )}
           </>
         ) : (
           <>
-            {message.body}
-            {sessionUser &&
-              sessionUser.id &&
-              sessionUser.id == message.user.id && (
-                <button
-                  className={`edit-message-form-button ${
-                    hovered ? "visible" : "hidden"
-                  }`}
-                  onClick={() => setShowForm(true)}
-                >
-                  <i className="fa-solid fa-pencil"></i>
-                </button>
-              )}
-            {showForm && editMessage()}
-            {userDeleteMessage()}
+            {showForm ? (
+              <EditMessageForm
+                serverId={serverId}
+                channelId={channelId}
+                message={message}
+                setShowForm={setShowForm}
+              />
+            ) : (
+              <>
+                <p>{message.body}</p>
+                {sessionUser &&
+                  sessionUser.id &&
+                  sessionUser.id == message.user.id && (
+                    <button
+                      className={`edit-message-form-button ${
+                        hovered ? "visible" : "hidden"
+                      }`}
+                      onClick={() => setShowForm(true)}
+                    >
+                      <i className="fa-solid fa-pencil"></i>
+                    </button>
+                  )}
+                {userDeleteMessage()}
+              </>
+            )}
           </>
         )}
       </div>
     </>
   );
 };
-
+  
 export default Message;
