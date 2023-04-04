@@ -1,5 +1,9 @@
+import eventlet
+eventlet.monkey_patch()
+
 from flask_socketio import SocketIO, emit, join_room, leave_room
 import os
+
 
 # configure cors_allowed_origins
 if os.environ.get('FLASK_ENV') == 'production':
@@ -17,18 +21,21 @@ def handle_chat(data):
     channel_id = data['channel_id']
     room = f'channel:{channel_id}'
     emit("chat", data, room=room)
+    print("@@@ DATA", data)
 
 @socketio.on('subscribe')
 def handle_subscribe(data):
     channel_id = data['channel_id']
     room = f'channel:{channel_id}'
     join_room(room)
+    print("@@@@ subscribe DATA", data)
 
 @socketio.on('unsubscribe')
 def handle_unsubscribe(data):
     channel_id = data['channel_id']
     room = f'channel:{channel_id}'
     leave_room(room)
+    print("@@@@ unsubscribe", data, "room", room)
 
 # USE AN IS DELETED FLAG -> frontend, emit to chat,
 # give it an object (should have the channelId to locate the proper room,

@@ -3,9 +3,11 @@ import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
 import { signUp } from "../../store/session";
 import "./SignupForm.css";
+import ImageUpload from "../ImageUpload";
 
 function SignupFormModal() {
 	const dispatch = useDispatch();
+	const [image, setImage] = useState("");
 	const [email, setEmail] = useState("");
 	const [username, setUsername] = useState("");
 	const [password, setPassword] = useState("");
@@ -16,7 +18,7 @@ function SignupFormModal() {
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		if (password === confirmPassword) {
-			const data = await dispatch(signUp(username, email, password));
+			const data = await dispatch(signUp(username, email, password, image));
 			if (data) {
 				setErrors(data);
 			} else {
@@ -35,6 +37,7 @@ function SignupFormModal() {
 	return (
 		<>
 			<h1>Sign Up</h1>
+			<ImageUpload setImage={setImage} />
 			<form onSubmit={handleSubmit}>
 				<ul>
 					{errors.map((error, idx) => (

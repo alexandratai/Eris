@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./MessageImageUpload.css";
 
-const MessageImageUpload = ({ setImage, formSubmitted, isEditing = false }) => {
+const MessageImageUpload = ({ setImage, formSubmitted, isEditing = false, image }) => {
   const [photo, setPhoto] = useState("");
   const [imageLoading, setImageLoading] = useState(false);
   const [imageUploaded, setImageUploaded] = useState(false);
@@ -57,6 +57,7 @@ const MessageImageUpload = ({ setImage, formSubmitted, isEditing = false }) => {
         </>
       ) : (
         <div>
+          <img src={image} className="image-uploaded-photo-preview" />
           <button onClick={() => document.getElementById("file").click()}>
           {isEditing ? "Edit Image" : <i className="fa-sharp fa-solid fa-plus"></i>}
           </button>

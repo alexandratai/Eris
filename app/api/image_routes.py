@@ -15,7 +15,6 @@ def validation_errors_to_error_messages(validation_errors):
     return errorMessages
 
 @image_routes.route('/', methods=['POST'])
-@login_required
 def upload_image():
     """
     This function allows you to upload an image with AWS.

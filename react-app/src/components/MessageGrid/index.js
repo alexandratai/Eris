@@ -31,31 +31,38 @@ const MessageGrid = () => {
     }
   }, [dispatch, channelId]);
 
-  useEffect(() => {
-    socket.emit("subscribe", { channel_id: channelId });
-    socket.on("chat", (chat) => {
-      if (chat.isEdited) {
-        setMessages(messages => {
-          const index = messages.findIndex(message => message.id == chat.id);
-          messages[index] = chat;
-          return [...messages];
-        });
-      } else if (chat.isDeleted) {
-        setMessages(messages => {
-          const index = messages.findIndex(message => message.id == chat.id);
-          messages.splice(index, 1);
-          return [...messages];
-        });
-      } else {
-        setMessages((messages) => [...messages, chat]);
-      };
-    });
+useEffect(() => {
+  console.log("SOCKET CONNECTED", socket.connected)
+if (channelId) {
+  socket.emit("subscribe", { channel_id: channelId });
+  socket.on("chat", (chat) => {
+    if (chat.isEdited) {
+      setMessages((messages) => {
+        const index = messages.findIndex((message) => message.id == chat.id);
+        messages[index] = chat;
+        return [...messages];
+      });
+    } else if (chat.isDeleted) {
+      setMessages((messages) => {
+        const index = messages.findIndex((message) => message.id == chat.id);
+        messages.splice(index, 1);
+        return [...messages];
+      });
+    } else {
+      setMessages((messages) => [...messages, chat]);
+    }
+  });
+}
+}, [socket, serverId, channelId]);
 
-    return () => {
-      socket.emit("unsubscribe", { channel_id: channelId })
-      socket.disconnect();
-    };
-  }, []);
+useEffect(() => {
+return () => {
+  if (channelId) {
+    socket.emit("unsubscribe", { channel_id: channelId });
+    // socket.disconnect();
+  }
+};
+}, [socket, channelId]);
 
   return (
     <>

@@ -60,7 +60,7 @@ const EditMessageForm = ({ serverId, channelId, message, setShowForm }) => {
 
   return sessionUser.id ? (
     <>
-      <MessageImageUpload setImage={setTempImage} formSubmitted={formSubmitted} isEditing={true} />
+      <MessageImageUpload setImage={setTempImage} formSubmitted={formSubmitted} isEditing={true} image={image} />
       <form onSubmit={handleSubmit}>
         <ul>
           {errors.map((error, idx) => (
