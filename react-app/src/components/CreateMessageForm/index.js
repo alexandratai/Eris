@@ -29,9 +29,11 @@ const CreateMessageForm = ({ serverId, channelId }) => {
   const updateBody = (e) => setBody(e.target.value);
 
   useEffect(() => {
+    if (sessionUser) {
     dispatch(allUserServersThunk())
       .then(dispatch(allChannelsByServerIdThunk(serverId)))
       .then(() => setIsLoaded(true));
+    }
   }, [dispatch, serverId, channelId]);
 
   const handleSubmit = async (e) => {
@@ -57,9 +59,6 @@ const CreateMessageForm = ({ serverId, channelId }) => {
     socket.emit("chat", createdChannelMessage);
 
     setFormSubmitted(true);
-  };
-
-  if (formSubmitted) {
     setImageUploaded(false);
   };
 

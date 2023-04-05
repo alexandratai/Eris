@@ -62,7 +62,6 @@ export const makeMessageThunk = (serverId, channelId, message) => async (dispatc
 
   if (res.ok) {
     const newMessage = await res.json();
-    console.log("MADE IT @@@@@@")
     dispatch(addMessage(newMessage));
     return newMessage;
   } else if (res.status < 500) {

@@ -1,12 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./ImageUpload.css";
 
-const ImageUpload = ({
-  setImage,
-  formSubmitted,
-  imageUploaded,
-  setImageUploaded,
-}) => {
+const ImageUpload = ({ setImage, formSubmitted, imageUploaded, setImageUploaded }) => {
   const [photo, setPhoto] = useState("");
   const [img, setImg] = useState("");
   const [imageLoading, setImageLoading] = useState(false);
@@ -56,7 +51,7 @@ const ImageUpload = ({
           <div>
             <img src={photo} className="image-uploaded-photo-preview" />
             <br></br>
-            <button onClick={() => document.getElementById("file").click()}>
+            <button onClick={() => document.getElementById("newImg").click()}>
               {" "}
               Change Image
             </button>
@@ -64,7 +59,7 @@ const ImageUpload = ({
         </>
       ) : (
         <div>
-          <button onClick={() => document.getElementById("file").click()}>
+          <button onClick={() => document.getElementById("newImg").click()}>
             <i
               className="fa-solid fa-camera fa-3x"
               style={{ marginTop: "5px" }}
@@ -91,7 +86,7 @@ const ImageUpload = ({
           accept="image/*"
           onChange={(e) => setImg(e.target.files[0])}
           style={{ display: "none" }}
-          id="file"
+          id="newImg"
         />
       </div>
     </>
