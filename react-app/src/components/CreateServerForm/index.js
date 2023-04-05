@@ -13,7 +13,9 @@ const CreateServerForm = ({ serverId }) => {
 
   const [name, setName] = useState("");
   const [image, setImage] = useState("");
+  const [imageUploaded, setImageUploaded] = useState(false);
   const [errors, setErrors] = useState([]);
+  const [formSubmitted, setFormSubmitted] = useState(false);
   const { closeModal } = useModal();
 
   const updateName = (e) => setName(e.target.value);
@@ -32,12 +34,17 @@ const CreateServerForm = ({ serverId }) => {
     } else {
       closeModal();
       history.push(`/${createdServer.id}`);
+      setFormSubmitted(true);
     }
+  };
+
+  if (formSubmitted) {
+    setImageUploaded(false);
   };
 
   return sessionUser.id ? (
     <>
-      <ImageUpload setImage={setImage} />
+      <ImageUpload setImage={setImage} formSubmitted={formSubmitted} imageUploaded={imageUploaded} setImageUploaded={setImageUploaded} />
       <form onSubmit={handleSubmit}>
         <ul>
           {errors.map((error, idx) => (

@@ -24,6 +24,7 @@ const CreateMessageForm = ({ serverId, channelId }) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [errors, setErrors] = useState([]);
+  const [imageUploaded, setImageUploaded] = useState(false);
 
   const updateBody = (e) => setBody(e.target.value);
 
@@ -46,10 +47,11 @@ const CreateMessageForm = ({ serverId, channelId }) => {
     const createdChannelMessage = await dispatch(
       makeMessageThunk(serverId, channelId, payload)
     );
+    
     if (!createdChannelMessage.id) {
       setErrors(createdChannelMessage);
     }
-    console.log("##### AHHH", createdChannelMessage)
+ 
     setBody("");
     setImage("");
     socket.emit("chat", createdChannelMessage);
@@ -57,9 +59,13 @@ const CreateMessageForm = ({ serverId, channelId }) => {
     setFormSubmitted(true);
   };
 
+  if (formSubmitted) {
+    setImageUploaded(false);
+  };
+
   return sessionUser.id ? (
     <div className="create-message-overall-div">
-      <MessageImageUpload setImage={setImage} formSubmitted={formSubmitted} />
+      <MessageImageUpload setImage={setImage} formSubmitted={formSubmitted} image={image} imageUploaded={imageUploaded} setImageUploaded={setImageUploaded} />
       <form onSubmit={handleSubmit}>
         <ul>
           {errors.map((error, idx) => (

@@ -1,10 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./ImageUpload.css";
 
-const ImageUpload = ({ setImage, formSubmitted }) => {
+const ImageUpload = ({
+  setImage,
+  formSubmitted,
+  imageUploaded,
+  setImageUploaded,
+}) => {
   const [photo, setPhoto] = useState("");
+  const [img, setImg] = useState("");
   const [imageLoading, setImageLoading] = useState(false);
-  const [imageUploaded, setImageUploaded] = useState(false);
   const [errors, setErrors] = useState([]);
 
   const handleSubmit = async (image) => {
@@ -33,11 +38,16 @@ const ImageUpload = ({ setImage, formSubmitted }) => {
     }
   };
 
-  const updateImage = async (e) => {
-    e.preventDefault();
-    const file = e.target.files[0];
-    handleSubmit(file);
-  };
+  useEffect(() => {
+    if (img) {
+      const updateImage = async () => {
+        const file = img;
+        handleSubmit(file);
+      };
+
+      updateImage();
+    }
+  }, [img]);
 
   return (
     <>
@@ -66,9 +76,7 @@ const ImageUpload = ({ setImage, formSubmitted }) => {
         </div>
       )}
 
-      {formSubmitted && imageUploaded && (
-        <></>
-      )}
+      {formSubmitted && imageUploaded && <></>}
 
       <ul>
         {errors.map((error, idx) => (
@@ -81,7 +89,7 @@ const ImageUpload = ({ setImage, formSubmitted }) => {
         <input
           type="file"
           accept="image/*"
-          onChange={updateImage}
+          onChange={(e) => setImg(e.target.files[0])}
           style={{ display: "none" }}
           id="file"
         />

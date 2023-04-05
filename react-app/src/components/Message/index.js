@@ -119,7 +119,7 @@ const Message = ({ message }) => {
             ) : (
               <>
                 <p>{message.body}</p>
-                <img src={message.image} className="messages-message-photo" />
+                {message.image && <img src={message.image} className="messages-message-photo" />}
                 {sessionUser &&
                   sessionUser.id &&
                   sessionUser.id == message.user.id && (

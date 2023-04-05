@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import "./MessageImageUpload.css";
 
-const MessageImageUpload = ({ setImage, formSubmitted, isEditing = false, image }) => {
+const MessageImageUpload = ({ setImage, formSubmitted, isEditing = false, image, imageUploaded, setImageUploaded }) => {
   const [photo, setPhoto] = useState("");
   const [imageLoading, setImageLoading] = useState(false);
-  const [imageUploaded, setImageUploaded] = useState(false);
   const [errors, setErrors] = useState([]);
 
   const handleSubmit = async (image) => {
@@ -32,6 +31,7 @@ const MessageImageUpload = ({ setImage, formSubmitted, isEditing = false, image 
       window.alert(error[0]);
     }
   };
+
 
   const updateImage = async (e) => {
     e.preventDefault();
@@ -65,7 +65,8 @@ const MessageImageUpload = ({ setImage, formSubmitted, isEditing = false, image 
       )}
 
       {formSubmitted && imageUploaded && (
-        <></>
+        <>
+        </>
       )}
 
       <ul>
