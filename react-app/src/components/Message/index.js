@@ -3,12 +3,12 @@ import EditMessageForm from "../EditMessageForm";
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useState, useContext, useEffect } from "react";
-import { deleteMessageThunk } from "../../store/messages";
+// import { deleteMessageThunk } from "../../store/messages";
 import { SocketContext } from "../../socket";
 
-const Message = ({ message }) => {
+const Message = ({ id, message, handleDelete }) => {
   const dispatch = useDispatch();
-  const socket = useContext(SocketContext);
+  // const socket = useContext(SocketContext);
   const { serverId, channelId } = useParams();
 
   const sessionUser = useSelector((state) => state.session.user);
@@ -18,6 +18,7 @@ const Message = ({ message }) => {
   const [errors, setErrors] = useState([]);
   const [showForm, setShowForm] = useState(false);
   const [userProfilePhotoDisplay, setUserProfilePhotoDisplay] = useState(false);
+  const [hovered, setHovered] = useState(false);
 
   useEffect(() => {
     if (messageArr.length > 1) {
@@ -25,7 +26,9 @@ const Message = ({ message }) => {
       if (previousMessage && previousMessage.user.id == message.user.id) {
         setUserProfilePhotoDisplay(false);
       } else {
-        const userMessages = messageArr.filter((m) => m.user.id == message.user.id);
+        const userMessages = messageArr.filter(
+          (m) => m.user.id == message.user.id
+        );
         if (userMessages.length == 1 || userMessages[0].id == message.id) {
           setUserProfilePhotoDisplay(true);
         } else {
@@ -47,30 +50,13 @@ const Message = ({ message }) => {
       />
     );
   };
-
-  const handleDelete = async () => {
-    // e.preventDefault();
-
-    const deletedChannelMessage = await dispatch(
-      deleteMessageThunk(message.id)
-    );
-
-    if (!deletedChannelMessage) {
-      setErrors(deletedChannelMessage);
-    } else {
-      deletedChannelMessage.isDeleted = true;
-      deletedChannelMessage.channel_id = parseInt(channelId);
-      deletedChannelMessage.id = message.id;
-      socket.emit("chat", deletedChannelMessage);
-    }
-  };
-
-  const messageDeleter = () => {
+  
+  const messageDeleter = async () => {
     const confirm = window.confirm(
       `Are you sure you want to delete this message?`
     );
     if (confirm) {
-      handleDelete();
+      await handleDelete(message.id);
     }
   };
 
@@ -78,7 +64,9 @@ const Message = ({ message }) => {
     if (sessionUser && message && sessionUser.id == message.user.id) {
       return (
         <button
-          className="message-page-delete-button"
+          className={`message-page-delete-button ${
+            hovered ? "visible" : "hidden"
+          }`}
           onClick={() => {
             messageDeleter();
           }}
@@ -91,49 +79,78 @@ const Message = ({ message }) => {
 
   return (
     <>
-      <div>
+      <div
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
+      >
         {userProfilePhotoDisplay ? (
           <>
-            <img
-              className="messages-grid-message-profile-photo"
-              src={message.user.profile_photo}
-            />
-            <p>{message.user.username}</p>
-            <p>{message.body}</p>
-
-            {sessionUser &&
-              sessionUser.id &&
-              sessionUser.id == message.user.id && (
-                <button
-                  className="edit-message-form-button"
-                  onClick={() => setShowForm(true)}
-                >
-                  <i className="fa-solid fa-pencil"></i>
-                </button>
-              )}
-            {showForm && editMessage()}
-            {userDeleteMessage()}
+            <div className="messages-profile-photo-and-username">
+              <img
+                className="messages-message-profile-photo"
+                src={message.user.profile_photo}
+              />
+              <p className="messages-username">{message.user.username}</p>
+            </div>
+            {showForm ? (
+              <EditMessageForm
+                serverId={serverId}
+                channelId={channelId}
+                message={message}
+                setShowForm={setShowForm}
+              />
+            ) : (
+              <>
+                <p>{message.body}</p>
+                {message.image && <img src={message.image} className="messages-message-photo" />}
+                {sessionUser &&
+                  sessionUser.id &&
+                  sessionUser.id == message.user.id && (
+                    <button
+                      className={`edit-message-form-button ${
+                        hovered ? "visible" : "hidden"
+                      }`}
+                      onClick={() => setShowForm(true)}
+                    >
+                      <i className="fa-solid fa-pencil"></i>
+                    </button>
+                  )}
+                {userDeleteMessage()}
+              </>
+            )}
           </>
         ) : (
           <>
-            {message.body}
-            {sessionUser &&
-              sessionUser.id &&
-              sessionUser.id == message.user.id && (
-                <button
-                  className="edit-message-form-button"
-                  onClick={() => setShowForm(true)}
-                >
-                  <i className="fa-solid fa-pencil"></i>
-                </button>
-              )}
-            {showForm && editMessage()}
-            {userDeleteMessage()}
+            {showForm ? (
+              <EditMessageForm
+                serverId={serverId}
+                channelId={channelId}
+                message={message}
+                setShowForm={setShowForm}
+              />
+            ) : (
+              <>
+                <p>{message.body}</p>
+                {sessionUser &&
+                  sessionUser.id &&
+                  sessionUser.id == message.user.id && (
+                    <button
+                      className={`edit-message-form-button ${
+                        hovered ? "visible" : "hidden"
+                      }`}
+                      onClick={() => setShowForm(true)}
+                    >
+                      <i className="fa-solid fa-pencil"></i>
+                    </button>
+                  )}
+                {userDeleteMessage()}
+              </>
+            )}
           </>
         )}
       </div>
     </>
   );
 };
-
+  
 export default Message;

@@ -1,5 +1,11 @@
+# import eventlet
+# eventlet.monkey_patch()
+
 from flask_socketio import SocketIO, emit, join_room, leave_room
 import os
+from .models import db, ChannelMessage
+import json
+
 
 # configure cors_allowed_origins
 if os.environ.get('FLASK_ENV') == 'production':
@@ -14,9 +20,28 @@ socketio = SocketIO(cors_allowed_origins=origins, logger=True, engineio_logger=T
 
 @socketio.on("chat")
 def handle_chat(data):
-    channel_id = data['channel_id']
+    if "isEdited" in data:
+        channel_message = ChannelMessage.query.get(data["id"])
+
+        for key, value in data.items():
+            setattr(channel_message, key, value)
+        db.session.commit()
+    else:
+        channel_message = ChannelMessage(
+            server_id = data["serverId"],
+            channel_id = data["channelId"],
+            user_id = data["userId"],
+            body = data["body"],
+            image = data["image"],
+        )
+
+    db.session.add(channel_message)
+    db.session.commit()
+
+    chatData = channel_message.to_dict();
+    channel_id = data['channelId']
     room = f'channel:{channel_id}'
-    emit("chat", data, room=room)
+    emit("chat", json.dumps(chatData, indent=4, sort_keys=True, default=str), room=room)
 
 @socketio.on('subscribe')
 def handle_subscribe(data):
@@ -30,7 +55,21 @@ def handle_unsubscribe(data):
     room = f'channel:{channel_id}'
     leave_room(room)
 
-# USE AN IS DELETED FLAG
+@socketio.on("delete")
+def on_delete(data):
+    message = ChannelMessage.query.get(data["id"])
+    db.session.delete(message)
+    channel_id = data['channelId']
+    room = f'channel:{channel_id}'
+    db.session.commit()
+
+    emit("delete", data["id"], room=room)
+
+# USE AN IS DELETED FLAG -> frontend, emit to chat,
+# give it an object (should have the channelId to locate the proper room,
+# have the id of deleted msg, and flag that says isDeleted)
+# then add an if else statement in your if statements you have
+# in MessagesGrid
 
 # handle chat messages
 # @socketio.on("chat")

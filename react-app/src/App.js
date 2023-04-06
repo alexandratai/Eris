@@ -39,8 +39,8 @@ function App() {
           <ProtectedRoute>
           <Route exact path="/:serverId(\d+)?/:channelId(\d+)?">
             <ServerGrid />
-            <ChannelGrid />
-            <MessageGrid />
+            {/* <ChannelGrid />
+            <MessageGrid /> */}
           </Route>
           </ProtectedRoute>
         </Switch>

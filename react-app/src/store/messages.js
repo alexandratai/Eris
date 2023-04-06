@@ -3,6 +3,7 @@ const GET_ONE_MESSAGE = "messages/getOneMessage";
 const ADD_MESSAGES = "messages/addMessage";
 const EDIT_MESSAGES = "messages/editMessage";
 const DELETE_MESSAGES = "messages/deleteMessage";
+const RESET_MESSAGES = "messages/resetMessage";
 
 const getMessagesByChannelId = (messages) => {
   return {
@@ -18,24 +19,30 @@ const getOneMessage = (message) => {
   };
 };
 
-const addMessage = (message) => {
+export const addMessage = (message) => {
   return {
     type: ADD_MESSAGES,
     message
   };
 };
 
-const editMessage = (message) => {
+export const editMessage = (message) => {
   return {
     type: EDIT_MESSAGES,
     message
   }
 };
 
-const deleteMessage = (id) => {
+export const deleteMessage = (id) => {
   return {
     type: DELETE_MESSAGES,
     id,
+  }
+};
+
+export const resetMessage = () => {
+  return {
+    type: RESET_MESSAGES
   }
 };
 
@@ -125,6 +132,8 @@ const messageReducer = (state = initialState, action) => {
     case DELETE_MESSAGES:
       delete newState[action.id]
       return newState;
+    case RESET_MESSAGES:
+      return initialState;
     default:
       return state;
   };

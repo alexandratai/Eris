@@ -49,6 +49,8 @@ export const allUserServersThunk = () => async (dispatch) => {
         dispatch(getServers(data.servers));
         return res;
     };
+
+    return res;
 };
 
 export const makeServerThunk = (server) => async (dispatch) => {
