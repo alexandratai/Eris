@@ -9,7 +9,7 @@ import { useHistory } from "react-router-dom";
 import { SocketContext } from "../../socket";
 import MessageImageUpload from "../MessageImageUpload";
 
-const CreateMessageForm = ({ serverId, channelId }) => {
+const CreateMessageForm = ({ serverId, channelId, handleChat }) => {
   const dispatch = useDispatch();
   const history = useHistory();
   const socket = useContext(SocketContext);
@@ -44,19 +44,17 @@ const CreateMessageForm = ({ serverId, channelId }) => {
       image,
       serverId,
       channelId,
+      userId: sessionUser.id
     };
 
-    const createdChannelMessage = await dispatch(
-      makeMessageThunk(serverId, channelId, payload)
-    );
+    let createdChannelMessage = await handleChat(serverId, channelId, payload);
     
-    if (!createdChannelMessage.id) {
-      setErrors(createdChannelMessage);
-    }
+    // if (!createdChannelMessage.id) {
+    //   setErrors(createdChannelMessage);
+    // }
  
     setBody("");
     setImage("");
-    socket.emit("chat", createdChannelMessage);
 
     setFormSubmitted(true);
     setImageUploaded(false);

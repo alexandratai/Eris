@@ -37,20 +37,25 @@ const EditMessageForm = ({ serverId, channelId, message, setShowForm }) => {
       serverId,
       channelId,
       id: message.id,
+      userId: sessionUser.id
     };
 
-    const editedChannelMessage = await dispatch(
-      editMessageThunk(serverId, channelId, payload)
-    ).then(setShowForm(false));
-    if (!editedChannelMessage.id) {
-      setErrors(editedChannelMessage);
-    } else {
-      editedChannelMessage.isEdited = true;
-      socket.emit("chat", editedChannelMessage);
+    // const editedChannelMessage = await dispatch(
+    //   editMessageThunk(serverId, channelId, payload)
+    // ).then(setShowForm(false));
+    
+    // if (!editedChannelMessage.id) {
+    //   setErrors(editedChannelMessage);
+    // } else {
+      // editedChannelMessage.isEdited = true;
+      // socket.emit("chat", editedChannelMessage);
+      payload.isEdited = true;
+      socket.emit("chat", payload);
+      setShowForm(false);
       
-      setImage(tempImage)
+      setImage(tempImage);
       setFormSubmitted(true);
-    }
+    // }
   };
 
   const handleCancel = () => {

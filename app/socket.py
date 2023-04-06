@@ -3,6 +3,8 @@
 
 from flask_socketio import SocketIO, emit, join_room, leave_room
 import os
+from .models import db, ChannelMessage
+import json
 
 
 # configure cors_allowed_origins
@@ -18,24 +20,33 @@ socketio = SocketIO(cors_allowed_origins=origins, logger=True, engineio_logger=T
 
 @socketio.on("chat")
 def handle_chat(data):
-    channel_id = data['channel_id']
+    channel_message = ChannelMessage(
+            server_id = data["serverId"],
+            channel_id = data["channelId"],
+            user_id = data["userId"],
+            body = data["body"],
+            image = data["image"],
+        )
+
+    db.session.add(channel_message)
+    db.session.commit()
+
+    chatData = channel_message.to_dict();
+    channel_id = data['channelId']
     room = f'channel:{channel_id}'
-    emit("chat", data, room=room)
-    print("@@@ DATA", data)
+    emit("chat", json.dumps(chatData, indent=4, sort_keys=True, default=str), room=room)
 
 @socketio.on('subscribe')
 def handle_subscribe(data):
     channel_id = data['channel_id']
     room = f'channel:{channel_id}'
     join_room(room)
-    print("@@@@ subscribe DATA", data)
 
 @socketio.on('unsubscribe')
 def handle_unsubscribe(data):
     channel_id = data['channel_id']
     room = f'channel:{channel_id}'
     leave_room(room)
-    print("@@@@ unsubscribe", data, "room", room)
 
 # USE AN IS DELETED FLAG -> frontend, emit to chat,
 # give it an object (should have the channelId to locate the proper room,
