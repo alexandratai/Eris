@@ -6,8 +6,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { allMessagesByChannelIdThunk } from "../../store/messages";
 import { useParams } from "react-router-dom";
 import { useState, useEffect, useContext } from "react";
-import { SocketContext } from "../../socket";
-import { makeMessageThunk } from "../../store/messages";
+// import { SocketContext } from "../../socket";
 import { resetMessage } from "../../store/messages";
 import { addMessage, editMessage, deleteMessage } from "../../store/messages";
 import { io } from "socket.io-client";
@@ -48,8 +47,8 @@ const MessageGrid = () => {
             // dispatch editMessage with the chat that we got back
             // add isEdited key on the backend
           // });
-        } else if (chat.isDeleted) {
-          dispatch(deleteMessage(chat));
+        // } else if (chat.isDeleted) {
+          // dispatch(deleteMessage(chat));
           // setMessages((messages) => {
           //   const index = messages.findIndex((message) => message.id == chat.id);
           //   messages.splice(index, 1);
@@ -60,7 +59,7 @@ const MessageGrid = () => {
           // setMessages((messages) => [...messages, chat]);
         }
       });
-    }
+    };
 
     return () => {
       dispatch(resetMessage());
@@ -69,7 +68,7 @@ const MessageGrid = () => {
         socket.disconnect();
       }
     };
-
+    
   }, [dispatch, serverId, channelId]);
   
   const handleChat = async (serverId, channelId, payload) => {
@@ -83,6 +82,7 @@ const MessageGrid = () => {
 
   return (
     <>
+
       <div className="messages-grid">
         {messagesArr.length > 0 &&
           messagesArr.map((message) => {

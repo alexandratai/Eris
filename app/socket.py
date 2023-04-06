@@ -20,7 +20,14 @@ socketio = SocketIO(cors_allowed_origins=origins, logger=True, engineio_logger=T
 
 @socketio.on("chat")
 def handle_chat(data):
-    channel_message = ChannelMessage(
+    if "isEdited" in data:
+        channel_message = ChannelMessage.query.get(data["id"])
+
+        for key, value in data.items():
+            setattr(channel_message, key, value)
+        db.session.commit()
+    else:
+        channel_message = ChannelMessage(
             server_id = data["serverId"],
             channel_id = data["channelId"],
             user_id = data["userId"],
@@ -47,6 +54,13 @@ def handle_unsubscribe(data):
     channel_id = data['channel_id']
     room = f'channel:{channel_id}'
     leave_room(room)
+
+@socketio.on("delete")
+def on_delete(data):
+    message = ChannelMessage.query.get(data["id"])
+    db.session.delete(message)
+    room = str(data["channelId"])
+    emit("delete", data["id"], room=room)
 
 # USE AN IS DELETED FLAG -> frontend, emit to chat,
 # give it an object (should have the channelId to locate the proper room,

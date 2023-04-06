@@ -3,12 +3,16 @@ import EditMessageForm from "../EditMessageForm";
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useState, useContext, useEffect } from "react";
-import { deleteMessageThunk } from "../../store/messages";
+// import { deleteMessageThunk } from "../../store/messages";
+import { deleteMessage, resetMessage } from "../../store/messages";
 import { SocketContext } from "../../socket";
+import { io } from "socket.io-client";
+
+let socket;
 
 const Message = ({ message }) => {
   const dispatch = useDispatch();
-  const socket = useContext(SocketContext);
+  // const socket = useContext(SocketContext);
   const { serverId, channelId } = useParams();
 
   const sessionUser = useSelector((state) => state.session.user);
@@ -51,29 +55,43 @@ const Message = ({ message }) => {
     );
   };
 
+  useEffect(() => {
+    socket = io();
+    socket.emit("subscribe", { channel_id: channelId });
+    socket.on("delete", (id) => dispatch(deleteMessage(id)));
+
+    return () => {
+      dispatch(resetMessage());
+      if (channelId) {
+        // socket.emit("unsubscribe", { channel_id: channelId });
+        socket.disconnect();
+      }
+  };
+  }, [dispatch, message]);
+
   const handleDelete = async () => {
     // e.preventDefault();
 
-    const deletedChannelMessage = await dispatch(
-      deleteMessageThunk(message.id)
-    );
+    // const deletedChannelMessage = await dispatch(
+    //   deleteMessageThunk(message.id)
+    // );
 
-    if (!deletedChannelMessage) {
-      setErrors(deletedChannelMessage);
-    } else {
-      deletedChannelMessage.isDeleted = true;
-      deletedChannelMessage.channel_id = parseInt(channelId);
-      deletedChannelMessage.id = message.id;
-      socket.emit("chat", deletedChannelMessage);
-    }
-  };
-
-  const messageDeleter = () => {
+    // if (!deletedChannelMessage) {
+    //   setErrors(deletedChannelMessage);
+    // } else {
+      // deletedChannelMessage.isDeleted = true;
+      // deletedChannelMessage.channel_id = parseInt(channelId);
+      // deletedChannelMessage.id = message.id;
+      // socket.emit("chat", deletedChannelMessage);
+      socket.emit("delete", {channelId, id: message.id});
+  }
+  
+  const messageDeleter = async () => {
     const confirm = window.confirm(
       `Are you sure you want to delete this message?`
     );
     if (confirm) {
-      handleDelete();
+      await handleDelete();
     }
   };
 
