@@ -61,12 +61,8 @@ const MessageGrid = () => {
       });
 
       socket.on("delete", (id) => {
-        setMessages((messages) => {
-          const messageToDelete = messages.filter(
-            (message) => message.id == id
-          );
-          dispatch(deleteMessage(messageToDelete.id));
-        });
+        console.log("######## ID", id)
+          dispatch(deleteMessage(id));
       });
     }
 

@@ -59,7 +59,10 @@ def handle_unsubscribe(data):
 def on_delete(data):
     message = ChannelMessage.query.get(data["id"])
     db.session.delete(message)
-    room = str(data["channelId"])
+    channel_id = data['channelId']
+    room = f'channel:{channel_id}'
+    db.session.commit()
+
     emit("delete", data["id"], room=room)
 
 # USE AN IS DELETED FLAG -> frontend, emit to chat,

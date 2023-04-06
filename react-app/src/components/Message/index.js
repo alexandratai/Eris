@@ -56,7 +56,7 @@ const Message = ({ id, message, handleDelete }) => {
       `Are you sure you want to delete this message?`
     );
     if (confirm) {
-      await handleDelete();
+      await handleDelete(message.id);
     }
   };
 
