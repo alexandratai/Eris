@@ -1,9 +1,9 @@
 from flask import Blueprint, jsonify, redirect, render_template, request
-from app.models import Server, Channel, User, memberships, db
+from app.models import Server, Channel, ChannelMessage, User, memberships, db
 from ..forms.server_form import ServerForm
 from ..forms.channel_form import ChannelForm
-from flask_login import current_user
-from flask_login import login_required
+from ..forms.channel_message_form import ChannelMessageForm
+from flask_login import current_user, login_required
 
 server_routes = Blueprint('servers', __name__)
 
@@ -76,6 +76,7 @@ def add_servers():
             name = "general-info",
             server_id = server.id,
         )
+        
         db.session.add(channel)
         db.session.commit()
 
@@ -117,3 +118,99 @@ def deletes_a_server(server_id):
     db.session.delete(server)
     db.session.commit()
     return {'message': 'Server has been deleted!'}
+
+@server_routes.route('/<int:server_id>/channels', methods=['POST'])
+@login_required
+def add_channels(server_id):
+    """
+    This function creates a new channel.
+    """
+    form = ChannelForm()
+    form['csrf_token'].data = request.cookies['csrf_token']
+
+    server = Server.query.get(server_id)
+
+    if server.owner_id != current_user.id:
+        return {'error': 'You do not own this server'}, 403
+
+    if form.validate_on_submit(): 
+        channel = Channel(
+            name = form.name.data,
+            server_id = server_id
+        )
+
+        db.session.add(channel)
+        db.session.commit()
+
+        return channel.to_dict()
+    return {'errors': validation_errors_to_error_messages(form.errors)}, 401
+
+@server_routes.route('/<int:server_id>/channels/<int:channel_id>', methods=["PUT"])
+def edits_a_channel(server_id, channel_id):
+    """
+    Edits a channel by ID.
+    """
+    form = ChannelForm()
+    form['csrf_token'].data = request.cookies['csrf_token']
+
+    if form.validate_on_submit():
+        data = form.data
+        channel = Channel.query.get(channel_id)
+
+        for key, value in data.items():
+            setattr(channel, key, value)
+        db.session.commit()
+        return channel.to_dict()
+    return {'errors': validation_errors_to_error_messages(form.errors)}, 400
+
+@server_routes.route('/<int:server_id>/channels/<int:channel_id>', methods=["DELETE"])
+def deletes_a_channel(server_id, channel_id):
+    """
+    Deletes a channel by ID.
+    """
+    channel = Channel.query.get(channel_id)
+    db.session.delete(channel)
+    db.session.commit()
+    return {'message': 'Your channel has been deleted!'}
+
+@server_routes.route('/<int:server_id>/channels/<int:channel_id>/messages/new', methods=['POST'])
+@login_required
+def add_messages(server_id, channel_id):
+    """
+    This function creates a new channel message.
+    """
+    form = ChannelMessageForm()
+    form['csrf_token'].data = request.cookies['csrf_token']
+
+    if form.validate_on_submit(): 
+        channel_message = ChannelMessage(
+            server_id = server_id,
+            channel_id = channel_id,
+            user_id = current_user.id,
+            body = form.body.data,
+            image = form.image.data,
+        )
+
+        db.session.add(channel_message)
+        db.session.commit()
+
+        return channel_message.to_dict()
+    return {'errors': validation_errors_to_error_messages(form.errors)}, 401
+
+@server_routes.route('/<int:server_id>/channels/<int:channel_id>/messages/<int:message_id>', methods=["PUT"])
+def edits_a_message(server_id, channel_id, message_id):
+    """
+    Edits a channel message by ID.
+    """
+    form = ChannelMessageForm()
+    form['csrf_token'].data = request.cookies['csrf_token']
+
+    if form.validate_on_submit():
+        data = form.data
+        channel_message = ChannelMessage.query.get(message_id)
+
+        for key, value in data.items():
+            setattr(channel_message, key, value)
+        db.session.commit()
+        return channel_message.to_dict()
+    return {'errors': validation_errors_to_error_messages(form.errors)}, 400

@@ -1,4 +1,5 @@
 import os
+from .socket import socketio
 from flask import Flask, render_template, request, session, redirect
 from flask_cors import CORS
 from flask_migrate import Migrate
@@ -12,13 +13,13 @@ from .config import Config
 from .api.channel_messages_routes import channel_message_routes
 from .api.channel_routes import channel_routes
 from .api.server_routes import server_routes
+from .api.image_routes import image_routes
 
 app = Flask(__name__, static_folder='../react-app/build', static_url_path='/')
 
 # Setup login manager
 login = LoginManager(app)
 login.login_view = 'auth.unauthorized'
-
 
 @login.user_loader
 def load_user(id):
@@ -34,13 +35,14 @@ app.register_blueprint(auth_routes, url_prefix='/api/auth')
 app.register_blueprint(server_routes, url_prefix='/api/servers')
 app.register_blueprint(channel_routes, url_prefix='/api/channels')
 app.register_blueprint(channel_message_routes, url_prefix='/api/messages')
+app.register_blueprint(image_routes, url_prefix='/api/images')
 
 db.init_app(app)
 Migrate(app, db)
+socketio.init_app(app)
 
 # Application Security
 CORS(app)
-
 
 # Since we are deploying with Docker and Flask,
 # we won't be using a buildpack when we deploy to Heroku.
@@ -96,3 +98,6 @@ def react_root(path):
 @app.errorhandler(404)
 def not_found(e):
     return app.send_static_file('index.html')
+
+if __name__ == '__main__':
+    socketio.run(app)

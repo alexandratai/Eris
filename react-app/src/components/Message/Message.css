@@ -1,0 +1,29 @@
+.edit-message-form-button {
+    padding: 0;
+    border: none;
+    background: none;
+    width: 30px;
+}
+
+.messages-message-profile-photo {
+    width: 50px;
+    height: 50px;
+    border-radius: 100%;
+    object-fit: cover;
+}
+
+.messages-message-photo {
+    width: 200px;
+    height: 150px;
+    object-fit: cover;
+}
+
+.messages-profile-photo-and-username {
+    display: flex;
+    justify-content: flex-start;
+    margin-top: 10px;
+}
+
+.messages-username {
+    margin-left: 5px;
+}

@@ -16,7 +16,9 @@ const HomePage = () => {
   const { serverId } = useParams();
 
   useEffect(() => {
-    dispatch(allUserServersThunk(serverId)).then(() => setIsLoaded(true));
+    if (sessionUser) {
+      dispatch(allUserServersThunk(serverId)).then(() => setIsLoaded(true));
+    }
   }, [dispatch, serverId]);
 
   if (isLoaded && sessionUser && serverArr.length > 0) return <Redirect to={`/${serverArr[0].id}`} />

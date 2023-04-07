@@ -25,7 +25,7 @@ class ChannelMessage(db.Model):
             'id': self.id,
             'server_id': self.server_id,
             'channel_id': self.channel_id,
-            'user_id': self.user_id,
+            'user': self.user.to_dict(),
             'body': self.body,
             'image': self.image,
         }

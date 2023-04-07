@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify, redirect, render_template, request
-from app.models import Channel, ChannelMessage, db
+from app.models import Channel, ChannelMessage, db, Server
 from ..forms.channel_form import ChannelForm
 from ..forms.channel_message_form import ChannelMessageForm
 from flask_login import current_user

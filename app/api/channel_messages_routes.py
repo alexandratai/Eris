@@ -4,7 +4,7 @@ from ..forms.channel_message_form import ChannelMessageForm
 from flask_login import current_user
 from flask_login import login_required
 
-channel_message_routes = Blueprint('channel_messages', __name__)
+channel_message_routes = Blueprint('messages', __name__)
 
 def validation_errors_to_error_messages(validation_errors):
     """
@@ -32,3 +32,13 @@ def channel_message(channel_message_id):
     """
     channel_message = ChannelMessage.query.get(channel_message_id)
     return channel_message.to_dict()
+
+@channel_message_routes.route('/<int:message_id>', methods=["DELETE"])
+def deletes_a_message(message_id):
+    """
+    Deletes a message by ID.
+    """
+    message = ChannelMessage.query.get(message_id)
+    db.session.delete(message)
+    db.session.commit()
+    return {'message': 'Message has been deleted!'}
