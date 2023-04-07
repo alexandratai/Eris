@@ -39,24 +39,9 @@ const MessageGrid = () => {
       socket.on("chat", (chat) => {
         chat = JSON.parse(chat);
         if (chat.isEdited) {
-          // setMessages((messages) => {
           dispatch(editMessage(chat));
-          // const index = messages.findIndex((message) => message.id == chat.id);
-          // messages[index] = chat;
-          // return [...messages];
-          // dispatch editMessage with the chat that we got back
-          // add isEdited key on the backend
-          // });
-          // } else if (chat.isDeleted) {
-          // dispatch(deleteMessage(chat));
-          // setMessages((messages) => {
-          //   const index = messages.findIndex((message) => message.id == chat.id);
-          //   messages.splice(index, 1);
-          //   return [...messages];
-          // });
         } else {
           dispatch(addMessage(chat));
-          // setMessages((messages) => [...messages, chat]);
         }
       });
 
@@ -68,7 +53,6 @@ const MessageGrid = () => {
     return () => {
       dispatch(resetMessage());
       if (channelId) {
-        // socket.emit("unsubscribe", { channel_id: channelId });
         socket.disconnect();
       }
     };
