@@ -30,6 +30,7 @@ eventlet = "==0.30.2"
 python-engineio = "==4.3.1"
 python-socketio = "==5.5.2"
 boto3 = "*"
+gevent = "*"
 
 [dev-packages]
 
