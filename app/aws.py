@@ -35,7 +35,6 @@ def upload_file_to_s3(file, acl="public-read"):
                 "ACL": acl,
                 "ContentType": file.content_type
             },
-            Config=CONFIG,
         )
     except Exception as e:
         # in case the our s3 upload fails
