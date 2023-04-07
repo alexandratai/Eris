@@ -10,7 +10,8 @@ import json
 # configure cors_allowed_origins
 if os.environ.get('FLASK_ENV') == 'production':
     origins = [
-        "https://eris-ryp5.onrender.com"
+        "https://eris-ryp5.onrender.com",
+        "http://eris-ryp5.onrender.com"
     ]
 else:
     origins = "*"
