@@ -1,7 +1,9 @@
 .server-grid-channel-grid-message-grid {
     display: flex;
     align-items: center;
-    max-height: 100px;
+    height: 100%;
+    width: 100%;
+    overflow-y: auto;
 }
 
 .server-grid {
