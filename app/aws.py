@@ -1,6 +1,3 @@
-import eventlet
-eventlet.monkey_patch()
-
 import boto3
 from boto3.s3.transfer import TransferConfig
 import botocore
@@ -10,7 +7,6 @@ import uuid
 BUCKET_NAME = os.environ.get("S3_BUCKET")
 S3_LOCATION = f"https://{BUCKET_NAME}.s3.amazonaws.com/"
 ALLOWED_EXTENSIONS = {"pdf", "png", "jpg", "jpeg", "gif", "svg"}
-CONFIG = TransferConfig(use_threads=False)
 
 s3 = boto3.client(
    "s3",
