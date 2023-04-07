@@ -1,9 +1,11 @@
 .server-grid-channel-grid-message-grid {
     display: flex;
     align-items: center;
-    height: 100vh;
+    height: 80vh;
     width: 100%;
     overflow-y: auto;
+    background-color: rgb(104, 136, 146);
+    border-radius: 15px;
 }
 
 .server-grid {
@@ -15,14 +17,11 @@
 .server-grid-channel-grid {
     display: flex;
     flex-direction: column;
-    width: 10%;
-    background-color: pink;
     height: 100%;
     overflow-y: auto;
+    margin-left: 20px;
 }
 
 .server-grid-message-grid {
     height: 100%;
-    /* width: 10%; */
-    background-color: purple;
 }

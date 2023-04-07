@@ -1,1 +1,8 @@
 /* TODO Add site wide styles */
+.app-overall-div {
+    background-color: rgb(132, 170, 182);
+}
+
+body {
+    margin: 0;
+}

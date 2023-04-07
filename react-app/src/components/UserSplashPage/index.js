@@ -10,20 +10,24 @@ const UserSplashPage = () => {
     const sessionUser = useSelector((state) => state.session.user)
     const serverObj = useSelector((state) => state.servers);
     const serverArr = Object.values(serverObj);
-    const userServers = serverArr.filter(server => {
-        return server.owner_id == sessionUser.id
-    })
+    let userServers;
+
+    if (sessionUser !== null) {
+      userServers = serverArr.filter(server => {
+          return server.owner_id == sessionUser.id
+      })
+    };
 
     useEffect(() => {
         dispatch(allUserServersThunk()).then(() => setIsLoaded(true))
       }, [dispatch]);
 
-    if (isLoaded && sessionUser && userServers.length > 0) return <Redirect to={`/${userServers[0].id}`} />
+    if (isLoaded && sessionUser !== null && userServers.length > 0) return <Redirect to={`/${userServers[0].id}`} />
 
     return (
       <>
         <div>
-        This is the User Splash Page.
+        Welcome! You can begin by creating a server.
         </div>
       </>
     );

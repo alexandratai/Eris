@@ -5,3 +5,7 @@
 .hidden {
   display: none;
 }
+
+.navigation-bar {
+  margin: 0
+}

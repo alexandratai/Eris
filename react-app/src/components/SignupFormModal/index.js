@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
 import { signUp } from "../../store/session";
-import "./SignupForm.css";
+import { useHistory } from "react-router-dom";
 import ImageUpload from "../ImageUpload";
+import "./SignupForm.css";
 
 function SignupFormModal() {
 	const dispatch = useDispatch();
@@ -13,7 +14,10 @@ function SignupFormModal() {
 	const [password, setPassword] = useState("");
 	const [confirmPassword, setConfirmPassword] = useState("");
 	const [errors, setErrors] = useState([]);
+	const [formSubmitted, setFormSubmitted] = useState(false);
+	const [imageUploaded, setImageUploaded] = useState(false);
 	const { closeModal } = useModal();
+	const history = useHistory();
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
@@ -23,6 +27,7 @@ function SignupFormModal() {
 				setErrors(data);
 			} else {
 				closeModal();
+				history.push(`/@me`);
 			}
 		} else {
 			setErrors([
@@ -31,13 +36,17 @@ function SignupFormModal() {
 		}
 	};
 
+	if (formSubmitted) {
+		setImageUploaded(false);
+	  };
+
 	// To do: Redirect to a server after signing up (homepage)
   // ^ until you have DMs then send them to DMs
 
 	return (
 		<>
 			<h1>Sign Up</h1>
-			<ImageUpload setImage={setImage} />
+			<ImageUpload setImage={setImage} formSubmitted={formSubmitted} imageUploaded={imageUploaded} setImageUploaded={setImageUploaded} />
 			<form onSubmit={handleSubmit}>
 				<ul>
 					{errors.map((error, idx) => (

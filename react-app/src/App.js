@@ -11,6 +11,7 @@ import ChannelGrid from "./components/ChannelGrid";
 import MessageGrid from "./components/MessageGrid";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
 import UserSplashPage from "./components/UserSplashPage";
+import "./index.css";
 
 function App() {
   const dispatch = useDispatch();
@@ -20,7 +21,7 @@ function App() {
   }, [dispatch]);
 
   return (
-    <>
+    <div className="app-overall-div">
       <Navigation isLoaded={isLoaded} />
       {isLoaded && (
         <Switch>
@@ -39,13 +40,11 @@ function App() {
           <ProtectedRoute>
           <Route exact path="/:serverId(\d+)?/:channelId(\d+)?">
             <ServerGrid />
-            {/* <ChannelGrid />
-            <MessageGrid /> */}
           </Route>
           </ProtectedRoute>
         </Switch>
       )}
-    </>
+    </div>
   );
 }
 

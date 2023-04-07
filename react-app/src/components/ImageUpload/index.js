@@ -15,7 +15,6 @@ const ImageUpload = ({ setImage, formSubmitted, imageUploaded, setImageUploaded 
     formData.append("image", image);
     const res = await fetch("/api/images/", {
       method: "POST",
-      headers: { "Content-Type": "multipart/form-data" },
       body: formData,
     });
 

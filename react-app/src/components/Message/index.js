@@ -83,7 +83,7 @@ const Message = ({ id, message, handleDelete }) => {
         onMouseLeave={() => setHovered(false)}
       >
         {userProfilePhotoDisplay ? (
-          <>
+          <div className="messages-overall-grid">
             <div className="messages-profile-photo-and-username">
               <img
                 className="messages-message-profile-photo"
@@ -117,7 +117,7 @@ const Message = ({ id, message, handleDelete }) => {
                 {userDeleteMessage()}
               </>
             )}
-          </>
+          </div>
         ) : (
           <>
             {showForm ? (

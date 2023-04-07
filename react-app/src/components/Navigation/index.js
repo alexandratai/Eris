@@ -22,7 +22,7 @@ function Navigation({ isLoaded }) {
   };
 
   return (
-    <ul>
+    <ul className="navigation-bar">
       <li>
         <NavLink exact to="/">
           Home
