@@ -1,10 +1,3 @@
-.channel-grid {
-    display: flex;
-    flex-direction: column;
-    margin-left: 60px;
-    margin-top: -100px;
-}
-
 .server-dropdown {
     padding: 0;
     border: none;
@@ -13,5 +6,4 @@
 
 #server-dropdown-list {
     list-style-type: none;
-    margin-top: -1px;
 }

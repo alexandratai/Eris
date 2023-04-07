@@ -3,7 +3,7 @@ import "./ImageUpload.css";
 
 const ImageUpload = ({ setImage, formSubmitted, imageUploaded, setImageUploaded }) => {
   const [photo, setPhoto] = useState("");
-  const [img, setImg] = useState("");
+  // const [img, setImg] = useState("");
   const [imageLoading, setImageLoading] = useState(false);
   const [errors, setErrors] = useState([]);
 
@@ -33,16 +33,20 @@ const ImageUpload = ({ setImage, formSubmitted, imageUploaded, setImageUploaded 
     }
   };
 
-  useEffect(() => {
-    if (img) {
-      const updateImage = async () => {
-        const file = img;
+  // useEffect(() => {
+  //   if (img) {
+      const updateImage = async (e) => {
+        e.preventDefault();
+        const file = e.target.files[0];
+        if (!file) {
+          return;
+        } // If you click cancel, it will not throw an error
         handleSubmit(file);
       };
 
-      updateImage();
-    }
-  }, [img]);
+      // updateImage();
+  //   }
+  // }, [img]);
 
   return (
     <>
@@ -84,7 +88,7 @@ const ImageUpload = ({ setImage, formSubmitted, imageUploaded, setImageUploaded 
         <input
           type="file"
           accept="image/*"
-          onChange={(e) => setImg(e.target.files[0])}
+          onChange={updateImage}
           style={{ display: "none" }}
           id="newImg"
         />

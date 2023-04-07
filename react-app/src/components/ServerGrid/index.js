@@ -27,10 +27,10 @@ const ServerGrid = () => {
             return <Server key={server.id} server={server} />;
           })}
       </div>
-      <div className="channel-grid">
+      <div className="server-grid-channel-grid">
         <ChannelGrid />
       </div>
-      <div className="message-grid">
+      <div className="server-grid-message-grid">
         <MessageGrid />
       </div>
     </div>

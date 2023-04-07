@@ -5,6 +5,11 @@
     width: 30px;
 }
 
+.messages-overall-grid {
+    height: 100%;
+    overflow: auto;
+}
+
 .messages-message-profile-photo {
     width: 50px;
     height: 50px;

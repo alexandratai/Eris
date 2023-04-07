@@ -3,7 +3,6 @@ import EditMessageForm from "../EditMessageForm";
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useState, useContext, useEffect } from "react";
-// import { deleteMessageThunk } from "../../store/messages";
 import { SocketContext } from "../../socket";
 
 const Message = ({ id, message, handleDelete }) => {
@@ -84,7 +83,7 @@ const Message = ({ id, message, handleDelete }) => {
         onMouseLeave={() => setHovered(false)}
       >
         {userProfilePhotoDisplay ? (
-          <>
+          <div className="messages-overall-grid">
             <div className="messages-profile-photo-and-username">
               <img
                 className="messages-message-profile-photo"
@@ -118,7 +117,7 @@ const Message = ({ id, message, handleDelete }) => {
                 {userDeleteMessage()}
               </>
             )}
-          </>
+          </div>
         ) : (
           <>
             {showForm ? (
@@ -131,6 +130,7 @@ const Message = ({ id, message, handleDelete }) => {
             ) : (
               <>
                 <p>{message.body}</p>
+                {message.image && <img src={message.image} className="messages-message-photo" />}
                 {sessionUser &&
                   sessionUser.id &&
                   sessionUser.id == message.user.id && (
@@ -152,5 +152,6 @@ const Message = ({ id, message, handleDelete }) => {
     </>
   );
 };
+  
   
 export default Message;
