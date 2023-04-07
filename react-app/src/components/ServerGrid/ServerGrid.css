@@ -9,12 +9,11 @@
 .server-grid {
     margin-left: 30px;
     margin-right: -6rem;
-    margin-top: 300px;
+    overflow-y: auto;
 }
 
 .channel-grid {
     margin-right: -4rem;
-    margin-bottom: -17rem;
 }
 
 .message-grid {
