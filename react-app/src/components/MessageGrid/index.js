@@ -61,7 +61,6 @@ const MessageGrid = () => {
       });
 
       socket.on("delete", (id) => {
-        console.log("######## ID", id)
           dispatch(deleteMessage(id));
       });
     }
