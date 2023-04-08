@@ -40,18 +40,27 @@ function App() {
           <ProtectedRoute>
             <Route exact path="/:serverId(\d+)?/:channelId(\d+)?">
               <ServerGrid />
+              {/* <div className="app-photo-element-cloud-one"></div>
+              <div className="app-photo-element-stars-one"></div>
+              <div className="app-photo-element-cloud-two"></div>
+              <div className="app-photo-element-stars-two"></div>
+              <div className="app-photo-element-stars-three"></div>
+              <div className="app-logo"></div> */}
+{/* 
+              <iframe
+                style={{ borderRadius: "12px" }}
+                src="https://open.spotify.com/embed/playlist/2DXbYkihVPRCWwpM9m0nT2?utm_source=generator&theme=0"
+                width="70%"
+                height="152"
+                frameBorder="0"
+                allowFullScreen=""
+                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                loading="lazy"
+              ></iframe> */}
             </Route>
           </ProtectedRoute>
         </Switch>
       )}
-      <div className="app-photo-element-cloud-one"></div>
-      <div className="app-photo-element-stars-one"></div>
-      <div className="app-photo-element-cloud-two"></div>
-      <div className="app-photo-element-stars-two"></div>
-      <div className="app-photo-element-stars-three"></div>
-      <div className="app-logo"></div>
-
-      <iframe style={{borderRadius: '12px'}} src="https://open.spotify.com/embed/playlist/2DXbYkihVPRCWwpM9m0nT2?utm_source=generator&theme=0" width="70%" height="152" frameBorder="0" allowFullScreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
       <footer className="app-footer">
         <div>
           By Alexandra Tai{" "}

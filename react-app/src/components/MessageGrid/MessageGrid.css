@@ -5,6 +5,13 @@
 }
 
 .messages-grid-create-message-form {
-    margin-top: -5px;
-    margin-left: 20px;
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    border-radius: 15px;
+    bottom: 0;
+    background-color: #76597d;
+    width: 35%;
+    margin-left: 33%;
+    padding: 10px 10px 20px 10px;
 }

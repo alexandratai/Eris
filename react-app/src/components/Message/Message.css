@@ -13,6 +13,7 @@
 .messages-message-profile-photo {
     width: 50px;
     height: 50px;
+    margin-top: 1%;
     border-radius: 100%;
     object-fit: cover;
 }
@@ -21,6 +22,7 @@
     width: 200px;
     height: 150px;
     object-fit: cover;
+    margin-left: 60px;
 }
 
 .messages-profile-photo-and-username {
@@ -29,6 +31,23 @@
     margin-top: 10px;
 }
 
+.messages-with-user-and-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 .messages-username {
+    margin-left: 10px;
+    font-weight: bold;
+}
+
+.messages-with-user-message-body {
+    display: flex;
     margin-left: 5px;
+    margin-top: -4px;
+}
+
+.messages-user-not-shown-message {
+    margin-left: 60px;
 }

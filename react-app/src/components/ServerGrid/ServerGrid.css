@@ -1,12 +1,17 @@
 .server-grid-channel-grid-message-grid {
     display: flex;
     position: fixed;
-    top: 100px; /* Adjust the value to set the desired distance from the top of the page */
-    left: 50%; /* Adjust the value to set the desired horizontal position */
+    top: 100px;
+    /* left: 50%; */
     transform: translateX(-50%); 
-    align-items: center;
+    /* align-items: center; */
     height: 70%;
     width: 80%;
+    /* position: relative; */
+    /* max-height: 10%;
+    width: 150%;
+    left: 50%; */
+    overflow-x: hidden;
     overflow-y: scroll;
     background-color: #8b6e92;
     border-radius: 15px;
@@ -14,21 +19,31 @@
 }
 
 .server-grid {
-    margin-left: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transform: translateX(50%);
     height: 100%;
     width: 5%;
+    margin-left: 1%;
 }
 
 .server-grid-channel-grid {
     display: flex;
     flex-direction: column;
+    align-items: center;
     height: 100%;
+    width: 20%;
+    background-color: rgb(133, 101, 141);
     overflow-y: auto;
+    margin-right: -10px;
     margin-left: 60px;
 }
 
 .server-grid-message-grid {
     height: 100%;
-    margin-left: 60px;
-    margin-top: 15px;
+    width: 80%;
+    margin-left: 10px;
+    background-color: #7a5e81;
+    overflow-y: auto;
 }

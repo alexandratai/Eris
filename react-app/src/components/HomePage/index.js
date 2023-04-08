@@ -14,17 +14,25 @@ const HomePage = () => {
   const serverObj = useSelector((state) => state.servers);
   const serverArr = Object.values(serverObj);
   const { serverId } = useParams();
+  let userServers;
+  
+  if (sessionUser !== null) {
+    userServers = serverArr.filter(server => {
+        return server.owner_id == sessionUser.id
+    })
+  };
 
   useEffect(() => {
     if (sessionUser) {
       dispatch(allUserServersThunk(serverId)).then(() => setIsLoaded(true));
     }
-  }, [dispatch, serverId]);
+  }, [dispatch, serverId, sessionUser]);
 
-  if (isLoaded && sessionUser && serverArr.length > 0) return <Redirect to={`/${serverArr[0].id}`} />
+  if (isLoaded && sessionUser !== null && userServers.length > 0) return <Redirect to={`/${userServers[0].id}`} />
 
   return (
     <>
+    <p>This is the homepage</p>
     </>
   );
 };

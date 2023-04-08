@@ -45,19 +45,20 @@ const CreateMessageForm = ({ serverId, channelId, handleChat }) => {
       serverId,
       channelId,
       userId: sessionUser.id
-    };
 
+    };
+    
     let createdChannelMessage = await handleChat(serverId, channelId, payload);
     
     // if (!createdChannelMessage.id) {
-    //   setErrors(createdChannelMessage);
-    // }
- 
-    setBody("");
-    setImage("");
-
-    setFormSubmitted(true);
-    setImageUploaded(false);
+      //   setErrors(createdChannelMessage);
+      // }
+      
+      setBody("");
+      setImage("");
+      
+      setFormSubmitted(true);
+      setImageUploaded(false);
   };
 
   return sessionUser.id ? (
@@ -78,11 +79,9 @@ const CreateMessageForm = ({ serverId, channelId, handleChat }) => {
             required
           />
 
-          <div>
             <button className="create-message-button" type="submit">
               Send Message
             </button>
-          </div>
         </div>
       </form>
     </div>

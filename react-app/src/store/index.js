@@ -4,23 +4,24 @@ import session from './session';
 import serverReducer from './servers';
 import channelReducer from './channels';
 import messageReducer from './messages';
+const REMOVE_USER = "session/REMOVE_USER";
 
-const rootReducer = combineReducers({
+const appReducer = combineReducers({
   session,
   servers: serverReducer,
   channels: channelReducer,
   messages: messageReducer,
 });
 
-// const rootReducer = (state, action) => {
-//   if (action.type === 'USER_LOGOUT') {
-//     return appReducer(undefined, action)
-//     // ^ Note: Reducers are supposed to return the initial state 
-//     // when they are called with undefined as the first argument, no matter the action
-//   };
+const rootReducer = (state, action) => {
+  if (action.type === REMOVE_USER) {
+    return appReducer(undefined, action)
+    // ^ Note: Reducers are supposed to return the initial state 
+    // when they are called with undefined as the first argument, no matter the action
+  };
 
-//   return appReducer(state, action);
-// };
+  return appReducer(state, action);
+};
 
 let enhancer;
 

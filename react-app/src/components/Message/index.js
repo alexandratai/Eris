@@ -3,7 +3,7 @@ import EditMessageForm from "../EditMessageForm";
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useState, useContext, useEffect } from "react";
-import { SocketContext } from "../../socket";
+// import { SocketContext } from "../../socket";
 
 const Message = ({ id, message, handleDelete }) => {
   const dispatch = useDispatch();
@@ -89,7 +89,10 @@ const Message = ({ id, message, handleDelete }) => {
                 className="messages-message-profile-photo"
                 src={message.user.profile_photo}
               />
+              <div className="messages-with-user-and-body">
               <p className="messages-username">{message.user.username}</p>
+              <p className="messages-with-user-message-body">{message.body}</p>
+              </div>
             </div>
             {showForm ? (
               <EditMessageForm
@@ -100,7 +103,6 @@ const Message = ({ id, message, handleDelete }) => {
               />
             ) : (
               <>
-                <p>{message.body}</p>
                 {message.image && <img src={message.image} className="messages-message-photo" />}
                 {sessionUser &&
                   sessionUser.id &&
@@ -129,8 +131,8 @@ const Message = ({ id, message, handleDelete }) => {
               />
             ) : (
               <>
-                <p>{message.body}</p>
                 {message.image && <img src={message.image} className="messages-message-photo" />}
+                <p className="messages-user-not-shown-message">{message.body}</p>
                 {sessionUser &&
                   sessionUser.id &&
                   sessionUser.id == message.user.id && (
