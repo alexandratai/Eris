@@ -1,9 +1,106 @@
 /* TODO Add site wide styles */
-.app-overall-div {
-    background-color: rgb(132, 170, 182);
-}
-
 body {
     margin: 0;
     height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #A98DAF;
+    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+    font-size: 10pt;
+}
+
+a {
+    color: #410c4d;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #641874;
+    text-decoration: none;
+}
+
+.app-photo-element-cloud-one::before {
+    content: url("./images/2.png");
+    display: block;
+    position: fixed;
+    bottom: 42px;
+    left: 40px;
+    animation: animateUpDown 2s infinite alternate;
+}
+
+@keyframes animateUpDown {
+    from { transform: translateY(0); }
+    to { transform: translateY(-18px); }
+}
+
+.app-photo-element-stars-one::before {
+    content: url("./images/3-3.png");
+    display: block;
+    position: fixed;
+    left: 10px;
+    top: 450px;
+    animation: animateUpDown 3s infinite alternate;
+}
+
+.app-photo-element-cloud-two::before {
+    content: url("./images/1.png");
+    display: block;
+    position: fixed;
+    bottom: 460px;
+    right: -5px;
+    z-index: 0;
+    animation: animateUpDown 3s infinite alternate;
+}
+
+.app-photo-element-stars-two::before {
+    content: url("./images/4-4.png");
+    display: block;
+    position: fixed;
+    right: 270px;
+    top: 70px;
+    animation: animateUpDown 2s infinite alternate;
+}
+
+.app-photo-element-stars-three::before {
+    content: url("./images/3-3.png");
+    display: block;
+    position: fixed;
+    right: 40px;
+    top: 150px;
+    animation: animateUpDown 2s infinite alternate;
+}
+
+.app-logo::before {
+    content: url("./images/eris.png");
+    display: block;
+    position: fixed;
+    height: 30%;
+    bottom: -95px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.app-footer {
+    display: block;
+    position: fixed;
+    height: 30%;
+    bottom: -165px;
+    left: 50%;
+    transform: translateX(-51%);
+    color: white;
+    text-align: center;
+}
+
+#app-footer-logo {
+    color: white;
+}
+
+iframe {
+    width: 20%;
+    height: 100px;
+    position: fixed;
+    top: 10%;
+    left: 40%;
+    border: none;
 }

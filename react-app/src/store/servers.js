@@ -1,3 +1,5 @@
+import REMOVE_USER from "./session";
+
 const GET_SERVERS = "servers/getServers";
 const ADD_SERVERS = "servers/addServer";
 const EDIT_SERVERS = "servers/editServer";
@@ -117,6 +119,8 @@ const serverReducer = (state = initialState, action) => {
       case DELETE_SERVERS:
         delete newState[action.id]
         return newState;
+      case REMOVE_USER:
+        return initialState;
       default:
         return newState;
     }

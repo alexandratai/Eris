@@ -20,20 +20,20 @@ const ServerGrid = () => {
   }, [dispatch, serverId]);
 
   return (
-    <div className="server-grid-channel-grid-message-grid">
-      <div className="server-grid">
-        {serverArr.length > 0 &&
-          serverArr.map((server) => {
-            return <Server key={server.id} server={server} />;
-          })}
+      <div className="server-grid-channel-grid-message-grid">
+        <div className="server-grid">
+          {serverArr.length > 0 &&
+            serverArr.map((server) => {
+              return <Server key={server.id} server={server} />;
+            })}
+        </div>
+        <div className="server-grid-channel-grid">
+          <ChannelGrid />
+        </div>
+        <div className="server-grid-message-grid">
+          <MessageGrid />
+        </div>
       </div>
-      <div className="server-grid-channel-grid">
-        <ChannelGrid />
-      </div>
-      <div className="server-grid-message-grid">
-        <MessageGrid />
-      </div>
-    </div>
   );
 };
 

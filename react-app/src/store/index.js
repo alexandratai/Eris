@@ -12,6 +12,16 @@ const rootReducer = combineReducers({
   messages: messageReducer,
 });
 
+// const rootReducer = (state, action) => {
+//   if (action.type === 'USER_LOGOUT') {
+//     return appReducer(undefined, action)
+//     // ^ Note: Reducers are supposed to return the initial state 
+//     // when they are called with undefined as the first argument, no matter the action
+//   };
+
+//   return appReducer(state, action);
+// };
+
 let enhancer;
 
 if (process.env.NODE_ENV === 'production') {
