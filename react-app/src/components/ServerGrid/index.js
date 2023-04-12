@@ -7,7 +7,6 @@ import { useState, useEffect } from "react";
 import React from "react";
 import ChannelGrid from "../ChannelGrid";
 import MessageGrid from "../MessageGrid";
-import CreateMessageForm from "../CreateMessageForm";
 import { io } from "socket.io-client";
 
 let socket;

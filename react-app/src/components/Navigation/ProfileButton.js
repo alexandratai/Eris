@@ -24,6 +24,7 @@ function ProfileButton({ user }) {
     setShowMenu(true);
   };
 
+  const closeMenu = () => setShowMenu(false);
   useEffect(() => {
     if (!showMenu) return;
 
@@ -44,7 +45,6 @@ function ProfileButton({ user }) {
   };
 
   const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
-  const closeMenu = () => setShowMenu(false);
 
   const demoSubmit = (e) => {
     e.preventDefault();
@@ -70,6 +70,7 @@ function ProfileButton({ user }) {
        <i className="fas fa-user-circle" />
       </button>
 
+{showMenu && (
       <ul className={sessionUser == null ? ulClassName : "profile-button-profile-dropdown-logged-in"} ref={ulRef}>
         {user ? (
           <>
@@ -100,8 +101,9 @@ function ProfileButton({ user }) {
           </>
         )}
       </ul>
-    </>
+      )}
+      </>
   );
-}
+        }
 
 export default ProfileButton;
