@@ -38,7 +38,7 @@ const MessageGrid = () => {
     if (messageGridRef.current) {
       scrollToBottom();
     }
-  }, [messageGridRef, messages]);
+  }, [messageGridRef, messagesArr]);
 
   useEffect(() => {
     socket = io();

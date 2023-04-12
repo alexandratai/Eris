@@ -49,7 +49,7 @@ const Message = ({ id, message, handleDelete }) => {
       />
     );
   };
-  
+
   const messageDeleter = async () => {
     const confirm = window.confirm(
       `Are you sure you want to delete this message?`
@@ -70,7 +70,7 @@ const Message = ({ id, message, handleDelete }) => {
             messageDeleter();
           }}
         >
-          Delete Message <i className="fa-sharp fa-solid fa-trash-can"></i>
+          <i className="fa-sharp fa-solid fa-trash-can"></i>
         </button>
       );
     }
@@ -90,8 +90,10 @@ const Message = ({ id, message, handleDelete }) => {
                 src={message.user.profile_photo}
               />
               <div className="messages-with-user-and-body">
-              <p className="messages-username">{message.user.username}</p>
-              <p className="messages-with-user-message-body">{message.body}</p>
+                <p className="messages-username">{message.user.username}</p>
+                <p className="messages-with-user-message-body">
+                  {message.body}
+                </p>
               </div>
             </div>
             {showForm ? (
@@ -103,20 +105,29 @@ const Message = ({ id, message, handleDelete }) => {
               />
             ) : (
               <>
-                {message.image && <img src={message.image} className="messages-message-photo" />}
-                {sessionUser &&
-                  sessionUser.id &&
-                  sessionUser.id == message.user.id && (
-                    <button
-                      className={`edit-message-form-button ${
-                        hovered ? "visible" : "hidden"
-                      }`}
-                      onClick={() => setShowForm(true)}
-                    >
-                      <i className="fa-solid fa-pencil"></i>
-                    </button>
+                <div className="messages-edit-delete-buttons">
+                  {message.image && (
+                    <img
+                      src={message.image}
+                      className="messages-message-photo"
+                    />
                   )}
-                {userDeleteMessage()}
+                  <div className="messages-edit-delete-buttons-div-with-user">
+                    {sessionUser &&
+                      sessionUser.id &&
+                      sessionUser.id == message.user.id && (
+                        <button
+                          className={`edit-message-form-button ${
+                            hovered ? "visible" : "hidden"
+                          }`}
+                          onClick={() => setShowForm(true)}
+                        >
+                          <i className="fa-solid fa-pencil"></i>
+                        </button>
+                      )}
+                      {userDeleteMessage()}
+                  </div>
+                </div>
               </>
             )}
           </div>
@@ -131,21 +142,29 @@ const Message = ({ id, message, handleDelete }) => {
               />
             ) : (
               <>
-                {message.image && <img src={message.image} className="messages-message-photo" />}
-                <p className="messages-user-not-shown-message">{message.body}</p>
-                {sessionUser &&
-                  sessionUser.id &&
-                  sessionUser.id == message.user.id && (
-                    <button
-                      className={`edit-message-form-button ${
-                        hovered ? "visible" : "hidden"
-                      }`}
-                      onClick={() => setShowForm(true)}
-                    >
-                      <i className="fa-solid fa-pencil"></i>
-                    </button>
-                  )}
-                {userDeleteMessage()}
+                {message.image && (
+                  <img src={message.image} className="messages-message-photo" />
+                )}
+                <div className="messages-user-not-shown-message-div">
+                  <p className="messages-user-not-shown-message">
+                    {message.body}
+                  </p>
+                  <div className="messages-edit-delete-buttons-div">
+                    {sessionUser &&
+                      sessionUser.id &&
+                      sessionUser.id == message.user.id && (
+                        <button
+                          className={`edit-message-form-button ${
+                            hovered ? "visible" : "hidden"
+                          }`}
+                          onClick={() => setShowForm(true)}
+                        >
+                          <i className="fa-solid fa-pencil"></i>
+                        </button>
+                      )}
+                    {userDeleteMessage()}
+                  </div>
+                </div>
               </>
             )}
           </>
@@ -154,6 +173,5 @@ const Message = ({ id, message, handleDelete }) => {
     </>
   );
 };
-  
-  
+
 export default Message;

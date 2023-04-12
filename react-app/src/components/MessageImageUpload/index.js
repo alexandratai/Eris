@@ -32,7 +32,6 @@ const MessageImageUpload = ({ setImage, formSubmitted, isEditing = false, image,
     }
   };
 
-
   const updateImage = async (e) => {
     e.preventDefault();
     const file = e.target.files[0];
@@ -42,24 +41,38 @@ const MessageImageUpload = ({ setImage, formSubmitted, isEditing = false, image,
     handleSubmit(file);
   };
 
+  const handleCancel = () => {
+    // This is to clear the uploaded image and reset state
+    setImage("");
+    setImageUploaded(false);
+    setPhoto("");
+    setErrors([]);
+  };
+
   return (
     <>
       {imageUploaded && !formSubmitted ? (
         <>
-          <div>
-            <img src={photo} className="image-uploaded-photo-preview" />
+          <div className="message-image-upload-photo-and-edit-image-button-div">
+            <div className="message-image-upload-photo-div">
+            <img src={photo} className="message-image-upload-photo"/>
+            </div>
             <br></br>
+            <div className="message-image-upload-edit-image-button">
             <button onClick={() => document.getElementById("file").click()}>
               {" "}
               Edit Image
             </button>
+            <button className="message-image-upload-cancel-button" onClick={handleCancel}>Remove</button>
+            </div>
           </div>
         </>
       ) : (
         <div>
-          <img src={image} className="image-uploaded-photo-preview" />
-          <button onClick={() => document.getElementById("file").click()}>
-          {isEditing ? "Edit Image" : <i className="fa-sharp fa-solid fa-plus"></i>}
+          {imageUploaded && <img src={image} className="image-uploaded-photo-preview" />}
+          <br></br>
+          <button onClick={() => document.getElementById("file").click()} id="message-image-upload-plus-sign">
+          <i className="fa-sharp fa-solid fa-plus"></i>
           </button>
         </div>
       )}
@@ -69,12 +82,12 @@ const MessageImageUpload = ({ setImage, formSubmitted, isEditing = false, image,
         </>
       )}
 
-      <ul>
+      <ul className="message-image-upload-errors-ul">
         {errors.map((error, idx) => (
           <li key={idx}>{error}</li>
         ))}
       </ul>
-      {imageLoading && <p>Loading...</p>}
+      {imageLoading && <p className="message-image-upload-loading">Loading...</p>}
 
       <div>
         <input

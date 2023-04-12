@@ -32,7 +32,9 @@ const HomePage = () => {
 
   return (
     <>
-    <p>This is the homepage</p>
+    <div className="homepage-photo-element-city"></div>
+    <br></br>
+    <p className="homepage-body-text">A place that makes it easy to talk every day and hang out more often.</p>
     </>
   );
 };

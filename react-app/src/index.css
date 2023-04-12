@@ -1,14 +1,18 @@
 /* TODO Add site wide styles */
+/* font-family: 'Nunito Sans', sans-serif; */
+
 body {
     margin: 0;
-    height: 100vh;
+    height: 690px;
+    margin-left: -20px;
     display: flex;
     align-items: center;
     justify-content: center;
     background-color: #A98DAF;
     font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
-    /* font-family: 'Nunito Sans', sans-serif; */
     font-size: 10pt;
+    overflow-y: hidden;
+    overflow-x: hidden;
 }
 
 a {
@@ -21,12 +25,24 @@ a:hover {
     text-decoration: none;
 }
 
+button {
+    color: rgb(230, 180, 231);
+    background-color: #76597d;
+    border: 1px solid rgb(230, 180, 231);
+    border-radius: 5px;
+}
+
+button:hover {
+    color: rgb(254, 254, 254);
+    border: 1px solid rgb(254, 254, 254);
+}
+
 .app-photo-element-cloud-one::before {
     content: url("./images/2.png");
     display: block;
     position: absolute;
-    bottom: 4%;
-    left: 40px;
+    margin-left: -660px;
+    margin-top: 140px;
     animation: animateUpDown 2s infinite alternate;
 }
 
@@ -36,48 +52,48 @@ a:hover {
 }
 
 .app-photo-element-stars-one::before {
-    content: url("./images/3-3.png");
+    content: url("./images/3.png");
     display: block;
-    position: fixed;
-    left: 10px;
-    top: 450px;
+    position: absolute;
+    margin-left: -650px;
+    margin-top: 170px;
     animation: animateUpDown 3s infinite alternate;
 }
 
 .app-photo-element-cloud-two::before {
     content: url("./images/1.png");
     display: block;
-    position: fixed;
-    bottom: 460px;
-    right: -5px;
+    position: absolute;
+    margin-top: -340px;
+    margin-left: 250px;
     z-index: 0;
     animation: animateUpDown 3s infinite alternate;
 }
 
 .app-photo-element-stars-two::before {
-    content: url("./images/4-4.png");
+    content: url("./images/4.png");
     display: block;
-    position: fixed;
-    right: 270px;
-    top: 70px;
+    position: absolute;
+    margin-left: 280px;
+    margin-top: -310px;
     animation: animateUpDown 2s infinite alternate;
 }
 
 .app-photo-element-stars-three::before {
-    content: url("./images/3-3.png");
+    content: url("./images/3.png");
     display: block;
-    position: fixed;
-    right: 40px;
-    top: 150px;
+    position: absolute;
+    margin-left: 550px;
+    margin-top: -200px;
     animation: animateUpDown 2s infinite alternate;
 }
 
 .app-logo::before {
     content: url("./images/eris.png");
     display: block;
-    position: fixed;
+    position: absolute;
     height: 30%;
-    bottom: -95px;
+    margin-top: 235px;
     left: 50%;
     transform: translateX(-50%);
 }
@@ -86,7 +102,7 @@ a:hover {
     display: block;
     position: fixed;
     height: 30%;
-    bottom: -165px;
+    margin-top: 305px;
     left: 50%;
     transform: translateX(-51%);
     color: white;

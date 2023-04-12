@@ -69,7 +69,7 @@ const EditChannelForm = ({ channel, serverId }) => {
       };
   
     return sessionUser.id ? (
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className="edit-channel-form-overall-div">
         <ul>
           {errors.map((error, idx) => (
             <li key={idx}>{error}</li>

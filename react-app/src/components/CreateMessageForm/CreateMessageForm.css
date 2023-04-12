@@ -1,4 +1,36 @@
 .create-message-overall-div {
     display: flex;
+}
+
+.create-message-overall-div-column {
+    display: flex;
+    flex-direction: column;
     align-items: center;
+}
+
+.create-message-form {
+    margin-top: 0.5%;
+}
+
+.create-message-input-box-and-button {
+    display: flex;
+    max-height: 20px;
+    min-height: 20px;
+}
+
+.create-message-button {
+    color: rgb(230, 180, 231);
+    background-color: #76597d;
+    border: 1px solid rgb(230, 180, 231);;
+    border-radius: 5px;
+    margin-left: 4px;
+}
+
+.create-message-button:hover  {
+    color: rgb(254, 254, 254);
+    border: 1px solid rgb(254, 254, 254);
+}
+
+.create-message-message-image-upload {
+    margin-right: -2px;
 }

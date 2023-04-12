@@ -121,7 +121,7 @@ const ChannelGrid = () => {
         {isLoaded && (
           <>
                 <div onClick={openMenu} className="server-dropdown">
-                  {server && server.name} <i className="fa-solid fa-angle-down"></i>
+                  {server && server.name} <i className="fa-solid fa-angle-down" id="channel-grid-server-dropdown-button"></i>
                 </div>
                 <ul
                   className={ulClassName}
@@ -134,7 +134,8 @@ const ChannelGrid = () => {
                   </>
                 </ul>
                 <br></br>
-                <p>Text Channels {createChannel()}</p>
+
+                <p className="channel-grid-text-channels-with-add-channel-button-div">Text Channels <div className="channel-grid-add-channel-button">{createChannel()}</div></p>
             {channelArr.length > 0 &&
               channelArr.map((channel) => {
                 return <Channel key={channel.id} channel={channel} />;

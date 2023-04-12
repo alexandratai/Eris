@@ -5,16 +5,42 @@
     width: 30px;
 }
 
+.edit-message-form-button:hover {
+    border: none;
+}
+
+.message-page-delete-button {
+    border: none;
+}
+
+.message-page-delete-button:hover {
+    border: none;
+}
+
 .messages-overall-grid {
     height: 100%;
     overflow: auto;
+    display: flex;
+    align-items: flex-start;
+    margin-left: 25px;
+}
+
+.messages-edit-delete-buttons-div {
+    margin-left: 10px;
+    margin-top: -1px;
+}
+
+.messages-edit-delete-buttons-div-with-user {
+    margin-top: 91px;
 }
 
 .messages-message-profile-photo {
-    width: 50px;
-    height: 50px;
+    width: 35px;
+    height: 35px;
     margin-top: 1%;
     border-radius: 100%;
+    margin-right: 10px;
+    margin-top: 18px;
     object-fit: cover;
 }
 
@@ -22,32 +48,38 @@
     width: 200px;
     height: 150px;
     object-fit: cover;
-    margin-left: 60px;
+    margin-left: 25px;
+    border-radius: 5px;
+    margin-bottom: 10px;
 }
 
 .messages-profile-photo-and-username {
     display: flex;
     justify-content: flex-start;
-    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
 }
 
 .messages-with-user-and-body {
     display: flex;
     flex-direction: column;
-    align-items: center;
 }
 
 .messages-username {
-    margin-left: 10px;
     font-weight: bold;
 }
 
 .messages-with-user-message-body {
     display: flex;
-    margin-left: 5px;
-    margin-top: -4px;
+    align-items: flex-start;
+    margin-top: -1px;
 }
 
 .messages-user-not-shown-message {
-    margin-left: 60px;
+    margin-left: 25px;
+    margin-top: -1px;
+}
+
+.messages-user-not-shown-message-div {
+    display: flex;
 }

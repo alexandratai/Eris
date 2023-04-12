@@ -1,16 +1,10 @@
 .server-grid-channel-grid-message-grid {
     display: flex;
     position: fixed;
-    top: 100px;
-    /* left: 50%; */
+    top: 80px;
     transform: translateX(-50%); 
-    /* align-items: center; */
-    height: 70%;
-    width: 80%;
-    /* position: relative; */
-    /* max-height: 10%;
-    width: 150%;
-    left: 50%; */
+    height: 500px;
+    width: 75vw;
     overflow-x: hidden;
     overflow-y: scroll;
     background-color: #8b6e92;
@@ -22,16 +16,18 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    overflow-y: scroll;
     transform: translateX(50%);
-    height: 100%;
-    width: 5%;
-    margin-left: 1%;
+    height: 84%;
+    width: 9%;
+    margin-left: -3%;
 }
 
 .server-grid-channel-grid {
     display: flex;
     flex-direction: column;
     align-items: center;
+    overflow-y: scroll;
     height: 100%;
     width: 20%;
     background-color: rgb(133, 101, 141);

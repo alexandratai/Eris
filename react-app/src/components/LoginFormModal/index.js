@@ -28,31 +28,33 @@ function LoginFormModal() {
   // ^ until you have DMs then send them to DMs
 
   return (
-    <div className="flex items-center justify-center h-screen bg-indigo-600">
+    <div className="flex items-center justify-center h-screen bg-indigo-600" id="login-form-overall-div">
       <div className="p-6 bg-white w-96 shadow-1g round-md">
-        <h1>Log In</h1>
-        <form onSubmit={handleSubmit}>
+        <p className="login-log-in-text">Log In</p>
+        <form onSubmit={handleSubmit} className="login-server-modal">
           <ul>
             {errors.map((error, idx) => (
               <li key={idx}>{error}</li>
             ))}
           </ul>
-          <label htmlFor="email" className="block mb-2 text-base">
+          <label htmlFor="email" className="block mb-2 text-base" id="login-email-password-label-text">
             Email
             <input
               type="text"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
+              className="login-input-box"
             />
           </label>
-          <label>
+          <label id="login-email-password-label-text">
             Password
             <input
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
+              className="login-input-box"
             />
           </label>
           <button type="submit">Log In</button>

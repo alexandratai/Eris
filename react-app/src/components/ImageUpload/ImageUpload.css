@@ -1,8 +1,11 @@
 .image-uploaded-photo-preview {
-    min-width: 50%;
-    min-height: 50%;
-    max-width: 50%;
-    max-height: 50%;
+    width: 90%;
+    height: 90%;
     object-fit: cover;
     border-radius: 5px;
+    margin-bottom: 1%;
+}
+
+.image-uploaded-upload-image-button {
+    margin: 2px;
 }

@@ -26,6 +26,7 @@ const ServerGrid = () => {
   }, [dispatch, serverId]);
 
   return (
+    <>
     <div className="server-grid-channel-grid-message-grid">
       <div className="server-grid">
         {serverArr.length > 0 &&
@@ -40,6 +41,7 @@ const ServerGrid = () => {
         <MessageGrid />
       </div>
     </div>
+    </>
   );
 };
 

@@ -63,10 +63,10 @@ const ImageUpload = ({ setImage, formSubmitted, imageUploaded, setImageUploaded 
         </>
       ) : (
         <div>
-          <button onClick={() => document.getElementById("newImg").click()}>
+          <button onClick={() => document.getElementById("newImg").click()} className="image-uploaded-upload-image-button">
             <i
               className="fa-solid fa-camera fa-3x"
-              style={{ marginTop: "5px" }}
+              style={{ marginTop: "7px" }}
             ></i>
             <div>
               <p>Upload Image</p>
