@@ -41,7 +41,7 @@ function ProfileButton({ user }) {
 
   const handleLogout = (e) => {
     e.preventDefault();
-    dispatch(logout()).then(() => history.push(`/login`));
+    dispatch(logout()).then(() => history.push(`/login`)).then(() => closeMenu());
   };
 
   const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
@@ -49,7 +49,7 @@ function ProfileButton({ user }) {
   const demoSubmit = (e) => {
     e.preventDefault();
     closeModal();
-    return dispatch(sessionActions.demoLogin());
+    return dispatch(sessionActions.demoLogin()).then(() => closeMenu());
   };
 
   const createServer = () => {
@@ -63,47 +63,53 @@ function ProfileButton({ user }) {
     }
   };
 
-
   return (
     <>
       <button onClick={openMenu}>
-       <i className="fas fa-user-circle" />
+        <i className="fas fa-user-circle" />
       </button>
 
-{showMenu && (
-      <ul className={sessionUser == null ? ulClassName : "profile-button-profile-dropdown-logged-in"} ref={ulRef}>
-        {user ? (
-          <>
-            <li>{user.username}</li>
-            <li className="profile-button-username-email">{user.email}</li>
-            <li>{createServer()}</li>
-            <li>
-              <button onClick={handleLogout}>Log Out</button>
-            </li>
-          </>
-        ) : (
-          <>
-            <OpenModalButton
-              buttonText="Log In"
-              onItemClick={closeMenu}
-              modalComponent={<LoginFormModal />}
-            />
+      {showMenu && (
+        <ul
+          className={
+            sessionUser == null
+              ? ulClassName
+              : "profile-button-profile-dropdown-logged-in"
+          }
+          ref={ulRef}
+        >
+          {user ? (
+            <>
+              <li>{user.username}</li>
+              <li className="profile-button-username-email">{user.email}</li>
+              <li>{createServer()}</li>
+              <li>
+                <button onClick={handleLogout}>Log Out</button>
+              </li>
+            </>
+          ) : (
+            <>
+              <OpenModalButton
+                buttonText="Log In"
+                onItemClick={closeMenu}
+                modalComponent={<LoginFormModal />}
+              />
 
-            <OpenModalButton
-              buttonText="Sign Up"
-              onItemClick={closeMenu}
-              modalComponent={<SignupFormModal />}
-            />
+              <OpenModalButton
+                buttonText="Sign Up"
+                onItemClick={closeMenu}
+                modalComponent={<SignupFormModal />}
+              />
 
-            <form className="demo-login-div" onSubmit={demoSubmit}>
-              <button className="demo-login">Demo Login</button>
-            </form>
-          </>
-        )}
-      </ul>
+              <form className="demo-login-div" onSubmit={demoSubmit}>
+                <button className="demo-login">Demo Login</button>
+              </form>
+            </>
+          )}
+        </ul>
       )}
-      </>
+    </>
   );
-        }
+}
 
 export default ProfileButton;
