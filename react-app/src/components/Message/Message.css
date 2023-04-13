@@ -53,6 +53,14 @@
     margin-bottom: 10px;
 }
 
+.messages-message-with-user-photo {
+    width: 200px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
 .messages-profile-photo-and-username {
     display: flex;
     justify-content: flex-start;
@@ -82,4 +90,10 @@
 
 .messages-user-not-shown-message-div {
     display: flex;
+}
+
+.messages-with-user-message-and-photo-div {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
 }

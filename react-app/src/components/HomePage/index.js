@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 const HomePage = () => {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
-  // Redirect - if the user is logged in, redirect them to 
+  // Redirect - if the user is logged in, redirect them to
   // one of their servers (the first one) arr[0]
 
   const sessionUser = useSelector((state) => state.session.user);
@@ -15,12 +15,12 @@ const HomePage = () => {
   const serverArr = Object.values(serverObj);
   const { serverId } = useParams();
   let userServers;
-  
+
   if (sessionUser !== null) {
-    userServers = serverArr.filter(server => {
-        return server.owner_id == sessionUser.id
-    })
-  };
+    userServers = serverArr.filter((server) => {
+      return server.owner_id == sessionUser.id;
+    });
+  }
 
   useEffect(() => {
     if (sessionUser) {
@@ -28,13 +28,16 @@ const HomePage = () => {
     }
   }, [dispatch, serverId, sessionUser]);
 
-  if (isLoaded && sessionUser !== null && userServers.length > 0) return <Redirect to={`/${userServers[0].id}`} />
+  if (isLoaded && sessionUser !== null && userServers.length > 0)
+    return <Redirect to={`/${userServers[0].id}`} />;
 
   return (
     <>
-    <div className="homepage-photo-element-city"></div>
-    <br></br>
-    <p className="homepage-body-text">A place that makes it easy to talk every day and hang out more often.</p>
+      <div className="homepage-photo-element-city"></div>
+      <br></br>
+      <p className="homepage-body-text">
+        A place that makes it easy to talk every day and hang out more often.
+      </p>
     </>
   );
 };

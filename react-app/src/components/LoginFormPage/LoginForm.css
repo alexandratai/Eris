@@ -1,0 +1,17 @@
+.login-form-log-in-text {
+    text-align: center;
+    font-weight: bold;
+    font-size: 15pt;
+}
+
+.login-form-page-label {
+    margin-right: 5px;
+}
+
+.login-form-page-input {
+    margin-left: 5px;
+}
+
+.login-form-page-button {
+    opacity: 70%;
+}

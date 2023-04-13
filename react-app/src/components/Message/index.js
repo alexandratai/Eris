@@ -91,9 +91,16 @@ const Message = ({ id, message, handleDelete }) => {
               />
               <div className="messages-with-user-and-body">
                 <p className="messages-username">{message.user.username}</p>
+                  <div className="messages-with-user-message-and-photo-div">{message.image && (
+                    <img
+                      src={message.image}
+                      className="messages-message-with-user-photo"
+                    />
+                  )}
                 <p className="messages-with-user-message-body">
                   {message.body}
                 </p>
+                </div>
               </div>
             </div>
             {showForm ? (
@@ -106,12 +113,6 @@ const Message = ({ id, message, handleDelete }) => {
             ) : (
               <>
                 <div className="messages-edit-delete-buttons">
-                  {message.image && (
-                    <img
-                      src={message.image}
-                      className="messages-message-photo"
-                    />
-                  )}
                   <div className="messages-edit-delete-buttons-div-with-user">
                     {sessionUser &&
                       sessionUser.id &&
@@ -125,7 +126,7 @@ const Message = ({ id, message, handleDelete }) => {
                           <i className="fa-solid fa-pencil"></i>
                         </button>
                       )}
-                      {userDeleteMessage()}
+                    {userDeleteMessage()}
                   </div>
                 </div>
               </>

@@ -44,10 +44,10 @@ function SignupFormModal() {
   // ^ until you have DMs then send them to DMs
 
 	return (
-		<>
-			<h1>Sign Up</h1>
+		<div className="sign-up-modal-overall-div">
+			<p className="sign-up-modal-sign-up">Sign Up</p>
 			<ImageUpload setImage={setImage} formSubmitted={formSubmitted} imageUploaded={imageUploaded} setImageUploaded={setImageUploaded} />
-			<form onSubmit={handleSubmit}>
+			<form onSubmit={handleSubmit} className="sign-up-modal-form">
 				<ul>
 					{errors.map((error, idx) => (
 						<li key={idx}>{error}</li>
@@ -55,43 +55,48 @@ function SignupFormModal() {
 				</ul>
 				<label>
 					Email
+					<br></br>
 					<input
 						type="text"
 						value={email}
 						onChange={(e) => setEmail(e.target.value)}
 						required
+						className="sign-up-modal-input"
 					/>
 				</label>
 				<label>
-					Username
+					Username<br></br>
 					<input
 						type="text"
 						value={username}
 						onChange={(e) => setUsername(e.target.value)}
 						required
+						className="sign-up-modal-input"
 					/>
 				</label>
 				<label>
-					Password
+					Password<br></br>
 					<input
 						type="password"
 						value={password}
 						onChange={(e) => setPassword(e.target.value)}
 						required
+						className="sign-up-modal-input"
 					/>
 				</label>
 				<label>
-					Confirm Password
+					Confirm Password<br></br>
 					<input
 						type="password"
 						value={confirmPassword}
 						onChange={(e) => setConfirmPassword(e.target.value)}
 						required
+						className="sign-up-modal-input"
 					/>
 				</label>
 				<button type="submit">Sign Up</button>
 			</form>
-		</>
+		</div>
 	);
 }
 

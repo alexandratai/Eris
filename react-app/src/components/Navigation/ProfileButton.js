@@ -41,7 +41,7 @@ function ProfileButton({ user }) {
 
   const handleLogout = (e) => {
     e.preventDefault();
-    dispatch(logout()).then(() => history.push(`/login`)).then(() => closeMenu());
+    dispatch(logout()).then(() => history.push(`/`)).then(() => closeMenu());
   };
 
   const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
@@ -91,13 +91,13 @@ function ProfileButton({ user }) {
             <>
               <OpenModalButton
                 buttonText="Log In"
-                onItemClick={closeMenu}
+                closeMenu={closeMenu}
                 modalComponent={<LoginFormModal />}
               />
 
               <OpenModalButton
                 buttonText="Sign Up"
-                onItemClick={closeMenu}
+                closeMenu={closeMenu}
                 modalComponent={<SignupFormModal />}
               />
 
@@ -110,6 +110,6 @@ function ProfileButton({ user }) {
       )}
     </>
   );
-}
+};
 
 export default ProfileButton;
