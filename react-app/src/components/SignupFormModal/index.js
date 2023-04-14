@@ -48,7 +48,7 @@ function SignupFormModal() {
 			<p className="sign-up-modal-sign-up">Sign Up</p>
 			<ImageUpload setImage={setImage} formSubmitted={formSubmitted} imageUploaded={imageUploaded} setImageUploaded={setImageUploaded} />
 			<form onSubmit={handleSubmit} className="sign-up-modal-form">
-				<ul>
+				<ul className="sign-up-modal-errors">
 					{errors.map((error, idx) => (
 						<li key={idx}>{error}</li>
 					))}

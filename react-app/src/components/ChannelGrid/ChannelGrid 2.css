@@ -1,0 +1,18 @@
+.channel-grid {
+    display: flex;
+    flex-direction: column;
+    margin-top: -400px;
+    margin-left: 60px;
+}
+
+.server-dropdown {
+    padding: 0;
+    border: none;
+    background: none;
+    width: 76px;
+}
+
+#server-dropdown-list {
+    list-style-type: none;
+    margin-top: -1px;
+}

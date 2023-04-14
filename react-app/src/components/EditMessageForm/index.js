@@ -17,6 +17,7 @@ const EditMessageForm = ({ serverId, channelId, message, setShowForm }) => {
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [errors, setErrors] = useState([]);
   const socket = useContext(SocketContext);
+  const [imageUploaded, setImageUploaded] = useState(false);
 
   const updateBody = (e) => setBody(e.target.value);
 
@@ -33,7 +34,7 @@ const EditMessageForm = ({ serverId, channelId, message, setShowForm }) => {
 
     const payload = {
       body,
-      image: tempImage ? tempImage : null, // Use null if tempImage is not set,
+      image: tempImage ? tempImage : null, // Use null if tempImage is not set
       serverId,
       channelId,
       id: message.id,
@@ -60,19 +61,19 @@ const EditMessageForm = ({ serverId, channelId, message, setShowForm }) => {
 
   const handleCancel = () => {
     setShowForm(false);
-    setImage(message.image); // restore original image
+    setImage(message.image); // Restore original image
   };
 
   return sessionUser.id ? (
-    <>
-      <MessageImageUpload setImage={setTempImage} formSubmitted={formSubmitted} isEditing={true} image={image} />
+    <div className="edit-channel-message-form">
+      <MessageImageUpload setImage={setTempImage} formSubmitted={formSubmitted} isEditing={true} image={image} imageUploaded={imageUploaded} setImageUploaded={setImageUploaded} />
       <form onSubmit={handleSubmit}>
         <ul>
           {errors.map((error, idx) => (
             <li key={idx}>{error}</li>
           ))}
         </ul>
-        <div className="edit-channel-message-form">
+        <div className="edit-channel-message-input-and-buttons">
           <input
             type="text"
             placeholder={body}
@@ -89,7 +90,7 @@ const EditMessageForm = ({ serverId, channelId, message, setShowForm }) => {
           </div>
         </div>
       </form>
-    </>
+    </div>
   ) : null;
 };
 

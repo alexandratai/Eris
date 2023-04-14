@@ -25,3 +25,9 @@
 .sign-up-modal-input {
     margin-bottom: 7px;
 }
+
+.sign-up-modal-errors {
+    font-weight: bold;
+    margin-top: 25px;
+    margin-left: -30px;
+}

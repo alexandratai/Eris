@@ -32,9 +32,9 @@ function LoginFormModal() {
       <div className="p-6 bg-white w-96 shadow-1g round-md">
         <p className="login-log-in-text">Log In</p>
         <form onSubmit={handleSubmit} className="login-server-modal">
-          <ul>
+          <ul className="login-server-modal-errors">
             {errors.map((error, idx) => (
-              <li key={idx}>{error}</li>
+              <li key={idx}>Error with {error}</li>
             ))}
           </ul>
           <label htmlFor="email" className="block mb-2 text-base" id="login-email-password-label-text">

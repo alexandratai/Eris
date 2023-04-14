@@ -32,3 +32,29 @@
 .message-image-upload-cancel-button {
     margin-left: 4px;
 }
+
+.image-uploaded-photo-preview {
+    width: 205px;
+    height: 215px;
+    object-fit: cover;
+}
+
+.image-uploaded-with-edit-button-div {
+    margin-bottom: -20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.message-image-upload-plus-sign {
+    margin-right: -25px;
+}
+
+.message-image-upload-loading-text {
+    margin-top: 20px;
+    margin-right: 10px;
+}
+
+.image-uploaded-with-edit-button-for-message-edit {
+    margin-bottom: 20px;
+}

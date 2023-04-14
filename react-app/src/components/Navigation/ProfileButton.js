@@ -24,14 +24,14 @@ function ProfileButton({ user }) {
     setShowMenu(true);
   };
 
-  const closeMenu = () => setShowMenu(false);
+  let closeMenu;
   useEffect(() => {
     if (!showMenu) return;
 
-    const closeMenu = (e) => {
-      if (!ulRef.current.contains(e.target)) {
+    closeMenu = () => {
+      // if (!ulRef.current.contains(e.target)) {
         setShowMenu(false);
-      }
+      // }
     };
 
     document.addEventListener("click", closeMenu);
@@ -48,8 +48,7 @@ function ProfileButton({ user }) {
 
   const demoSubmit = (e) => {
     e.preventDefault();
-    closeModal();
-    return dispatch(sessionActions.demoLogin()).then(() => closeMenu());
+    return dispatch(sessionActions.demoLogin()).then(() => setShowMenu(false));
   };
 
   const createServer = () => {
@@ -91,25 +90,23 @@ function ProfileButton({ user }) {
             <>
               <OpenModalButton
                 buttonText="Log In"
-                closeMenu={closeMenu}
                 modalComponent={<LoginFormModal />}
               />
 
               <OpenModalButton
                 buttonText="Sign Up"
-                closeMenu={closeMenu}
                 modalComponent={<SignupFormModal />}
               />
 
-              <form className="demo-login-div" onSubmit={demoSubmit}>
-                <button className="demo-login">Demo Login</button>
-              </form>
+              <div className="demo-login-div">
+                <button className="demo-login" onClick={demoSubmit}>Demo Login</button>
+              </div>
             </>
           )}
         </ul>
       )}
     </>
   );
-};
+}
 
 export default ProfileButton;

@@ -42,7 +42,7 @@ const EditServerForm = ({ server }) => {
   };
 
   return sessionUser.id ? (
-    <>
+    <div className="edit-server-form-overall-div">
       <ImageUpload setImage={setImage} />
       <form onSubmit={handleSubmit}>
         <ul>
@@ -70,7 +70,7 @@ const EditServerForm = ({ server }) => {
           </div>
         </div>
       </form>
-    </>
+    </div>
   ) : null;
 };
 

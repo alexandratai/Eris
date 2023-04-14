@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./MessageImageUpload.css";
 
 const MessageImageUpload = ({ setImage, formSubmitted, isEditing = false, image, imageUploaded, setImageUploaded }) => {
-  const [photo, setPhoto] = useState("");
+  const [photo, setPhoto] = useState(image)
   const [imageLoading, setImageLoading] = useState(false);
   const [errors, setErrors] = useState([]);
 
@@ -32,6 +32,12 @@ const MessageImageUpload = ({ setImage, formSubmitted, isEditing = false, image,
     }
   };
 
+  const handleRemoveImage = () => {
+    setPhoto("");
+    setImage("");
+    setImageUploaded(false);
+  };
+
   const updateImage = async (e) => {
     e.preventDefault();
     const file = e.target.files[0];
@@ -41,38 +47,28 @@ const MessageImageUpload = ({ setImage, formSubmitted, isEditing = false, image,
     handleSubmit(file);
   };
 
-  const handleCancel = () => {
-    // This is to clear the uploaded image and reset state
-    setImage("");
-    setImageUploaded(false);
-    setPhoto("");
-    setErrors([]);
-  };
-
   return (
     <>
-      {imageUploaded && !formSubmitted ? (
+      {(imageUploaded || photo) && !formSubmitted ? (
         <>
-          <div className="message-image-upload-photo-and-edit-image-button-div">
-            <div className="message-image-upload-photo-div">
-            <img src={photo} className="message-image-upload-photo"/>
-            </div>
+          <div className={imageUploaded ? "image-uploaded-with-edit-button-div" : "image-uploaded-with-edit-button-for-message-div"}>
+            <img src={photo} className="image-uploaded-photo-preview" />
             <br></br>
-            <div className="message-image-upload-edit-image-button">
+            <div className={photo && "image-uploaded-with-edit-button-for-message-edit"}>
             <button onClick={() => document.getElementById("file").click()}>
               {" "}
               Edit Image
             </button>
-            <button className="message-image-upload-cancel-button" onClick={handleCancel}>Remove</button>
+            <button onClick={handleRemoveImage}>Remove Image</button>
             </div>
           </div>
         </>
       ) : (
         <div>
-          {imageUploaded && <img src={image} className="image-uploaded-photo-preview" />}
+          {image && <img src={image} className="image-uploaded-photo-preview" />}
           <br></br>
-          <button onClick={() => document.getElementById("file").click()} id="message-image-upload-plus-sign">
-          <i className="fa-sharp fa-solid fa-plus"></i>
+          <button className="message-image-upload-plus-sign" onClick={() => document.getElementById("file").click()}>
+          {isEditing ? "Edit Image" : <i className="fa-sharp fa-solid fa-plus"></i>}
           </button>
         </div>
       )}
@@ -82,12 +78,12 @@ const MessageImageUpload = ({ setImage, formSubmitted, isEditing = false, image,
         </>
       )}
 
-      <ul className="message-image-upload-errors-ul">
+      <ul>
         {errors.map((error, idx) => (
           <li key={idx}>{error}</li>
         ))}
       </ul>
-      {imageLoading && <p className="message-image-upload-loading">Loading...</p>}
+      {imageLoading && <p className="message-image-upload-loading-text">Loading...</p>}
 
       <div>
         <input
