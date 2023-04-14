@@ -66,7 +66,7 @@ const EditMessageForm = ({ serverId, channelId, message, setShowForm }) => {
 
   return sessionUser.id ? (
     <div className="edit-channel-message-form">
-      <MessageImageUpload setImage={setTempImage} formSubmitted={formSubmitted} isEditing={true} image={image} imageUploaded={imageUploaded} setImageUploaded={setImageUploaded} />
+      <MessageImageUpload setImage={setImage} formSubmitted={formSubmitted} isEditing={true} image={image} imageUploaded={imageUploaded} setImageUploaded={setImageUploaded} />
       <form onSubmit={handleSubmit}>
         <ul>
           {errors.map((error, idx) => (
@@ -82,8 +82,8 @@ const EditMessageForm = ({ serverId, channelId, message, setShowForm }) => {
             required
           />
 
-          <div>
-            <button className="edit-channel-button" type="submit">
+          <div className="edit-channel-message-buttons-div">
+            <button className="edit-channel-message-button" type="submit">
               Save
             </button>
             <button type="cancel" onClick={handleCancel}>Cancel</button>

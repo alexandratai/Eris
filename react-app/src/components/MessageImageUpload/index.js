@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./MessageImageUpload.css";
 
 const MessageImageUpload = ({ setImage, formSubmitted, isEditing = false, image, imageUploaded, setImageUploaded }) => {
-  const [photo, setPhoto] = useState(image)
+  const [photo, setPhoto] = useState(image);
   const [imageLoading, setImageLoading] = useState(false);
   const [errors, setErrors] = useState([]);
 
@@ -32,9 +32,9 @@ const MessageImageUpload = ({ setImage, formSubmitted, isEditing = false, image,
     }
   };
 
-  const handleRemoveImage = () => {
-    setPhoto("");
-    setImage("");
+  const handleRemoveImage = async () => {
+    setPhoto(null);
+    setImage(null);
     setImageUploaded(false);
   };
 
@@ -52,7 +52,7 @@ const MessageImageUpload = ({ setImage, formSubmitted, isEditing = false, image,
       {(imageUploaded || photo) && !formSubmitted ? (
         <>
           <div className={imageUploaded ? "image-uploaded-with-edit-button-div" : "image-uploaded-with-edit-button-for-message-div"}>
-            <img src={photo} className="image-uploaded-photo-preview" />
+            {photo && <img src={photo} className="image-uploaded-photo-preview" />}
             <br></br>
             <div className={photo && "image-uploaded-with-edit-button-for-message-edit"}>
             <button onClick={() => document.getElementById("file").click()}>
@@ -68,7 +68,7 @@ const MessageImageUpload = ({ setImage, formSubmitted, isEditing = false, image,
           {image && <img src={image} className="image-uploaded-photo-preview" />}
           <br></br>
           <button className="message-image-upload-plus-sign" onClick={() => document.getElementById("file").click()}>
-          {isEditing ? "Edit Image" : <i className="fa-sharp fa-solid fa-plus"></i>}
+          {(isEditing && imageUploaded) ? "Edit Image" : <i className="fa-sharp fa-solid fa-plus"></i>}
           </button>
         </div>
       )}

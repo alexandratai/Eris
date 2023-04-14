@@ -42,11 +42,11 @@ function App() {
               <div className="app-full-main-component-with-images-div">
               <ServerGrid />
               <div className="app-images-div">
-              <div className="app-photo-element-cloud-one"></div>
+              {/* <div className="app-photo-element-cloud-one"></div>
               <div className="app-photo-element-stars-one"></div>
               <div className="app-photo-element-cloud-two"></div>
               <div className="app-photo-element-stars-two"></div>
-              <div className="app-photo-element-stars-three"></div>
+              <div className="app-photo-element-stars-three"></div> */}
               <div className="app-logo"></div>
               </div>
               </div>

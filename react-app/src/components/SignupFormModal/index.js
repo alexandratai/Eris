@@ -24,6 +24,11 @@ function SignupFormModal() {
 		if (password === confirmPassword) {
 			const data = await dispatch(signUp(username, email, password, image));
 			if (data) {
+				data.map((error) => {
+					let space = error.indexOf(" ");
+					let errorMessage = error.slice(space);
+					return errorMessage
+				})
 				setErrors(data);
 			} else {
 				closeModal();
@@ -50,7 +55,7 @@ function SignupFormModal() {
 			<form onSubmit={handleSubmit} className="sign-up-modal-form">
 				<ul className="sign-up-modal-errors">
 					{errors.map((error, idx) => (
-						<li key={idx}>{error}</li>
+						<li key={idx}>Error: {error}</li>
 					))}
 				</ul>
 				<label>
