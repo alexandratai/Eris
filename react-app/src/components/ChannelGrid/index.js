@@ -123,6 +123,7 @@ const ChannelGrid = () => {
                 <div onClick={openMenu} className="server-dropdown">
                   {server && server.name} <i className="fa-solid fa-angle-down" id="channel-grid-server-dropdown-button"></i>
                 </div>
+                {showMenu &&
                 <ul
                   className={ulClassName}
                   ref={ulRef}
@@ -133,6 +134,7 @@ const ChannelGrid = () => {
                     <li>{userDeleteServer()}</li>
                   </>
                 </ul>
+                }
                 <br></br>
 
                 <p className="channel-grid-text-channels-with-add-channel-button-div">Text Channels <div className="channel-grid-add-channel-button">{createChannel()}</div></p>

@@ -1,5 +1,9 @@
 .profile-dropdown {
-  position: absolute;
+  position: fixed;
+}
+
+button .profile-button-profile-dropdown-icon {
+  position: relative;
 }
 
 .hidden {
@@ -20,7 +24,7 @@
 
 .navigation-bar-logged-in {
   margin: 0;
-  position: absolute;
+  position: fixed;
   margin-top: -250px;
   margin-left: 450px;
   z-index: 1;
@@ -53,7 +57,7 @@ ul {
 .profile-dropdown {
   text-align: center;
   width: 125px;
-  position: absolute;
+  position: fixed;
   margin-left: -73px;
   border-radius: 10px;
   background-color: #92729b;
@@ -66,7 +70,7 @@ ul {
 .profile-button-profile-dropdown-logged-in {
   text-align: center;
   width: 125px;
-  position: absolute;
+  position: fixed;
   margin-left: -50px;
   border-radius: 10px;
   background-color: #92729b;

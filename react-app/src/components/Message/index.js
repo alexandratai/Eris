@@ -2,7 +2,7 @@ import "./Message.css";
 import EditMessageForm from "../EditMessageForm";
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { useState, useContext, useEffect } from "react";
+import { useState, useContext, useEffect, useRef } from "react";
 // import { SocketContext } from "../../socket";
 
 const Message = ({ id, message, handleDelete }) => {
@@ -15,9 +15,24 @@ const Message = ({ id, message, handleDelete }) => {
   const messageArr = Object.values(messagesObj);
 
   const [errors, setErrors] = useState([]);
-  const [showForm, setShowForm] = useState(false);
+  const [showEditMessageForm, setShowEditMessageForm] = useState(false);
   const [userProfilePhotoDisplay, setUserProfilePhotoDisplay] = useState(false);
   const [hovered, setHovered] = useState(false);
+
+  // const editFormRef = useRef(null); 
+
+  // useEffect(() => {
+  //   if (showEditMessageForm) {
+  //     document.addEventListener("click", handleOutsideClick);
+  //   }
+  //   return () => {
+  //     document.removeEventListener("click", handleOutsideClick);
+  //   };
+  // }, [showEditMessageForm]);
+
+  // const handleOutsideClick = (e) => {
+  //     setShowEditMessageForm(false);
+  // };
 
   useEffect(() => {
     if (messageArr.length > 1) {
@@ -45,7 +60,8 @@ const Message = ({ id, message, handleDelete }) => {
         serverId={serverId}
         channelId={channelId}
         message={message}
-        setShowForm={setShowForm}
+        setShowEditMessageForm={setShowEditMessageForm}
+        // ref={editFormRef} 
       />
     );
   };
@@ -82,7 +98,7 @@ const Message = ({ id, message, handleDelete }) => {
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
       >
-        {userProfilePhotoDisplay ? (
+        {userProfilePhotoDisplay && !showEditMessageForm ? (
           <div className="messages-overall-grid">
             <div className="messages-profile-photo-and-username">
               <img
@@ -103,13 +119,9 @@ const Message = ({ id, message, handleDelete }) => {
                 </div>
               </div>
             </div>
-            {showForm ? (
-              <EditMessageForm
-                serverId={serverId}
-                channelId={channelId}
-                message={message}
-                setShowForm={setShowForm}
-              />
+            {userProfilePhotoDisplay && showEditMessageForm ? (
+              <> 
+              </>
             ) : (
               <>
                 <div className="messages-edit-delete-buttons">
@@ -121,7 +133,7 @@ const Message = ({ id, message, handleDelete }) => {
                           className={`edit-message-form-button ${
                             hovered ? "visible" : "hidden"
                           }`}
-                          onClick={() => setShowForm(true)}
+                          onClick={() => setShowEditMessageForm(true)}
                         >
                           <i className="fa-solid fa-pencil"></i>
                         </button>
@@ -134,12 +146,19 @@ const Message = ({ id, message, handleDelete }) => {
           </div>
         ) : (
           <>
-            {showForm ? (
+          {userProfilePhotoDisplay && <>
+               <img
+                className="messages-message-profile-photo-when-editing"
+                src={message.user.profile_photo}
+              />
+               <p className="messages-username-when-editing">{message.user.username}</p>
+          </>}
+            {showEditMessageForm ? (
               <EditMessageForm
                 serverId={serverId}
                 channelId={channelId}
                 message={message}
-                setShowForm={setShowForm}
+                setShowEditMessageForm={setShowEditMessageForm}
               />
             ) : (
               <>
@@ -158,7 +177,7 @@ const Message = ({ id, message, handleDelete }) => {
                           className={`edit-message-form-button ${
                             hovered ? "visible" : "hidden"
                           }`}
-                          onClick={() => setShowForm(true)}
+                          onClick={() => setShowEditMessageForm(true)}
                         >
                           <i className="fa-solid fa-pencil"></i>
                         </button>

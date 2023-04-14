@@ -24,12 +24,12 @@ function SignupFormModal() {
 		if (password === confirmPassword) {
 			const data = await dispatch(signUp(username, email, password, image));
 			if (data) {
-				data.map((error) => {
+				const message = data.map((error) => {
 					let space = error.indexOf(" ");
 					let errorMessage = error.slice(space);
 					return errorMessage
 				})
-				setErrors(data);
+				setErrors(message);
 			} else {
 				closeModal();
 				history.push(`/@me`);

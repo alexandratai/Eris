@@ -6,7 +6,7 @@ import { editMessageThunk } from "../../store/messages";
 import { SocketContext } from "../../socket";
 import MessageImageUpload from "../MessageImageUpload";
 
-const EditMessageForm = ({ serverId, channelId, message, setShowForm }) => {
+const EditMessageForm = ({ serverId, channelId, message, setShowEditMessageForm }) => {
   const dispatch = useDispatch();
   const sessionUser = useSelector((state) => state.session.user);
 
@@ -52,7 +52,7 @@ const EditMessageForm = ({ serverId, channelId, message, setShowForm }) => {
       // socket.emit("chat", editedChannelMessage);
       payload.isEdited = true;
       socket.emit("chat", payload);
-      setShowForm(false);
+      setShowEditMessageForm(false);
       
       setImage(tempImage);
       setFormSubmitted(true);
@@ -60,7 +60,7 @@ const EditMessageForm = ({ serverId, channelId, message, setShowForm }) => {
   };
 
   const handleCancel = () => {
-    setShowForm(false);
+    setShowEditMessageForm(false);
     setImage(message.image); // Restore original image
   };
 
@@ -86,7 +86,7 @@ const EditMessageForm = ({ serverId, channelId, message, setShowForm }) => {
             <button className="edit-channel-message-button" type="submit">
               Save
             </button>
-            <button type="cancel" onClick={handleCancel}>Cancel</button>
+            <button type="button" onClick={handleCancel}>Cancel</button>
           </div>
         </div>
       </form>

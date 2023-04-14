@@ -1,11 +1,30 @@
 .image-uploaded-photo-preview {
-    width: 90%;
-    height: 90%;
+    width: 70%;
+    height: 70%;
     object-fit: cover;
     border-radius: 5px;
     margin-bottom: 1%;
+    margin-top: 10px;
 }
 
 .image-uploaded-upload-image-button {
     margin: 2px;
+}
+
+.image-upload-preview-and-button-div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.image-uploaded-loading {
+    margin-top: -5px;
+}
+
+#image-upload-camera-button {
+    margin-top: 5px;
+}
+
+.image-upload-remove-image-button {
+    margin-left: 3px;
 }

@@ -51,11 +51,11 @@ const MessageImageUpload = ({ setImage, formSubmitted, isEditing = false, image,
     <>
       {(imageUploaded || photo) && !formSubmitted ? (
         <>
-          <div className={imageUploaded ? "image-uploaded-with-edit-button-div" : "image-uploaded-with-edit-button-for-message-div"}>
-            {photo && <img src={photo} className="image-uploaded-photo-preview" />}
+          <div className={imageUploaded && "message-image-uploaded-with-edit-button-div"}>
+            {photo && <img src={photo} className="message-image-uploaded-photo-preview" />}
             <br></br>
-            <div className={photo && "image-uploaded-with-edit-button-for-message-edit"}>
-            <button onClick={() => document.getElementById("file").click()}>
+            <div className={photo && "message-image-uploaded-with-edit-button-for-message-edit"}>
+            <button className="message-image-upload-edit-button" onClick={() => document.getElementById("file").click()}>
               {" "}
               Edit Image
             </button>
@@ -65,7 +65,7 @@ const MessageImageUpload = ({ setImage, formSubmitted, isEditing = false, image,
         </>
       ) : (
         <div>
-          {image && <img src={image} className="image-uploaded-photo-preview" />}
+          {image && <img src={image} className="message-image-uploaded-photo-preview" />}
           <br></br>
           <button className="message-image-upload-plus-sign" onClick={() => document.getElementById("file").click()}>
           {(isEditing && imageUploaded) ? "Edit Image" : <i className="fa-sharp fa-solid fa-plus"></i>}

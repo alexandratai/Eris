@@ -8,6 +8,14 @@
     margin-bottom: -30px;
 }
 
+.message-image-uploaded-photo-preview {
+    width: 70%;
+    height: 70%;
+    object-fit: cover;
+    border-radius: 5px;
+    margin-bottom: 1%;
+}
+
 .message-image-upload-photo {
     width: 30%;
     height: 30%;
@@ -33,13 +41,13 @@
     margin-left: 4px;
 }
 
-.image-uploaded-photo-preview {
+.message-image-uploaded-photo-preview {
     width: 205px;
     height: 215px;
     object-fit: cover;
 }
 
-.image-uploaded-with-edit-button-div {
+.message-image-uploaded-with-edit-button-div {
     margin-bottom: -20px;
     display: flex;
     flex-direction: column;
@@ -51,10 +59,14 @@
 }
 
 .message-image-upload-loading-text {
-    margin-top: 20px;
+    /* margin-top: 20px; */
     margin-right: 10px;
 }
 
-.image-uploaded-with-edit-button-for-message-edit {
+.message-image-uploaded-with-edit-button-for-message-edit {
     margin-bottom: 20px;
+}
+
+.message-image-upload-edit-button {
+    margin-right: 3px;
 }

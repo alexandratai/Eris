@@ -17,7 +17,13 @@ function LoginFormModal() {
     e.preventDefault();
     const data = await dispatch(login(email, password));
     if (data) {
-      setErrors(data);
+      const message = data.map((error) => {
+					let space = error.indexOf(" ");
+					let errorMessage = error.slice(space);
+					console.log("#####", errorMessage)
+					return errorMessage
+				})
+				setErrors(message);
     } else {
       closeModal();
       history.push(`/@me`);
@@ -34,7 +40,7 @@ function LoginFormModal() {
         <form onSubmit={handleSubmit} className="login-server-modal">
           <ul className="login-server-modal-errors">
             {errors.map((error, idx) => (
-              <li key={idx}>Error with {error}</li>
+              <li key={idx}>Error: {error}</li>
             ))}
           </ul>
           <label htmlFor="email" className="block mb-2 text-base" id="login-email-password-label-text">
