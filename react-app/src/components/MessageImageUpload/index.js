@@ -46,15 +46,16 @@ const MessageImageUpload = ({ setImage, formSubmitted, isEditing = false, image,
     } // If you click cancel, it will not throw an error
     handleSubmit(file);
   };
-
+  
   return (
     <>
-      {(imageUploaded || photo) && !formSubmitted ? (
+      {imageUploaded && !formSubmitted ? (
         <>
-          <div className={isEditing || imageUploaded ? "message-image-uploaded-with-edit-button-div-for-editing" : "message-image-uploaded-with-edit-button-div"}>
+          <div className={(isEditing || imageUploaded) ? "message-image-uploaded-with-edit-button-div-for-editing" : "message-image-uploaded-with-edit-button-div"}>
             {photo && <img src={photo} className="message-image-uploaded-photo-preview" />}
             <br></br>
             <div className={photo && "message-image-uploaded-with-edit-button-for-message-edit"}>
+
             <button className="message-image-upload-edit-button" onClick={() => document.getElementById("file").click()}>
               {" "}
               Edit Image

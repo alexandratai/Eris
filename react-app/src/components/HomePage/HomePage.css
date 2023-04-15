@@ -18,9 +18,9 @@
     position: fixed;
     z-index: 1;
     color: white;
+    margin-top: -180px;
     /* margin-top: -190px; */ /* DO NOT DELETE */
     margin-left: -190px;
-    margin-top: -175px;
     z-index: 0;
     /* animation: animateUpDown 2s infinite alternate; */ /* DO NOT DELETE */
 }
