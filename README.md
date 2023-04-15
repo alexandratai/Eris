@@ -1,6 +1,6 @@
 # Eris
 
-Eris is a web application that allows you to communicate with friends via real time messaging while seamlessly navigating across different servers and their corresponding channels. It was built using **Node.js, SQLAlchemy, Flask, Sequelize, Sqlite3, React, Redux, HTML5, CSS, Git, Python, Amazon S3, Sockets, and JavaScript**.
+Eris is a web application that allows you to communicate with friends via real time messaging while seamlessly navigating across servers and their corresponding channels. It was built using **Node.js, SQLAlchemy, Flask, Sequelize, Sqlite3, React, Redux, HTML5, CSS, Git, Python, Amazon S3, Sockets, and JavaScript**.
 
 ## Features
 
