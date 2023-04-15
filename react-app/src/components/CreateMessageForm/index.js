@@ -45,31 +45,32 @@ const CreateMessageForm = ({ serverId, channelId, handleChat }) => {
       serverId,
       channelId,
       userId: sessionUser.id
-    };
 
+    };
+    
     let createdChannelMessage = await handleChat(serverId, channelId, payload);
     
     // if (!createdChannelMessage.id) {
-    //   setErrors(createdChannelMessage);
-    // }
- 
-    setBody("");
-    setImage("");
-
-    setFormSubmitted(true);
-    setImageUploaded(false);
+      //   setErrors(createdChannelMessage);
+      // }
+      
+      setBody("");
+      setImage("");
+      
+      setFormSubmitted(true);
+      setImageUploaded(false);
   };
 
   return sessionUser.id ? (
-    <div className="create-message-overall-div">
-      <MessageImageUpload setImage={setImage} formSubmitted={formSubmitted} image={image} imageUploaded={imageUploaded} setImageUploaded={setImageUploaded} />
-      <form onSubmit={handleSubmit}>
+    <div className={imageUploaded == false ? "create-message-overall-div" : "create-message-overall-div-column"}>
+      <MessageImageUpload className="create-message-message-image-upload" setImage={setImage} formSubmitted={formSubmitted} image={image} imageUploaded={imageUploaded} setImageUploaded={setImageUploaded} />
+      <form onSubmit={handleSubmit} className="create-message-form">
         <ul>
           {errors.map((error, idx) => (
             <li key={idx}>{error}</li>
           ))}
         </ul>
-        <div className="create-message-form">
+        <div className="create-message-input-box-and-button">
           <input
             type="text"
             placeholder={`Message #${channel && channel.name}`}
@@ -78,11 +79,9 @@ const CreateMessageForm = ({ serverId, channelId, handleChat }) => {
             required
           />
 
-          <div>
             <button className="create-message-button" type="submit">
-              Send Message
+            <i className="fa-sharp fa-regular fa-paper-plane"></i>
             </button>
-          </div>
         </div>
       </form>
     </div>

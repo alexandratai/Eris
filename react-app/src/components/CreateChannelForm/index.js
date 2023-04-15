@@ -34,14 +34,14 @@ const CreateChannelForm = ({ serverId }) => {
     };
   
     return sessionUser.id ? (
-      <form onSubmit={handleSubmit}>
+      <form className="create-channel-form-overall-div" onSubmit={handleSubmit}>
         <ul>
           {errors.map((error, idx) => (
             <li key={idx}>{error}</li>
           ))}
         </ul>
         <div className="create-channel-modal">
-          <p>Channel Name</p>
+          <p className="create-channel-form-title">Channel Name</p>
           <input
             type="text"
             placeholder="new-channel"

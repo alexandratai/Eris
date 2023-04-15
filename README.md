@@ -1,8 +1,26 @@
-# Flask React Project
+# Eris
 
-This is the starter for the Flask React project.
+Eris is a web application that allows you to communicate with friends via real time messaging while seamlessly navigating across different servers and channels. It was built using **Node.js, SQLAlchemy, Flask, Sequelize, Sqlite3, React, Redux, HTML5, CSS, Git, Python, Amazon S3, Sockets, and JavaScript**.
 
-## Getting started
+## Features
+
++ Create Server
++ Get Server
++ Edit Server
++ Delete Server
++ Create Channel
++ Get Channel
++ Edit Channel
++ Delete Channel
++ Create Message
++ Get Message
++ Edit Message
++ Delete Message
++ Live Messaging
++ Cloud Object Storage
+
+## How to Setup the Application on Local
+
 1. Clone this repository (only this branch)
 
 2. Install dependencies

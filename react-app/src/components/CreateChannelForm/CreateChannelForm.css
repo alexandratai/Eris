@@ -1,0 +1,21 @@
+.create-channel-form-overall-div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 15px 15px 15px 15px;
+    background-color: #76597d;
+    opacity: 90%;
+}
+
+.create-channel-modal {
+    text-align: center;
+    margin-top: -30px;
+}
+
+.create-channel-button {
+    margin-top: 5px;
+}
+
+.create-channel-form-title {
+    font-weight: bold;
+}

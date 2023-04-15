@@ -17,7 +17,13 @@ function LoginFormModal() {
     e.preventDefault();
     const data = await dispatch(login(email, password));
     if (data) {
-      setErrors(data);
+      const message = data.map((error) => {
+					let space = error.indexOf(" ");
+					let errorMessage = error.slice(space);
+					console.log("#####", errorMessage)
+					return errorMessage
+				})
+				setErrors(message);
     } else {
       closeModal();
       history.push(`/@me`);
@@ -28,31 +34,33 @@ function LoginFormModal() {
   // ^ until you have DMs then send them to DMs
 
   return (
-    <div className="flex items-center justify-center h-screen bg-indigo-600">
+    <div className="flex items-center justify-center h-screen bg-indigo-600" id="login-form-modal-overall-div">
       <div className="p-6 bg-white w-96 shadow-1g round-md">
-        <h1>Log In</h1>
-        <form onSubmit={handleSubmit}>
-          <ul>
+        <p className="login-log-in-text">Log In</p>
+        <form onSubmit={handleSubmit} className="login-server-modal">
+          <ul className="login-server-modal-errors">
             {errors.map((error, idx) => (
-              <li key={idx}>{error}</li>
+              <li key={idx}>Error: {error}</li>
             ))}
           </ul>
-          <label htmlFor="email" className="block mb-2 text-base">
+          <label htmlFor="email" className="block mb-2 text-base" id="login-email-password-label-text">
             Email
             <input
               type="text"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
+              className="login-input-box"
             />
           </label>
-          <label>
+          <label id="login-email-password-label-text">
             Password
             <input
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
+              className="login-input-box"
             />
           </label>
           <button type="submit">Log In</button>

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./MessageImageUpload.css";
 
 const MessageImageUpload = ({ setImage, formSubmitted, isEditing = false, image, imageUploaded, setImageUploaded }) => {
-  const [photo, setPhoto] = useState("");
+  const [photo, setPhoto] = useState(image);
   const [imageLoading, setImageLoading] = useState(false);
   const [errors, setErrors] = useState([]);
 
@@ -32,6 +32,11 @@ const MessageImageUpload = ({ setImage, formSubmitted, isEditing = false, image,
     }
   };
 
+  const handleRemoveImage = async () => {
+    setPhoto(null);
+    setImage(null);
+    setImageUploaded(false);
+  };
 
   const updateImage = async (e) => {
     e.preventDefault();
@@ -41,25 +46,30 @@ const MessageImageUpload = ({ setImage, formSubmitted, isEditing = false, image,
     } // If you click cancel, it will not throw an error
     handleSubmit(file);
   };
-
+  
   return (
     <>
       {imageUploaded && !formSubmitted ? (
         <>
-          <div>
-            <img src={photo} className="image-uploaded-photo-preview" />
+          <div className={(isEditing || imageUploaded) ? "message-image-uploaded-with-edit-button-div-for-editing" : "message-image-uploaded-with-edit-button-div"}>
+            {photo && <img src={photo} className="message-image-uploaded-photo-preview" />}
             <br></br>
-            <button onClick={() => document.getElementById("file").click()}>
+            <div className={photo && "message-image-uploaded-with-edit-button-for-message-edit"}>
+
+            <button className="message-image-upload-edit-button" onClick={() => document.getElementById("file").click()}>
               {" "}
               Edit Image
             </button>
+            <button onClick={handleRemoveImage}>Remove Image</button>
+            </div>
           </div>
         </>
       ) : (
         <div>
-          <img src={image} className="image-uploaded-photo-preview" />
-          <button onClick={() => document.getElementById("file").click()}>
-          {isEditing ? "Edit Image" : <i className="fa-sharp fa-solid fa-plus"></i>}
+          {image && <img src={image} className="message-image-uploaded-photo-preview" />}
+          <br></br>
+          <button className="message-image-upload-plus-sign" onClick={() => document.getElementById("file").click()}>
+          {(isEditing && imageUploaded) ? "Edit Image" : <i className="fa-sharp fa-solid fa-plus"></i>}
           </button>
         </div>
       )}
@@ -74,7 +84,7 @@ const MessageImageUpload = ({ setImage, formSubmitted, isEditing = false, image,
           <li key={idx}>{error}</li>
         ))}
       </ul>
-      {imageLoading && <p>Loading...</p>}
+      {imageLoading && <p className="message-image-upload-loading-text">Loading...</p>}
 
       <div>
         <input

@@ -13,7 +13,8 @@ function LoginFormPage() {
   const [errors, setErrors] = useState([]);
   const history = useHistory();
 
-  if (sessionUser) return <Redirect to="/" />;
+  if (sessionUser) return <Redirect to="/@me" />;
+  // if (sessionUser == null) return <Redirect to="/" />; // PUT THIS BACK IN AFTER YOU STYLE THIS PAGE
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -27,32 +28,34 @@ function LoginFormPage() {
 
   return (
     <>
-      <h1>Log In</h1>
+      <h1 className="login-form-log-in-text">Log In</h1>
       <form onSubmit={handleSubmit}>
         <ul>
           {errors.map((error, idx) => (
             <li key={idx}>{error}</li>
           ))}
         </ul>
-        <label>
+        <label className="login-form-page-label">
           Email
           <input
             type="text"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
+            className="login-form-page-input"
           />
         </label>
-        <label>
+        <label className="login-form-page-label">
           Password
           <input
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
+            className="login-form-page-input"
           />
         </label>
-        <button type="submit">Log In</button>
+        <button type="submit" className="login-form-page-button">Log In</button>
       </form>
     </>
   );

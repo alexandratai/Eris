@@ -25,7 +25,7 @@ function App() {
       <Navigation isLoaded={isLoaded} />
       {isLoaded && (
         <Switch>
-          <Route path="/login" >
+          <Route path="/login">
             <LoginFormPage />
           </Route>
           <Route path="/signup">
@@ -38,12 +38,44 @@ function App() {
             <HomePage />
           </Route>
           <ProtectedRoute>
-          <Route exact path="/:serverId(\d+)?/:channelId(\d+)?">
-            <ServerGrid />
-          </Route>
+            <Route exact path="/:serverId(\d+)?/:channelId(\d+)?">
+              <div className="app-full-main-component-with-images-div">
+              <ServerGrid />
+              <div className="app-images-div">
+              {/* <div className="app-photo-element-cloud-one"></div>
+              <div className="app-photo-element-stars-one"></div>
+              <div className="app-photo-element-cloud-two"></div>
+              <div className="app-photo-element-stars-two"></div>
+              <div className="app-photo-element-stars-three"></div> */}
+              <div className="app-logo"></div>
+              </div>
+              </div>
+{/* 
+              <iframe
+                style={{ borderRadius: "12px" }}
+                src="https://open.spotify.com/embed/playlist/2DXbYkihVPRCWwpM9m0nT2?utm_source=generator&theme=0"
+                width="70%"
+                height="152"
+                frameBorder="0"
+                allowFullScreen=""
+                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                loading="lazy"
+              ></iframe> */}
+            </Route>
           </ProtectedRoute>
         </Switch>
       )}
+      <footer className="app-footer">
+        <div>
+          By Alexandra Tai{" "}
+          <a href="https://www.linkedin.com/in/alexandratai" target="_blank">
+            <i className="fa-brands fa-linkedin-in" id="app-footer-logo"></i>
+          </a>{" "}
+          <a href="https://github.com/alexandratai" target="_blank">
+            <i className="fa-brands fa-github" id="app-footer-logo"></i>
+          </a>
+        </div>
+      </footer>
     </div>
   );
 }

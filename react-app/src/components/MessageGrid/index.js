@@ -5,7 +5,7 @@ import CreateMessageForm from "../CreateMessageForm";
 import { useSelector, useDispatch } from "react-redux";
 import { allMessagesByChannelIdThunk } from "../../store/messages";
 import { useParams } from "react-router-dom";
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useRef, useContext } from "react";
 // import { SocketContext } from "../../socket";
 import { resetMessage } from "../../store/messages";
 import { addMessage, editMessage, deleteMessage } from "../../store/messages";
@@ -23,6 +23,22 @@ const MessageGrid = () => {
   const messagesArr = Object.values(messagesObj);
 
   const [messages, setMessages] = useState(messagesArr);
+
+  const messageGridRef = useRef(null);
+
+  const scrollToBottom = () => {
+    messageGridRef.current.scrollIntoView({
+      behavior: "smooth",
+      block: "nearest",
+      inline: "start",
+    });
+  };
+
+  useEffect(() => {
+    if (messageGridRef.current) {
+      scrollToBottom();
+    }
+  }, [messageGridRef, messagesArr]);
 
   useEffect(() => {
     socket = io();
@@ -89,6 +105,7 @@ const MessageGrid = () => {
           handleChat={handleChat}
         />
       </div>
+      <div ref={messageGridRef}></div>
     </>
   );
 };

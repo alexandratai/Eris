@@ -1,39 +1,38 @@
 import React from "react";
-import { NavLink, useParams } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";
 import ProfileButton from "./ProfileButton";
 import "./Navigation.css";
-import CreateServerForm from "../CreateServerForm";
-import OpenModalButton from "../OpenModalButton";
 
 function Navigation({ isLoaded }) {
   const sessionUser = useSelector((state) => state.session.user);
-  const { serverId } = useParams();
 
-  const createServer = () => {
-    if (sessionUser) {
-      return (
-        <OpenModalButton
-          buttonText="Add a Server"
-          modalComponent={<CreateServerForm server={serverId} />}
-        />
-      );
-    }
+  const serverObj = useSelector((state) => state.servers);
+  const serverArr = Object.values(serverObj);
+  let userServers;
+  
+  if (sessionUser !== null) {
+    userServers = serverArr.filter(server => {
+        return server.owner_id == sessionUser.id
+    })
   };
 
   return (
-    <ul className="navigation-bar">
+    <ul className={(isLoaded && sessionUser == null) ? "navigation-bar-logged-out" : "navigation-bar-logged-in"}>
+      <div className="navigation-home-and-profile-button-div">
       <li>
-        <NavLink exact to="/">
+        <button className={(isLoaded && sessionUser !== null && userServers.length > 0) && "navigation-home-button-none"}>
+        <NavLink exact to="/" className="navigation-home-button">
           Home
         </NavLink>
+        </button>
       </li>
       {isLoaded && (
         <li>
           <ProfileButton user={sessionUser} />
         </li>
       )}
-      <li>{createServer()}</li>
+      </div>
     </ul>
   );
 }

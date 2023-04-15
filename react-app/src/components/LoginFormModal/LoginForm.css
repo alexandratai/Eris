@@ -1,0 +1,30 @@
+#login-form-modal-overall-div {
+    display: flex;
+    padding: 10px 12px 15px 12px;
+    background-color: #76597d;
+    opacity: 90%;
+}
+
+.login-server-modal {
+    text-align: center;
+    margin: 10px 25px 10px 25px;
+}
+
+.login-log-in-text {
+    text-align: center;
+    font-weight: bold;
+    font-size: 15pt;
+}
+
+#login-email-password-label-text {
+    margin-right: 5px;
+}
+
+.login-input-box {
+    margin-left: 5px;
+}
+
+.login-server-modal-errors {
+    font-weight: bold;
+    margin-left: -30px;
+}

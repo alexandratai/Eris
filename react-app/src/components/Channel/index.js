@@ -37,7 +37,7 @@ const Channel = ({ channel }) => {
       <div
       onMouseEnter={() => setIsShown(true)}
       onMouseLeave={() => setIsShown(false)}>
-        <Link to={`/${serverId}/${channel.id}`}>{channel.name}</Link>
+        <Link to={`/${serverId}/${channel.id}`} className="channel-edit-channel-name"># {channel.name}</Link>
         {isShown && (
           editChannel()
         )}

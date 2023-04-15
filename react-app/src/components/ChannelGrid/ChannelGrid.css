@@ -7,3 +7,24 @@
 #server-dropdown-list {
     list-style-type: none;
 }
+
+.channel-grid {
+    margin-top: 25px;
+}
+
+#channel-grid-server-dropdown-button {
+    margin-left: 10px;
+}
+
+.channel-grid-text-channels-with-add-channel-button-div {
+    display: flex;
+}
+
+.channel-grid-add-channel-button button {
+    margin-left: 6px;
+    margin-top: -2px;
+}
+
+.server-page-delete-button {
+    margin-top: 3px;
+}

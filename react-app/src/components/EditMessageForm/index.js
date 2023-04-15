@@ -6,7 +6,7 @@ import { editMessageThunk } from "../../store/messages";
 import { SocketContext } from "../../socket";
 import MessageImageUpload from "../MessageImageUpload";
 
-const EditMessageForm = ({ serverId, channelId, message, setShowForm }) => {
+const EditMessageForm = ({ serverId, channelId, message, setShowEditMessageForm }) => {
   const dispatch = useDispatch();
   const sessionUser = useSelector((state) => state.session.user);
 
@@ -17,6 +17,7 @@ const EditMessageForm = ({ serverId, channelId, message, setShowForm }) => {
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [errors, setErrors] = useState([]);
   const socket = useContext(SocketContext);
+  const [imageUploaded, setImageUploaded] = useState(false);
 
   const updateBody = (e) => setBody(e.target.value);
 
@@ -33,7 +34,7 @@ const EditMessageForm = ({ serverId, channelId, message, setShowForm }) => {
 
     const payload = {
       body,
-      image: tempImage ? tempImage : null, // Use null if tempImage is not set,
+      image: tempImage ? tempImage : null, // Use null if tempImage is not set
       serverId,
       channelId,
       id: message.id,
@@ -51,7 +52,7 @@ const EditMessageForm = ({ serverId, channelId, message, setShowForm }) => {
       // socket.emit("chat", editedChannelMessage);
       payload.isEdited = true;
       socket.emit("chat", payload);
-      setShowForm(false);
+      setShowEditMessageForm(false);
       
       setImage(tempImage);
       setFormSubmitted(true);
@@ -59,20 +60,20 @@ const EditMessageForm = ({ serverId, channelId, message, setShowForm }) => {
   };
 
   const handleCancel = () => {
-    setShowForm(false);
-    setImage(message.image); // restore original image
+    setShowEditMessageForm(false);
+    setImage(message.image); // Restore original image
   };
 
   return sessionUser.id ? (
-    <>
-      <MessageImageUpload setImage={setTempImage} formSubmitted={formSubmitted} isEditing={true} image={image} />
+    <div className="edit-channel-message-form">
+      <MessageImageUpload setImage={setImage} formSubmitted={formSubmitted} isEditing={true} image={image} imageUploaded={imageUploaded} setImageUploaded={setImageUploaded} />
       <form onSubmit={handleSubmit}>
         <ul>
           {errors.map((error, idx) => (
             <li key={idx}>{error}</li>
           ))}
         </ul>
-        <div className="edit-channel-message-form">
+        <div className="edit-channel-message-input-and-buttons">
           <input
             type="text"
             placeholder={body}
@@ -81,15 +82,15 @@ const EditMessageForm = ({ serverId, channelId, message, setShowForm }) => {
             required
           />
 
-          <div>
-            <button className="edit-channel-button" type="submit">
+          <div className="edit-channel-message-buttons-div">
+            <button className="edit-channel-message-button" type="submit">
               Save
             </button>
-            <button type="cancel" onClick={handleCancel}>Cancel</button>
+            <button type="button" onClick={handleCancel}>Cancel</button>
           </div>
         </div>
       </form>
-    </>
+    </div>
   ) : null;
 };
 

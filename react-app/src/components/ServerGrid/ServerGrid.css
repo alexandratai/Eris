@@ -1,27 +1,45 @@
 .server-grid-channel-grid-message-grid {
     display: flex;
-    align-items: center;
-    height: 100vh;
-    width: 100%;
-    overflow-y: auto;
-    background-color: rgb(104, 136, 146);
+    position: fixed;
+    top: 80px;
+    transform: translateX(-50%); 
+    height: 500px;
+    width: 75vw;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    background-color: #8b6e92;
     border-radius: 15px;
+    opacity: 80%;
 }
 
 .server-grid {
-    margin-left: 30px;
-    height: 100%;
-    width: 5%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-y: scroll;
+    transform: translateX(50%); 
+    /* height: 84%; */ /* COMMENT BACK IN LATER */
+    width: 9%;
+    margin-left: -3%;
 }
 
 .server-grid-channel-grid {
     display: flex;
     flex-direction: column;
+    align-items: center;
+    overflow-y: scroll;
     height: 100%;
+    width: 20%;
+    background-color: rgb(133, 101, 141);
     overflow-y: auto;
-    margin-left: 20px;
+    margin-right: -10px;
+    margin-left: 60px;
 }
 
 .server-grid-message-grid {
     height: 100%;
+    width: 80%;
+    margin-left: 10px;
+    background-color: #7a5e81;
+    overflow-y: auto;
 }

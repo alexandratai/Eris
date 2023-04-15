@@ -16,6 +16,7 @@ const EditServerForm = ({ server }) => {
   const [image, setImage] = useState(server.image);
   const [errors, setErrors] = useState([]);
   const { closeModal } = useModal();
+  const [imageUploaded, setImageUploaded] = useState(false);
 
   const updateName = (e) => setName(e.target.value);
 
@@ -42,8 +43,8 @@ const EditServerForm = ({ server }) => {
   };
 
   return sessionUser.id ? (
-    <>
-      <ImageUpload setImage={setImage} />
+    <div className="edit-server-form-overall-div">
+      <ImageUpload setImage={setImage} imageUploaded={imageUploaded} setImageUploaded={setImageUploaded} />
       <form onSubmit={handleSubmit}>
         <ul>
           {errors.map((error, idx) => (
@@ -52,7 +53,7 @@ const EditServerForm = ({ server }) => {
         </ul>
 
         <div className="edit-server-modal">
-          <p>Edit a Server:</p>
+          <p className="edit-server-modal-title">Edit a Server:</p>
           <input
             type="text"
             placeholder="Server name here"
@@ -70,7 +71,7 @@ const EditServerForm = ({ server }) => {
           </div>
         </div>
       </form>
-    </>
+    </div>
   ) : null;
 };
 

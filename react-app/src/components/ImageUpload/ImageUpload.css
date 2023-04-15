@@ -1,8 +1,33 @@
 .image-uploaded-photo-preview {
-    min-width: 50%;
-    min-height: 50%;
-    max-width: 50%;
-    max-height: 50%;
+    width: 150px;
+    height: 150px;
     object-fit: cover;
     border-radius: 5px;
+    margin-bottom: 1%;
+    margin-top: 10px;
+}
+
+.image-uploaded-upload-image-button {
+    margin: 2px;
+    margin-top: 6px;
+}
+
+.image-upload-preview-and-button-div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.image-uploaded-loading {
+    margin-top: -5px;
+    display: flex;
+    justify-content: center;
+}
+
+#image-upload-camera-button {
+    margin-top: 5px;
+}
+
+.image-upload-remove-image-button {
+    margin-left: 3px;
 }

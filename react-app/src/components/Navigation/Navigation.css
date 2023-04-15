@@ -1,11 +1,85 @@
 .profile-dropdown {
-  position: absolute;
+  position: fixed;
+}
+
+button .profile-button-profile-dropdown-icon {
+  position: relative;
 }
 
 .hidden {
   display: none;
 }
 
-.navigation-bar {
-  margin: 0
+.navigation-bar-logged-out {
+  margin: 0;
+  position: absolute;
+  margin-top: -260px;
+  margin-left: 540px;
+  z-index: 1;
+  list-style-type: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.navigation-bar-logged-in {
+  margin: 0;
+  position: fixed;
+  margin-top: -250px;
+  margin-left: 450px;
+  z-index: 1;
+  list-style-type: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.navigation-home-button {
+  color: rgb(230, 180, 231);
+}
+
+.navigation-home-button-none {
+  display: none;
+}
+
+.navigation-home-and-profile-button-div {
+  display: flex;
+}
+
+ul li button {
+  background-color: #92729b;
+}
+
+ul {
+  list-style-type: none;
+}
+
+.profile-dropdown {
+  text-align: center;
+  width: 125px;
+  position: fixed;
+  margin-left: -73px;
+  border-radius: 10px;
+  background-color: #92729b;
+  border: solid 1px rgb(230, 180, 231);
+  padding-left: 0;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.profile-button-profile-dropdown-logged-in {
+  text-align: center;
+  width: 125px;
+  position: fixed;
+  margin-left: -50px;
+  border-radius: 10px;
+  background-color: #92729b;
+  border: solid 1px rgb(230, 180, 231);
+  padding-left: 0;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.profile-button-username-email {
+  margin-bottom: 3px;
 }

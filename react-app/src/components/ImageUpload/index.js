@@ -3,7 +3,6 @@ import "./ImageUpload.css";
 
 const ImageUpload = ({ setImage, formSubmitted, imageUploaded, setImageUploaded }) => {
   const [photo, setPhoto] = useState("");
-  // const [img, setImg] = useState("");
   const [imageLoading, setImageLoading] = useState(false);
   const [errors, setErrors] = useState([]);
 
@@ -33,41 +32,45 @@ const ImageUpload = ({ setImage, formSubmitted, imageUploaded, setImageUploaded 
     }
   };
 
-  // useEffect(() => {
-  //   if (img) {
-      const updateImage = async (e) => {
-        e.preventDefault();
-        const file = e.target.files[0];
-        if (!file) {
-          return;
-        } // If you click cancel, it will not throw an error
-        handleSubmit(file);
-      };
-
-      // updateImage();
-  //   }
-  // }, [img]);
+  const handleRemoveImage = async () => {
+    setPhoto(null);
+    setImage(null);
+    setImageUploaded(false);
+  };
+  const updateImage = async (e) => {
+    e.preventDefault();
+    const file = e.target.files[0];
+      if (!file) {
+        return;
+      } // If you click cancel, it will not throw an error
+    handleSubmit(file);
+  };
 
   return (
     <>
       {imageUploaded && !formSubmitted ? (
         <>
-          <div>
+          <div className="image-upload-preview-and-button-div">
             <img src={photo} className="image-uploaded-photo-preview" />
             <br></br>
+            {imageLoading && <p className="image-uploaded-loading">Loading...</p>}
+            <div>
             <button onClick={() => document.getElementById("newImg").click()}>
               {" "}
               Change Image
             </button>
+            <button className="image-upload-remove-image-button" onClick={handleRemoveImage}>Remove Image</button>
+            </div>
           </div>
         </>
       ) : (
         <div>
-          <button onClick={() => document.getElementById("newImg").click()}>
+          {imageLoading && <p className="image-uploaded-loading">Loading...</p>}
+          <button onClick={() => document.getElementById("newImg").click()} className="image-uploaded-upload-image-button">
             <i
               className="fa-solid fa-camera fa-3x"
-              style={{ marginTop: "5px" }}
-            ></i>
+              id="image-upload-camera-button"
+              ></i>
             <div>
               <p>Upload Image</p>
             </div>
@@ -82,7 +85,6 @@ const ImageUpload = ({ setImage, formSubmitted, imageUploaded, setImageUploaded 
           <li key={idx}>{error}</li>
         ))}
       </ul>
-      {imageLoading && <p>Loading...</p>}
 
       <div>
         <input
@@ -91,7 +93,7 @@ const ImageUpload = ({ setImage, formSubmitted, imageUploaded, setImageUploaded 
           onChange={updateImage}
           style={{ display: "none" }}
           id="newImg"
-        />
+          />
       </div>
     </>
   );

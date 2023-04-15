@@ -1,30 +1,37 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../store/session";
 import OpenModalButton from "../OpenModalButton";
 import LoginFormModal from "../LoginFormModal";
 import SignupFormModal from "../SignupFormModal";
 import { useModal } from "../../context/Modal";
+import { useHistory, useParams } from "react-router-dom";
 import * as sessionActions from "../../store/session";
+import CreateServerForm from "../CreateServerForm";
+import "./Navigation.css";
 
 function ProfileButton({ user }) {
   const dispatch = useDispatch();
+  const history = useHistory();
   const [showMenu, setShowMenu] = useState(false);
   const ulRef = useRef();
   const { closeModal } = useModal();
+  const sessionUser = useSelector((state) => state.session.user);
+  const { serverId } = useParams();
 
   const openMenu = () => {
     if (showMenu) return;
     setShowMenu(true);
   };
 
+  let closeMenu;
   useEffect(() => {
     if (!showMenu) return;
 
-    const closeMenu = (e) => {
-      if (!ulRef.current.contains(e.target)) {
+    closeMenu = () => {
+      // if (!ulRef.current.contains(e.target)) {
         setShowMenu(false);
-      }
+      // }
     };
 
     document.addEventListener("click", closeMenu);
@@ -34,52 +41,71 @@ function ProfileButton({ user }) {
 
   const handleLogout = (e) => {
     e.preventDefault();
-    dispatch(logout());
+    dispatch(logout()).then(() => history.push(`/`)).then(() => closeMenu());
   };
 
   const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
-  const closeMenu = () => setShowMenu(false);
 
   const demoSubmit = (e) => {
     e.preventDefault();
-    closeModal();
-    return dispatch(sessionActions.demoLogin());
+    return dispatch(sessionActions.demoLogin()).then(() => setShowMenu(false));
+  };
+
+  const createServer = () => {
+    if (sessionUser) {
+      return (
+        <OpenModalButton
+          buttonText="Add a Server"
+          modalComponent={<CreateServerForm server={serverId} />}
+          className="create-server-add-server-modal"
+        />
+      );
+    }
   };
 
   return (
     <>
-      <button onClick={openMenu}>
+      <button onClick={openMenu} className="profile-button-profile-dropdown-icon">
         <i className="fas fa-user-circle" />
       </button>
-      <ul className={ulClassName} ref={ulRef}>
-        {user ? (
-          <>
-            <li>{user.username}</li>
-            <li>{user.email}</li>
-            <li>
-              <button onClick={handleLogout}>Log Out</button>
-            </li>
-          </>
-        ) : (
-          <>
-            <OpenModalButton
-              buttonText="Log In"
-              onItemClick={closeMenu}
-              modalComponent={<LoginFormModal />}
-            />
 
-            <OpenModalButton
-              buttonText="Sign Up"
-              onItemClick={closeMenu}
-              modalComponent={<SignupFormModal />}
-            />
+      {showMenu && (
+        <ul
+          className={
+            sessionUser == null
+              ? ulClassName
+              : "profile-button-profile-dropdown-logged-in"
+          }
+          ref={ulRef}
+        >
+          {user ? (
+            <>
+              <li>{user.username}</li>
+              <li className="profile-button-username-email">{user.email}</li>
+              <li>{createServer()}</li>
+              <li>
+                <button onClick={handleLogout}>Log Out</button>
+              </li>
+            </>
+          ) : (
+            <>
+              <OpenModalButton
+                buttonText="Log In"
+                modalComponent={<LoginFormModal />}
+              />
 
-            <form className="demo-login-div" onSubmit={demoSubmit}>
-              <button className="demo-login">Demo Login</button>
-            </form>
-          </>
-        )}
-      </ul>
+              <OpenModalButton
+                buttonText="Sign Up"
+                modalComponent={<SignupFormModal />}
+              />
+
+              <div className="demo-login-div">
+                <button className="demo-login" onClick={demoSubmit}>Demo Login</button>
+              </div>
+            </>
+          )}
+        </ul>
+      )}
     </>
   );
 }

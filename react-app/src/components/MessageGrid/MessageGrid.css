@@ -2,9 +2,17 @@
     display: flex;
     flex-direction: column;
     margin-left: 20px;
+    width: 300px;
 }
 
 .messages-grid-create-message-form {
-    margin-top: -5px;
-    margin-left: 20px;
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    border-radius: 15px;
+    bottom: 0;
+    background-color: #76597d;
+    width: 35%;
+    margin-left: 29%;
+    padding: 1% 2% 2% 1%;
 }
