@@ -57,7 +57,7 @@ const CreateMessageForm = ({ serverId, channelId, handleChat }) => {
       setBody("");
       setImage("");
       
-      setFormSubmitted(true);
+      setFormSubmitted(false);
       setImageUploaded(false);
   };
 
