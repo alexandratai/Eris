@@ -9,7 +9,7 @@
     overflow-y: scroll;
     background-color: #8b6e92;
     border-radius: 15px;
-    opacity: 80%;
+    /* opacity: 80%; */
 }
 
 .server-grid {

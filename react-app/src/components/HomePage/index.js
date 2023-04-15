@@ -33,7 +33,7 @@ const HomePage = () => {
 
   return (
     <>
-      <div className="homepage-photo-element-city"></div>
+      <div className="homepage-photo-element-city" style={{opacity: "90%"}}></div>
       <br></br>
       <p className="homepage-body-text">
         A place that makes it easy to talk every day and hang out more often.

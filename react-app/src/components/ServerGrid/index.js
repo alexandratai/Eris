@@ -26,7 +26,7 @@ const ServerGrid = () => {
 
   return (
     <>
-    <div className="server-grid-channel-grid-message-grid">
+    <div className="server-grid-channel-grid-message-grid" style={{opacity: "80%"}}>
       <div className="server-grid">
         {serverArr.length > 0 &&
           serverArr.map((server) => {

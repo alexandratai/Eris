@@ -43,7 +43,7 @@ const CreateServerForm = ({ serverId }) => {
   };
 
   return sessionUser.id ? (
-    <div className="create-server-form-overall-div">
+    <div className="create-server-form-overall-div" style={{opacity: "90%"}}>
       <ImageUpload setImage={setImage} formSubmitted={formSubmitted} imageUploaded={imageUploaded} setImageUploaded={setImageUploaded} />
       <form onSubmit={handleSubmit}>
         <ul>

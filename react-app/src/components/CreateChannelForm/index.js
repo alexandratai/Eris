@@ -34,7 +34,7 @@ const CreateChannelForm = ({ serverId }) => {
     };
   
     return sessionUser.id ? (
-      <form className="create-channel-form-overall-div" onSubmit={handleSubmit}>
+      <form className="create-channel-form-overall-div" style={{opacity: "90%"}} onSubmit={handleSubmit}>
         <ul>
           {errors.map((error, idx) => (
             <li key={idx}>{error}</li>

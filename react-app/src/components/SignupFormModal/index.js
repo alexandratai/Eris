@@ -49,7 +49,7 @@ function SignupFormModal() {
   // ^ until you have DMs then send them to DMs
 
 	return (
-		<div className="sign-up-modal-overall-div">
+		<div className="sign-up-modal-overall-div" style={{opacity: "90%"}}>
 			<p className="sign-up-modal-sign-up">Sign Up</p>
 			<ImageUpload setImage={setImage} formSubmitted={formSubmitted} imageUploaded={imageUploaded} setImageUploaded={setImageUploaded} />
 			<form onSubmit={handleSubmit} className="sign-up-modal-form">

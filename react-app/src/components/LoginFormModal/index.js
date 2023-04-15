@@ -20,7 +20,6 @@ function LoginFormModal() {
       const message = data.map((error) => {
 					let space = error.indexOf(" ");
 					let errorMessage = error.slice(space);
-					console.log("#####", errorMessage)
 					return errorMessage
 				})
 				setErrors(message);
@@ -34,7 +33,7 @@ function LoginFormModal() {
   // ^ until you have DMs then send them to DMs
 
   return (
-    <div className="flex items-center justify-center h-screen bg-indigo-600" id="login-form-modal-overall-div">
+    <div className="flex items-center justify-center h-screen bg-indigo-600" id="login-form-modal-overall-div" style={{opacity: "90%"}}>
       <div className="p-6 bg-white w-96 shadow-1g round-md">
         <p className="login-log-in-text">Log In</p>
         <form onSubmit={handleSubmit} className="login-server-modal">

@@ -55,7 +55,7 @@ function LoginFormPage() {
             className="login-form-page-input"
           />
         </label>
-        <button type="submit" className="login-form-page-button">Log In</button>
+        <button type="submit" className="login-form-page-button" style={{opacity: "70%"}}>Log In</button>
       </form>
     </>
   );

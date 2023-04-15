@@ -43,7 +43,7 @@ const EditServerForm = ({ server }) => {
   };
 
   return sessionUser.id ? (
-    <div className="edit-server-form-overall-div">
+    <div className="edit-server-form-overall-div" style={{opacity: "90%"}}>
       <ImageUpload setImage={setImage} imageUploaded={imageUploaded} setImageUploaded={setImageUploaded} />
       <form onSubmit={handleSubmit}>
         <ul>
