@@ -1,6 +1,6 @@
 .image-uploaded-photo-preview {
-    width: 70%;
-    height: 70%;
+    width: 150px;
+    height: 150px;
     object-fit: cover;
     border-radius: 5px;
     margin-bottom: 1%;
@@ -9,6 +9,7 @@
 
 .image-uploaded-upload-image-button {
     margin: 2px;
+    margin-top: 6px;
 }
 
 .image-upload-preview-and-button-div {
@@ -19,6 +20,8 @@
 
 .image-uploaded-loading {
     margin-top: -5px;
+    display: flex;
+    justify-content: center;
 }
 
 #image-upload-camera-button {

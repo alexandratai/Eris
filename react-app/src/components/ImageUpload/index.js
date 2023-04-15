@@ -3,7 +3,6 @@ import "./ImageUpload.css";
 
 const ImageUpload = ({ setImage, formSubmitted, imageUploaded, setImageUploaded }) => {
   const [photo, setPhoto] = useState("");
-  // const [img, setImg] = useState("");
   const [imageLoading, setImageLoading] = useState(false);
   const [errors, setErrors] = useState([]);
 
@@ -38,21 +37,14 @@ const ImageUpload = ({ setImage, formSubmitted, imageUploaded, setImageUploaded 
     setImage(null);
     setImageUploaded(false);
   };
-
-  // useEffect(() => {
-  //   if (img) {
-      const updateImage = async (e) => {
-        e.preventDefault();
-        const file = e.target.files[0];
-        if (!file) {
-          return;
-        } // If you click cancel, it will not throw an error
-        handleSubmit(file);
-      };
-
-      // updateImage();
-  //   }
-  // }, [img]);
+  const updateImage = async (e) => {
+    e.preventDefault();
+    const file = e.target.files[0];
+      if (!file) {
+        return;
+      } // If you click cancel, it will not throw an error
+    handleSubmit(file);
+  };
 
   return (
     <>

@@ -57,6 +57,7 @@ function ProfileButton({ user }) {
         <OpenModalButton
           buttonText="Add a Server"
           modalComponent={<CreateServerForm server={serverId} />}
+          className="create-server-add-server-modal"
         />
       );
     }
