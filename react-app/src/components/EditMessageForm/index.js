@@ -11,7 +11,6 @@ const EditMessageForm = ({ serverId, channelId, message, setShowEditMessageForm 
   const sessionUser = useSelector((state) => state.session.user);
 
   const [body, setBody] = useState(message.body);
-  const [tempImage, setTempImage] = useState(message.image);
   const [image, setImage] = useState(message.image);
   const [isLoaded, setIsLoaded] = useState(false);
   const [formSubmitted, setFormSubmitted] = useState(false);
@@ -34,7 +33,7 @@ const EditMessageForm = ({ serverId, channelId, message, setShowEditMessageForm 
 
     const payload = {
       body,
-      image: tempImage ? tempImage : null, 
+      image: image ? image : null, 
       serverId,
       channelId,
       id: message.id,
@@ -45,7 +44,7 @@ const EditMessageForm = ({ serverId, channelId, message, setShowEditMessageForm 
       socket.emit("chat", payload);
       setShowEditMessageForm(false);
       
-      setImage(tempImage);
+      setImage(image);
       setFormSubmitted(true);
   };
 

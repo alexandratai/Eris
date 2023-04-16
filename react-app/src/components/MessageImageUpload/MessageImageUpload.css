@@ -70,3 +70,12 @@
 .message-image-upload-edit-button {
     margin-right: 3px;
 }
+
+.message-image-upload-editing-delete-button {
+    background-color: red;
+    margin-right: 10px;
+}
+
+.message-image-upload-editing-buttons-overall-div {
+    display: flex;
+}
