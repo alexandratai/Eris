@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import "./MessageImageUpload.css";
 
 const MessageImageUpload = ({ setImage, formSubmitted, isEditing = false, image, imageUploaded, setImageUploaded }) => {
   const [photo, setPhoto] = useState(image);
   const [imageLoading, setImageLoading] = useState(false);
   const [errors, setErrors] = useState([]);
+  const ref = useRef();
 
   const handleSubmit = async (image) => {
     const formData = new FormData();
@@ -40,7 +41,8 @@ const MessageImageUpload = ({ setImage, formSubmitted, isEditing = false, image,
 
   const updateImage = async (e) => {
     e.preventDefault();
-    const file = e.target.files[0];
+    // const file = e.target.files[0];
+    const file = ref.current.files[0];
     if (!file) {
       return;
     } // If you click cancel, it will not throw an error
@@ -92,6 +94,7 @@ const MessageImageUpload = ({ setImage, formSubmitted, isEditing = false, image,
           accept="image/*"
           onChange={updateImage}
           style={{ display: "none" }}
+          ref={ref}
           id="file"
         />
       </div>
