@@ -20,6 +20,7 @@ const MessageImageUpload = ({ setImage, formSubmitted, isEditing = false, image,
 
     if (res.ok) {
       const img = await res.json();
+      console.log("###### IMG", img)
       setImageLoading(false);
       setImage(img.url);
       setImageUploaded(true);
@@ -40,13 +41,17 @@ const MessageImageUpload = ({ setImage, formSubmitted, isEditing = false, image,
   };
 
   const updateImage = async (e) => {
+    console.log("########ONE", ref.current.files[0])
     e.preventDefault();
     // const file = e.target.files[0];
     const file = ref.current.files[0];
+    console.log("########TWO", ref.current.files[0])
     if (!file) {
+      console.log("########THREE", ref.current.files[0])
       return;
     } // If you click cancel, it will not throw an error
     handleSubmit(file);
+    console.log("########FOUR", ref.current.files[0])
   };
   
   return (
@@ -58,7 +63,7 @@ const MessageImageUpload = ({ setImage, formSubmitted, isEditing = false, image,
             <br></br>
             <div className={photo && "message-image-uploaded-with-edit-button-for-message-edit"}>
 
-            <button className="message-image-upload-edit-button" onClick={() => document.getElementById("file").click()}>
+            <button className="message-image-upload-edit-button" onClick={() => ref.current.click()}>
               {" "}
               Edit Image
             </button>
@@ -70,7 +75,7 @@ const MessageImageUpload = ({ setImage, formSubmitted, isEditing = false, image,
         <div>
           {image && <img src={image} className="message-image-uploaded-photo-preview" />}
           <br></br>
-          <button className="message-image-upload-plus-sign" onClick={() => document.getElementById("file").click()}>
+          <button className="message-image-upload-plus-sign" onClick={() => ref.current.click()}>
           {(isEditing && imageUploaded) ? "Edit Image" : <i className="fa-sharp fa-solid fa-plus"></i>}
           </button>
         </div>
