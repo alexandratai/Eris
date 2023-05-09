@@ -2,8 +2,9 @@
   position: fixed;
 }
 
-button .profile-button-profile-dropdown-icon {
-  position: relative;
+.profile-button-profile-dropdown-icon {
+  position: absolute;
+  margin-left: -10px;
 }
 
 .hidden {

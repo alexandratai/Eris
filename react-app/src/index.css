@@ -102,8 +102,8 @@ button:hover {
     display: block;
     position: fixed;
     height: 30%;
-    /* margin-top: 305px; COMMENT BACK IN LATER */
-    margin-top: 315px;
+    margin-top: 305px; /* COMMENT BACK IN LATER */
+    /* margin-top: 315px; */
     left: 50%;
     transform: translateX(-51%);
     color: white;
