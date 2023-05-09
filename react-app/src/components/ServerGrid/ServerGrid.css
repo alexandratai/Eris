@@ -18,7 +18,7 @@
     align-items: center;
     overflow-y: scroll;
     transform: translateX(50%); 
-    /* height: 84%; */ /* COMMENT BACK IN LATER */
+    height: 84%; /* COMMENT BACK IN LATER */
     width: 9%;
     margin-left: -3%;
 }
