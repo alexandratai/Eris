@@ -42,7 +42,7 @@ button:hover {
     display: block;
     position: absolute;
     margin-left: -660px;
-    margin-top: 140px;
+    margin-top: 170px;
     animation: animateUpDown 2s infinite alternate;
 }
 
@@ -56,7 +56,7 @@ button:hover {
     display: block;
     position: absolute;
     margin-left: -650px;
-    margin-top: 170px;
+    margin-top: 200px;
     animation: animateUpDown 3s infinite alternate;
 }
 
@@ -64,7 +64,7 @@ button:hover {
     content: url("./images/1.png");
     display: block;
     position: absolute;
-    margin-top: -340px;
+    margin-top: -330px;
     margin-left: 250px;
     z-index: 0;
     animation: animateUpDown 3s infinite alternate;
@@ -75,7 +75,7 @@ button:hover {
     display: block;
     position: absolute;
     margin-left: 280px;
-    margin-top: -310px;
+    margin-top: -260px;
     animation: animateUpDown 2s infinite alternate;
 }
 
@@ -84,25 +84,25 @@ button:hover {
     display: block;
     position: absolute;
     margin-left: 550px;
-    margin-top: -200px;
+    margin-top: -150px;
     animation: animateUpDown 2s infinite alternate;
 }
 
 .app-logo::before {
     content: url("./images/eris.png");
-    display: block;
+    display: flex;
     position: absolute;
     height: 30%;
-    margin-top: 235px;
+    margin-top: 255px;
     left: 50%;
     transform: translateX(-50%);
 }
 
 .app-footer {
-    display: block;
-    position: fixed;
+    display: flex;
+    position: absolute;
     height: 30%;
-    margin-top: 305px; /* COMMENT BACK IN LATER */
+    margin-top: 325px; /* COMMENT BACK IN LATER */
     /* margin-top: 315px; */
     left: 50%;
     transform: translateX(-51%);

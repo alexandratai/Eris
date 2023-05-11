@@ -4,7 +4,7 @@
 
 .profile-button-profile-dropdown-icon {
   position: absolute;
-  margin-left: -10px;
+  margin-left: 1.5px;
 }
 
 .hidden {
@@ -60,6 +60,7 @@ ul {
   width: 125px;
   position: fixed;
   margin-left: -73px;
+  margin-top: 19px;
   border-radius: 10px;
   background-color: #92729b;
   border: solid 1px rgb(230, 180, 231);
@@ -73,6 +74,7 @@ ul {
   width: 125px;
   position: fixed;
   margin-left: -50px;
+  margin-top: 19px;
   border-radius: 10px;
   background-color: #92729b;
   border: solid 1px rgb(230, 180, 231);
